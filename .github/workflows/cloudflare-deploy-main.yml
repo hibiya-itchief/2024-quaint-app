@@ -12,8 +12,8 @@ jobs:
     name: deploy to cloudflare
     runs-on: ubuntu-latest
     environment:
-      name: '星陵祭公式Webサイト'
-      url: https://seiryofes.com/
+      name: 'quaint-app'
+      url: https://quaint-wa.pages.dev/
     steps:
       - name: Cloudflareのデプロイフックを実行
         run: |
