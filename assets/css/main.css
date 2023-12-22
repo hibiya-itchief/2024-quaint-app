@@ -1,0 +1,99 @@
+:root {
+  /* テーマカラーを設定してください　。呼び出す時は var(--theme-color) でできます */
+  --theme-color: #335594;
+}
+
+.info-title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
+}
+
+.info-subtitle {
+  text-align: center;
+  font-weight: normal;
+}
+
+.info-caption {
+  text-align: center;
+  font-weight: normal;
+  color: #666;
+}
+
+.pages-title {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid #fff;
+  font-family: serif;
+  font-weight: bold;
+  color: #fff;
+}
+
+.arrow-rotate:active {
+  transform: rotate(180deg);
+}
+
+.text-truncate {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pages-xs {
+  font-size: 20px;
+}
+
+.pages-else {
+  font-size: 30px;
+}
+
+.pages-else:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.pages-text {
+  text-align: center;
+  font-family: serif;
+  font-weight: bold;
+}
+
+.status-code {
+  text-align: center;
+  font-family: serif;
+  font-size: 1500%;
+  color: var(--theme-color);
+  height: 60%;
+}
+
+.status-code-xs {
+  text-align: center;
+  font-family: serif;
+  font-size: 1000%;
+  color: var(--theme-color);
+  height: 60%;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 300%;
+  color: var(--theme-color);
+}
+
+.error-message-xs {
+  text-align: center;
+  font-size: 200%;
+  color: var(--theme-color);
+}
+
+.chochin {
+  animation: flap ease 2s infinite;
+  width: 60px;
+  height: 60px;
+  margin-top: auto;
+}

@@ -3,7 +3,12 @@
     <v-container>
       <h1 id="title">校内マップ</h1>
       <v-row justify="center">
-        <v-btn-toggle v-model="selectedFloor" mandatory color="sairai" group>
+        <v-btn-toggle
+          v-model="selectedFloor"
+          mandatory
+          color="theme_color"
+          group
+        >
           <v-btn value="1F">1F</v-btn>
           <v-btn value="2F">2F</v-btn>
           <v-btn value="3F">3F</v-btn>

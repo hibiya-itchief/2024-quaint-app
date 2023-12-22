@@ -41,7 +41,7 @@
                   style="width: 100%"
                 >
                   <v-btn
-                    color="sairai"
+                    color="theme_color"
                     dark
                     outlined
                     rounded
@@ -119,7 +119,7 @@
                 <v-btn
                   v-if="is_bookmarked"
                   icon
-                  color="sairai"
+                  color="theme_color"
                   @click="removeBookmark(group.id)"
                   ><v-icon>mdi-bookmark</v-icon></v-btn
                 >

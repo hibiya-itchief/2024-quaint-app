@@ -14,7 +14,9 @@
             <div>
               <v-card flat :ripple="false" @click="g1 = !g1">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>ログインの方法</h3>
                 </div>
               </v-card>
@@ -41,7 +43,9 @@
             <div>
               <v-card flat :ripple="false" @click="g2 = !g2">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>｢探す｣ページの使い方</h3>
                 </div>
               </v-card>
@@ -58,7 +62,9 @@
             <div>
               <v-card flat :ripple="false" @click="g3 = !g3">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>整理券取得の方法</h3>
                 </div>
               </v-card>
@@ -83,7 +89,9 @@
             <div>
               <v-card flat :ripple="false" @click="g4 = !g4">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>一度取得した整理券をキャンセルしたい</h3>
                 </div>
               </v-card>
@@ -97,7 +105,9 @@
             <div>
               <v-card flat :ripple="false" @click="g5 = !g5">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>クラス劇の投票の方法</h3>
                 </div>
               </v-card>
@@ -124,7 +134,9 @@
             <div>
               <v-card flat :ripple="false" @click="q1 = !q1">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>アカウント名/パスワードを忘れた</h3>
                 </div>
               </v-card>
@@ -140,7 +152,9 @@
             <div>
               <v-card flat :ripple="false" @click="q2 = !q2">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>ログインしているかどうか確認したい</h3>
                 </div>
               </v-card>
@@ -161,7 +175,9 @@
             <div>
               <v-card flat :ripple="false" @click="q3 = !q3">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>ログインしているのに整理券が取れない</h3>
                 </div>
               </v-card>
@@ -178,7 +194,9 @@
             <div>
               <v-card flat :ripple="false" @click="q4 = !q4">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>「探す」ページで劇の一覧が表示されない</h3>
                 </div>
               </v-card>
@@ -198,7 +216,9 @@
             <div>
               <v-card flat :ripple="false" @click="q5 = !q5">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>ページが表示されない、重くて動かない</h3>
                 </div>
               </v-card>
@@ -215,7 +235,9 @@
             <div>
               <v-card flat :ripple="false" @click="q6 = !q6">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>校内マップがよく分からない</h3>
                 </div>
               </v-card>
@@ -231,7 +253,9 @@
             <div>
               <v-card flat :ripple="false" @click="q7 = !q7">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>取得したはずの整理券が表示されない</h3>
                 </div>
               </v-card>
@@ -252,7 +276,9 @@
             <div>
               <v-card flat :ripple="false" @click="q8 = !q8">
                 <div class="pa-5 questions-box">
-                  <v-icon large color="sairai">mdi-exclamation-thick</v-icon>
+                  <v-icon large color="theme_color"
+                    >mdi-exclamation-thick</v-icon
+                  >
                   <h3>このページを見ても解決しなかったトラブルや質問がある</h3>
                 </div>
               </v-card>
