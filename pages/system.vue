@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 class="title">整理券制度</h1>
+      <h1 id="title">整理券制度</h1>
       <v-row justify="center">
         <v-col cols="12" sm="6" md="6">
           <h2>保護者の皆様</h2>
@@ -91,5 +91,14 @@ export default Vue.extend({
 h2 {
   text-align: center;
   font-weight: normal;
+}
+
+#title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
 }
 </style>

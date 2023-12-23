@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 class="title">校内マップ</h1>
+      <h1 id="title">校内マップ</h1>
       <v-row justify="center">
         <v-btn-toggle
           v-model="selectedFloor"
@@ -52,5 +52,14 @@ h2 {
 
 .img {
   border: 9px solid var(--theme-color);
+}
+
+#title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
 }
 </style>

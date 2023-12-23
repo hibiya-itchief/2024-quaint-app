@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 class="title">ヘルプ</h1>
+      <h1 id="title">ヘルプ</h1>
       <v-row justify="center">
         <v-col cols="12">
           <div
@@ -358,5 +358,14 @@ h3 {
 
 .img {
   border: 9px solid var(--theme-color);
+}
+
+#title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
 }
 </style>

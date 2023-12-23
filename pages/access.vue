@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 class="title">アクセス</h1>
+      <h1 id="title">アクセス</h1>
       <v-row>
         <v-col cols="12" sm="6" md="6">
           <v-img class="img" src="/images/accessMap.png" alt="周辺の地図" />
@@ -59,5 +59,14 @@ h2 {
 
 .img {
   border: 9px solid var(--theme-color);
+}
+
+#title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
 }
 </style>

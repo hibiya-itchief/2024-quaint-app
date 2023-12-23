@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 class="title">星陵祭とは</h1>
+      <h1 id="title">星陵祭とは</h1>
       <p>
         日比谷高校の文化祭は「星陵祭」と呼ばれており、全クラスが劇を行います。<br />
         今年の星陵祭は4年ぶりの一般開催で、テーマは「祭徠」です！星陵祭を表す「祭」の字に、未来を表す「徠」の字を組み合わせています。「再来」と掛けており、過去の星陵祭を復活させると共に、未来の形の星陵祭を作り上げるという思いが込められています。日比谷のお祭りをみんなで盛り上げましょう！
@@ -103,5 +103,14 @@ export default Vue.extend({
 h2 {
   text-align: center;
   font-weight: normal;
+}
+
+#title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
 }
 </style>
