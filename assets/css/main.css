@@ -97,3 +97,61 @@
   height: 60px;
   margin-top: auto;
 }
+
+.questions-box {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.questions-mark {
+  font-weight: bold;
+  color: var(--theme-color);
+}
+
+.fade-in {
+  animation-name: fade-in-name;
+  animation-duration: 0.25s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.title {
+  display: inline-block;
+  padding: 0.5rem 3rem 0.5rem 0;
+  margin-bottom: 5rem;
+  border-bottom: 3px solid var(--theme-color);
+  font-family: serif;
+  font-weight: bold;
+}
+
+.attention {
+  color: var(--theme-color);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.sta-nagata {
+  margin-bottom: 0;
+}
+
+.sta-nagata-indent {
+  margin-left: 5.5rem;
+}
+
+.sta-mitsuke {
+  margin-bottom: 0;
+}
+
+.sta-mitsuke-indent {
+  margin-left: 6.5rem;
+}
+
+.sta-gijido {
+  margin-bottom: 0;
+}
+
+.sta-gijido-indent {
+  margin-left: 8.5rem;
+  margin-bottom: 0;
+}

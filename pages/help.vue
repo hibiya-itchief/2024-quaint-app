@@ -1,10 +1,12 @@
 <template>
   <v-app>
     <v-container>
-      <h1 id="title">ヘルプ</h1>
+      <h1 class="title">ヘルプ</h1>
       <v-row justify="center">
         <v-col cols="12">
-          <div style="border-left: 5px solid #b49656; padding: 2px 8px">
+          <div
+            style="border-left: 5px solid var(--theme-color); padding: 2px 8px"
+          >
             <h2>
               オンライン整理券の<br />
               使い方ガイド
@@ -21,7 +23,7 @@
                 </div>
               </v-card>
               <p v-show="g1" class="pl-5 pt-2 fade-in">
-                画面左上の<span style="color: #b49656"> ≡ </span
+                画面左上の<span style="color: var(--theme-color)"> ≡ </span
                 >（三本線のメニュー）をタップし、「ログイン」をタップするとログイン画面が表示されます。ご自身のアカウント名とパスワードを入力してください。<br />
                 <br />
                 【生徒の方へ】<br />
@@ -31,7 +33,7 @@
                 各ご家庭にアカウントを2つ配布しています。一方のアカウントで取得した整理券はもう一方のアカウントには反映されません。別のアカウントとして区別して利用するようお願いいたします。<br />
                 <br />
                 【一般の方へ】<br />
-                <span style="font-weight: bold; color: #b49656"
+                <span style="font-weight: bold; color: var(--theme-color)"
                   >今年度はオンライン整理券をご利用いただけません</span
                 >。つきましては、当サイトはログインをせずにご利用ください。観劇の際には体育棟にて配布している紙の整理券をご利用ください。<br />
                 詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
@@ -77,7 +79,7 @@
                 >のページもご覧ください。<br />
                 <br />
                 【一般の方】<br />
-                <span style="font-weight: bold; color: #b49656"
+                <span style="font-weight: bold; color: var(--theme-color)"
                   >今年度はオンライン整理券をご利用いただけません</span
                 >。観劇の際には体育棟にて配布している紙の整理券をご利用ください。<br />
                 詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
@@ -127,7 +129,7 @@
           </div>
           <div
             class="my-10"
-            style="border-left: 5px solid #b49656; padding: 2px 8px"
+            style="border-left: 5px solid var(--theme-color); padding: 2px 8px"
           >
             <h2>よくあるトラブル、質問</h2>
 
@@ -159,7 +161,7 @@
                 </div>
               </v-card>
               <p v-show="q2" class="pl-5 pt-2 fade-in">
-                画面左上の<span style="color: #b49656"> ≡ </span
+                画面左上の<span style="color: var(--theme-color)"> ≡ </span
                 >(三本線のメニュー)をタップしてください。<br />
                 ログイン中であればアカウント名が表示されます。<br />
                 <v-img
@@ -344,33 +346,6 @@ h3 {
   font-weight: normal;
 }
 
-#title {
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
-  font-family: serif;
-  font-weight: bold;
-}
-
-.questions-box {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-}
-
-.questions-mark {
-  font-weight: bold;
-  color: #b49656;
-}
-
-.fade-in {
-  animation-name: fade-in-name;
-  animation-duration: 0.25s;
-  animation-fill-mode: forwards;
-  opacity: 0;
-}
-
 @keyframes fade-in-name {
   from {
     opacity: 0;
@@ -382,6 +357,6 @@ h3 {
 }
 
 .img {
-  border: 9px solid #b49656;
+  border: 9px solid var(--theme-color);
 }
 </style>

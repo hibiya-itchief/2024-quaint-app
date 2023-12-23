@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 id="title">アクセス</h1>
+      <h1 class="title">アクセス</h1>
       <v-row>
         <v-col cols="12" sm="6" md="6">
           <v-img class="img" src="/images/accessMap.png" alt="周辺の地図" />
@@ -57,47 +57,7 @@ h2 {
   font-weight: normal;
 }
 
-#title {
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
-  font-family: serif;
-  font-weight: bold;
-}
-
 .img {
-  border: 9px solid #b49656;
-}
-
-.attention {
-  color: #b49656;
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.sta-nagata {
-  margin-bottom: 0;
-}
-
-.sta-nagata-indent {
-  margin-left: 5.5rem;
-}
-
-.sta-mitsuke {
-  margin-bottom: 0;
-}
-
-.sta-mitsuke-indent {
-  margin-left: 6.5rem;
-}
-
-.sta-gijido {
-  margin-bottom: 0;
-}
-
-.sta-gijido-indent {
-  margin-left: 8.5rem;
-  margin-bottom: 0;
+  border: 9px solid var(--theme-color);
 }
 </style>

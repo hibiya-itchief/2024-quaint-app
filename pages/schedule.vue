@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-container>
-      <h1 id="title">スケジュール</h1>
+      <h1 class="title">スケジュール</h1>
       <v-row class="mb-10" justify="center">
         <v-col cols="12" sm="6" md="6">
           <h2 class="mb-3">9月16日</h2>
@@ -97,16 +97,7 @@ h2 {
   font-weight: normal;
 }
 
-#title {
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
-  font-family: serif;
-  font-weight: bold;
-}
-
 .img {
-  border: 9px solid #b49656;
+  border: 9px solid var(--theme-color);
 }
 </style>

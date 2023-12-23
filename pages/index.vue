@@ -284,55 +284,6 @@ body {
   padding: 0;
 }
 
-.info-title {
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
-  font-family: serif;
-  font-weight: bold;
-}
-
-.info-subtitle {
-  text-align: center;
-  font-weight: normal;
-}
-
-.info-caption {
-  text-align: center;
-  font-weight: normal;
-  color: #666;
-}
-
-.pages-title {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #fff;
-  font-family: serif;
-  font-weight: bold;
-  color: #fff;
-}
-
-.pages-xs {
-  font-size: 20px;
-}
-
-.pages-else {
-  font-size: 30px;
-}
-
-.pages-else:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.pages-text {
-  text-align: center;
-  font-family: serif;
-  font-weight: bold;
-}
-
 html,
 body {
   height: 100%;
