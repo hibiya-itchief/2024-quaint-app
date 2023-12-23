@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-container>
     <v-card
       height="100%"
       class="d-flex flex-column ma-0 pa-2"
@@ -63,7 +63,7 @@
         </div>
       </div>
     </v-card>
-  </v-app>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -128,3 +128,16 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style>
+.arrow-rotate:active {
+  transform: rotate(180deg);
+}
+
+.text-truncate {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
