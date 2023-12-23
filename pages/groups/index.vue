@@ -137,76 +137,7 @@
           class="my-0 py-2"
         >
           <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
-          <v-card
-            height="100%"
-            class="d-flex flex-column ma-0 pa-2"
-            :to="'/groups/' + group.id"
-          >
-            <div v-if="!$vuetify.breakpoint.xs">
-              <v-img
-                v-if="group.public_thumbnail_image_url != null"
-                height="180px"
-                aspect-ratio="4/3"
-                contain
-                :src="group.public_thumbnail_image_url"
-              ></v-img>
-              <v-img
-                v-else
-                :class="HashColor(group.id)"
-                height="180px"
-                aspect-ratio="4/3"
-                contain
-              ></v-img>
-            </div>
-            <div class="d-flex flex-no-wrap">
-              <div v-if="$vuetify.breakpoint.xs">
-                <!--<v-avatar v-if="$vuetify.breakpoint.xs" size="100" rounded="0">-->
-                <v-img
-                  v-if="group.public_thumbnail_image_url != null"
-                  height="120px"
-                  width="90px"
-                  contain
-                  :src="group.public_thumbnail_image_url"
-                ></v-img>
-                <v-img
-                  v-else
-                  :class="HashColor(group.id)"
-                  height="120px"
-                  width="90px"
-                ></v-img>
-                <!--</v-avatar>-->
-              </div>
-              <div class="px-1 text-truncate" style="width: 100%">
-                <v-card-title class="pb-2 text-truncate">
-                  {{ group.title }}
-                </v-card-title>
-                <v-card-subtitle class="pb-0 text-truncate">
-                  {{ group.groupname }}
-                </v-card-subtitle>
-                <v-card-text
-                  class="my-0 py-0 text-caption grey--text text-truncate"
-                >
-                  {{ group.description }}
-                </v-card-text>
-                <v-card-actions class="py-0">
-                  <v-chip-group column>
-                    <v-chip
-                      v-for="tag in group.tags"
-                      :key="tag.id"
-                      disabled
-                      small
-                    >
-                      {{ tag.tagname }}
-                    </v-chip>
-                  </v-chip-group>
-                  <v-spacer />
-                  <v-icon v-if="FilterBookmarks(group.id)" color="sairai"
-                    >mdi-bookmark</v-icon
-                  >
-                </v-card-actions>
-              </div>
-            </div>
-          </v-card>
+          <GroupCard :group="group" />
         </v-col>
       </v-row>
       <p
