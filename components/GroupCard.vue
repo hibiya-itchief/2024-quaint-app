@@ -55,7 +55,7 @@
             </v-chip>
           </v-chip-group>
           <v-spacer />
-          <v-icon v-if="FilterBookmarks(group.id)" color=""
+          <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
             >mdi-bookmark</v-icon
           >
         </v-card-actions>
