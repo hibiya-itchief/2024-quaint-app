@@ -7,7 +7,7 @@
             v-model="search_query"
             solo
             label="検索"
-            color="sairai"
+            color="theme_color"
             prepend-inner-icon="mdi-magnify"
             @input="SearchGroups()"
             @blur="
@@ -81,7 +81,7 @@
           <div v-if="!nowloading" style="display: inline">
             <v-icon
               v-show="display_bookmarks"
-              color="sairai"
+              color="theme_color"
               @click="
                 display_bookmarks = false
                 PushQuery(null, null, undefined, null, null)
@@ -411,15 +411,3 @@ export default Vue.extend({
   },
 })
 </script>
-<style>
-.arrow-rotate:active {
-  transform: rotate(180deg);
-}
-
-.text-truncate {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>

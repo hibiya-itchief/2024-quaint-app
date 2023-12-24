@@ -21,7 +21,7 @@
         nuxt-link
         outlined
         to="/help"
-        color="sairai"
+        color="theme_color"
         style="font-weight: bold"
         >ヘルプページ</v-btn
       >
@@ -77,33 +77,5 @@ export default Vue.extend({
   padding: auto;
   width: 75%;
   height: 50%;
-}
-
-.status-code {
-  text-align: center;
-  font-family: serif;
-  font-size: 1500%;
-  color: #b49656;
-  height: 60%;
-}
-
-.status-code-xs {
-  text-align: center;
-  font-family: serif;
-  font-size: 1000%;
-  color: #b49656;
-  height: 60%;
-}
-
-.error-message {
-  text-align: center;
-  font-size: 300%;
-  color: #b49656;
-}
-
-.error-message-xs {
-  text-align: center;
-  font-size: 200%;
-  color: #b49656;
 }
 </style>

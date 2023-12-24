@@ -593,20 +593,6 @@ export default Vue.extend({
 })
 </script>
 <style>
-.text-truncate {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.chochin {
-  animation: flap ease 2s infinite;
-  width: 60px;
-  height: 60px;
-  margin-top: auto;
-}
-
 @keyframes flap {
   0% {
     transform: translateY(0);

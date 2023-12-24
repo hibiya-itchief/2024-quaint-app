@@ -97,16 +97,16 @@ h2 {
   font-weight: normal;
 }
 
+.img {
+  border: 9px solid var(--theme-color);
+}
+
 #title {
   display: inline-block;
   padding: 0.5rem 3rem 0.5rem 0;
   margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
+  border-bottom: 3px solid var(--theme-color);
   font-family: serif;
   font-weight: bold;
-}
-
-.img {
-  border: 9px solid #b49656;
 }
 </style>

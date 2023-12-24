@@ -57,47 +57,16 @@ h2 {
   font-weight: normal;
 }
 
+.img {
+  border: 9px solid var(--theme-color);
+}
+
 #title {
   display: inline-block;
   padding: 0.5rem 3rem 0.5rem 0;
   margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
+  border-bottom: 3px solid var(--theme-color);
   font-family: serif;
   font-weight: bold;
-}
-
-.img {
-  border: 9px solid #b49656;
-}
-
-.attention {
-  color: #b49656;
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.sta-nagata {
-  margin-bottom: 0;
-}
-
-.sta-nagata-indent {
-  margin-left: 5.5rem;
-}
-
-.sta-mitsuke {
-  margin-bottom: 0;
-}
-
-.sta-mitsuke-indent {
-  margin-left: 6.5rem;
-}
-
-.sta-gijido {
-  margin-bottom: 0;
-}
-
-.sta-gijido-indent {
-  margin-left: 8.5rem;
-  margin-bottom: 0;
 }
 </style>

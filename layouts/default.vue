@@ -153,7 +153,7 @@
 
                 <v-divider></v-divider>
                 <p class="ma-0 pa-0 text-caption grey--text">
-                  © 2023 東京都立日比谷高等学校 IT委員会 | IT Chief | Tokyo
+                  © 2024 東京都立日比谷高等学校 IT委員会 | IT Chief | Tokyo
                   Metropolitan Hibiya High School
                 </p>
               </v-list-item-group>
@@ -168,7 +168,7 @@
 
       <v-bottom-navigation
         v-if="$route.path !== '/board'"
-        color="sairai"
+        color="theme_color"
         fixed
         app
       >
@@ -314,7 +314,7 @@ export default Vue.extend({
   left: 14px;
   height: 3px;
   border-radius: 2px;
-  background: #b49656;
+  background: #335594;
   width: 45%;
 }
 
