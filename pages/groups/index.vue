@@ -1,119 +1,122 @@
 <template>
   <v-app>
     <v-container>
-      <v-row justify="center">
-        <v-col class="mt-2 mb-0 py-0" cols="12" sm="8" md="8">
-          <v-text-field
-            v-model="search_query"
-            solo
-            label="検索"
-            color="theme_color"
-            prepend-inner-icon="mdi-magnify"
-            @input="SearchGroups()"
-            @blur="
-              const search_query_q =
-                search_query === '' ? undefined : search_query
-              PushQuery(search_query_q, null, null, null, null)
-            "
-          >
-          </v-text-field>
-        </v-col>
-        <v-col class="mt-2 mb-5 py-0" cols="12" sm="8" md="8">
-          <p v-show="search_query !== ''" class="ma-0 pa-0 text-caption">
-            "{{ search_query }}"の検索結果({{ search_result_number }}件)
-          </p>
-
-          <v-menu offset-y>
-            <template #activator="{ on, attrs }">
-              <v-btn
-                :disabled="search_query !== ''"
-                depressed
-                max-width="135"
-                class="text-subtitle-2 text-capitalize"
-                v-bind="attrs"
-                v-on="on"
-                >{{ selectedTag?.tagname ?? 'すべて' }}<v-spacer /><v-icon
-                  >mdi-chevron-down</v-icon
-                ></v-btn
-              >
-            </template>
-            <v-list>
-              <v-list-item
-                @click="
-                  PushQuery(null, undefined, null, null, null)
-                  selectedTag = undefined
-                "
-                >すべて</v-list-item
-              >
-              <v-list-item
-                v-for="tag in tags"
-                :key="tag.id"
-                :value="tag.tagname"
-                @click="
-                  PushQuery(null, tag.tagname, null, null, null)
-                  selectedTag = tag
-                "
-                >{{ tag.tagname }}</v-list-item
-              >
-            </v-list>
-          </v-menu>
-          <v-menu offset-y>
-            <template #activator="{ on, attrs }">
-              <v-btn
-                depressed
-                max-width="150"
-                class="text-subtitle-2 text-capitalize"
-                v-bind="attrs"
-                v-on="on"
-                >{{ sort_displayname }} <v-spacer /><v-icon
-                  >mdi-chevron-down</v-icon
-                ></v-btn
-              >
-            </template>
-            <v-list>
-              <v-list-item @click="SortGroups('id')">デフォルト順</v-list-item>
-              <v-list-item @click="SortGroups('groupname')"
-                >団体名順</v-list-item
-              >
-              <v-list-item @click="SortGroups('title')">演目名順</v-list-item>
-            </v-list>
-          </v-menu>
-          <div v-if="!nowloading" style="display: inline">
-            <v-icon
-              v-show="display_bookmarks"
+      <div v-if="!nowloading">
+        <v-row justify="center">
+          <v-col class="mt-2 mb-0 py-0" cols="12" sm="8" md="8">
+            <v-text-field
+              v-model="search_query"
+              solo
+              label="検索"
               color="theme_color"
-              @click="
-                display_bookmarks = false
-                PushQuery(null, null, undefined, null, null)
+              prepend-inner-icon="mdi-magnify"
+              @input="SearchGroups()"
+              @blur="
+                const search_query_q =
+                  search_query === '' ? undefined : search_query
+                PushQuery(search_query_q, null, null, null, null)
               "
-              >mdi-bookmark-multiple</v-icon
             >
-            <v-icon
-              v-show="!display_bookmarks"
-              @click="
-                display_bookmarks = true
-                PushQuery(null, null, true, null, null)
-              "
-              >mdi-bookmark-multiple-outline</v-icon
-            >
-            <v-icon
-              v-show="$route.query.r == 'true'"
-              class="arrow-rotate"
-              @click="ReverseGroups()"
-              >mdi-arrow-up</v-icon
-            >
-            <v-icon
-              v-show="$route.query.r != 'true'"
-              class="arrow-rotate"
-              @click="ReverseGroups()"
-              >mdi-arrow-down</v-icon
-            >
-          </div>
-        </v-col>
+            </v-text-field>
+          </v-col>
+          <v-col class="mt-2 mb-5 py-0" cols="12" sm="8" md="8">
+            <p v-show="search_query !== ''" class="ma-0 pa-0 text-caption">
+              "{{ search_query }}"の検索結果({{ search_result_number }}件)
+            </p>
 
-        <v-col class="my-0 py-0" cols="12">
-          <v-divider class="my-0 py-0"></v-divider>
-          <!--
+            <v-menu offset-y>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  :disabled="search_query !== ''"
+                  depressed
+                  max-width="135"
+                  class="text-subtitle-2 text-capitalize"
+                  v-bind="attrs"
+                  v-on="on"
+                  >{{ selectedTag?.tagname ?? 'すべて' }}<v-spacer /><v-icon
+                    >mdi-chevron-down</v-icon
+                  ></v-btn
+                >
+              </template>
+              <v-list>
+                <v-list-item
+                  @click="
+                    PushQuery(null, undefined, null, null, null)
+                    selectedTag = undefined
+                  "
+                  >すべて</v-list-item
+                >
+                <v-list-item
+                  v-for="tag in tags"
+                  :key="tag.id"
+                  :value="tag.tagname"
+                  @click="
+                    PushQuery(null, tag.tagname, null, null, null)
+                    selectedTag = tag
+                  "
+                  >{{ tag.tagname }}</v-list-item
+                >
+              </v-list>
+            </v-menu>
+            <v-menu offset-y>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  depressed
+                  max-width="150"
+                  class="text-subtitle-2 text-capitalize"
+                  v-bind="attrs"
+                  v-on="on"
+                  >{{ sort_displayname }} <v-spacer /><v-icon
+                    >mdi-chevron-down</v-icon
+                  ></v-btn
+                >
+              </template>
+              <v-list>
+                <v-list-item @click="SortGroups('id')"
+                  >デフォルト順</v-list-item
+                >
+                <v-list-item @click="SortGroups('groupname')"
+                  >団体名順</v-list-item
+                >
+                <v-list-item @click="SortGroups('title')">演目名順</v-list-item>
+              </v-list>
+            </v-menu>
+            <div v-if="!nowloading" style="display: inline">
+              <v-icon
+                v-show="display_bookmarks"
+                color="theme_color"
+                @click="
+                  display_bookmarks = false
+                  PushQuery(null, null, undefined, null, null)
+                "
+                >mdi-bookmark-multiple</v-icon
+              >
+              <v-icon
+                v-show="!display_bookmarks"
+                @click="
+                  display_bookmarks = true
+                  PushQuery(null, null, true, null, null)
+                "
+                >mdi-bookmark-multiple-outline</v-icon
+              >
+              <v-icon
+                v-show="$route.query.r == 'true'"
+                class="arrow-rotate"
+                @click="ReverseGroups()"
+                >mdi-arrow-up</v-icon
+              >
+              <v-icon
+                v-show="$route.query.r != 'true'"
+                class="arrow-rotate"
+                @click="ReverseGroups()"
+                >mdi-arrow-down</v-icon
+              >
+            </div>
+          </v-col>
+
+          <v-col class="my-0 py-0" cols="12">
+            <v-divider class="my-0 py-0"></v-divider>
+            <!--
             現状ほぼnowloading文を見ることがないこと、
             開発環境ではレンダリング中にlocalStorageが使えないことから
             一旦無効にする
@@ -124,29 +127,33 @@
             </p>
           </div>
           -->
-        </v-col>
+          </v-col>
 
-        <v-col
-          v-for="group in groups"
-          v-show="FilterGroups(group)"
-          :key="group.id"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          class="my-0 py-2"
+          <v-col
+            v-for="group in groups"
+            v-show="FilterGroups(group)"
+            :key="group.id"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+            class="my-0 py-2"
+          >
+            <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
+            <GroupCard :group="group" />
+          </v-col>
+        </v-row>
+        <p
+          v-show="!nowloading && display_bookmarks"
+          class="mt-10"
+          style="text-align: center"
         >
-          <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
-          <GroupCard :group="group" />
-        </v-col>
-      </v-row>
-      <p
-        v-show="!nowloading && display_bookmarks"
-        class="mt-10"
-        style="text-align: center"
-      >
-        団体の詳細ページでブックマークを追加することができます。
-      </p>
+          団体の詳細ページでブックマークを追加することができます。
+        </p>
+      </div>
+      <div v-else>
+        <LoadingPage />
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -257,6 +264,8 @@ export default Vue.extend({
     for (let i = 0; i < localStorage.length; i++) {
       this.storage_bookmarks.push(localStorage.key(i))
     }
+
+    // ロードの終了
     this.nowloading = false
   },
 

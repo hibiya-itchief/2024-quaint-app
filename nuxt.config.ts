@@ -280,5 +280,10 @@ const nuxtConfig: NuxtConfig = {
       ]
     },
   },
+
+  loading: {
+    color: '#335594',
+    height: '5px',
+  },
 }
 export default nuxtConfig
