@@ -81,7 +81,7 @@
                 <v-list-item @click="SortGroups('title')">演目名順</v-list-item>
               </v-list>
             </v-menu>
-            <div v-if="!nowloading" style="display: inline">
+            <div style="display: inline">
               <v-icon
                 v-show="display_bookmarks"
                 color="theme_color"
@@ -143,11 +143,7 @@
             <GroupCard :group="group" />
           </v-col>
         </v-row>
-        <p
-          v-show="!nowloading && display_bookmarks"
-          class="mt-10"
-          style="text-align: center"
-        >
+        <p v-show="display_bookmarks" class="mt-10" style="text-align: center">
           団体の詳細ページでブックマークを追加することができます。
         </p>
       </v-container>
@@ -349,7 +345,6 @@ export default Vue.extend({
     },
 
     FilterGroups(group: Group) {
-      if (this.nowloading === true) return false
       if (
         this.display_bookmarks === true &&
         this.FilterBookmarks(group.id) === false
@@ -385,13 +380,7 @@ export default Vue.extend({
 
     FilterBookmarks(id: string) {
       // お気に入りならtrue
-      if (this.nowloading === true) {
-        return false
-      } else {
-        return this.storage_bookmarks.includes(
-          'seiryofes.groups.favorite.' + id
-        )
-      }
+      return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
     },
 
     HashColor(text: string) {

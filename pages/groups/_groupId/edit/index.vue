@@ -882,6 +882,12 @@ export default Vue.extend({
       }
     }
   },
+
+  mounted() {
+    // ロードの終了
+    this.nowloading = false
+  },
+
   methods: {
     IsNotClassroom(group: Group) {
       for (let i = 0; i < group.tags.length; i++) {
@@ -1145,11 +1151,6 @@ export default Vue.extend({
 
       this.delete_event_dialog = false
     },
-  },
-
-  mounted() {
-    // ロードの終了
-    this.nowloading = false
   },
 })
 </script>
