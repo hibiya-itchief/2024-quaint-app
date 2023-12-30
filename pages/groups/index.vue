@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-container>
-      <div v-if="!nowloading">
+    <div v-if="!nowloading">
+      <v-container>
         <v-row justify="center">
           <v-col class="mt-2 mb-0 py-0" cols="12" sm="8" md="8">
             <v-text-field
@@ -150,11 +150,11 @@
         >
           団体の詳細ページでブックマークを追加することができます。
         </p>
-      </div>
-      <div v-else>
-        <LoadingPage />
-      </div>
-    </v-container>
+      </v-container>
+    </div>
+    <div v-else>
+      <LoadingPage />
+    </div>
   </v-app>
 </template>
 <script lang="ts">

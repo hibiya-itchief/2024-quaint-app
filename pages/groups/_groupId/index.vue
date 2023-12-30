@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-container class="px-1 py-0">
-      <div v-if="!nowloading">
+    <div v-if="!nowloading">
+      <v-container class="px-1 py-0">
         <client-only>
           <v-row justify="center" class="ma-0 pa-0">
             <v-col cols="12" sm="6" lg="6">
@@ -359,11 +359,11 @@
             </template>
           </v-snackbar>
         </client-only>
-      </div>
-      <div v-else>
-        <LoadingPage />
-      </div>
-    </v-container>
+      </v-container>
+    </div>
+    <div v-else>
+      <LoadingPage />
+    </div>
   </v-app>
 </template>
 

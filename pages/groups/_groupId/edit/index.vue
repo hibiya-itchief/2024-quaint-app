@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-container>
-      <div v-if="!nowloading">
+    <div v-if="!nowloading">
+      <v-container>
         <v-row justify="center" class="ma-0 pa-0">
           <v-col cols="12" sm="8" md="6" class="ma-0 pa-0">
             <v-btn icon fab small @click="$router.go(-1)">
@@ -701,11 +701,11 @@
             </v-btn>
           </template>
         </v-snackbar>
-      </div>
-      <div v-else>
-        <LoadingPage />
-      </div>
-    </v-container>
+      </v-container>
+    </div>
+    <div v-else>
+      <LoadingPage />
+    </div>
   </v-app>
 </template>
 
