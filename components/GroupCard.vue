@@ -68,18 +68,10 @@
 import Vue from 'vue'
 
 type Data = {
-  nowloading: boolean
   storage_bookmarks: (string | null)[]
 }
 
 export default Vue.extend({
-  data(): Data {
-    return {
-      nowloading: true,
-      storage_bookmarks: [],
-    }
-  },
-
   props: {
     group: {
       type: Object,
@@ -87,17 +79,17 @@ export default Vue.extend({
     },
   },
 
+  data(): Data {
+    return {
+      storage_bookmarks: [],
+    }
+  },
+
   methods: {
     // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
     FilterBookmarks(id: string) {
       // お気に入りならtrue
-      if (this.nowloading === true) {
-        return false
-      } else {
-        return this.storage_bookmarks.includes(
-          'seiryofes.groups.favorite.' + id
-        )
-      }
+      return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
     },
 
     HashColor(text: string) {
