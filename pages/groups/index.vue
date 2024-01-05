@@ -258,7 +258,9 @@ export default Vue.extend({
   },
   mounted() {
     for (let i = 0; i < localStorage.length; i++) {
-      this.storage_bookmarks.push(localStorage.key(i))
+      if (localStorage.key(i)?.includes('seiryofes.groups.favorite')) {
+        this.storage_bookmarks.push(localStorage.key(i))
+      }
     }
 
     // ロードの終了
