@@ -45,6 +45,11 @@
   text-overflow: ellipsis;
 }
 
+.group-title {
+  display: block;
+  white-space: normal;
+}
+
 .pages-xs {
   font-size: 20px;
 }

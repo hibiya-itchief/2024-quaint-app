@@ -135,8 +135,8 @@
             :key="group.id"
             cols="12"
             sm="6"
-            md="4"
-            lg="3"
+            md="6"
+            lg="4"
             class="my-0 py-2"
           >
             <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
