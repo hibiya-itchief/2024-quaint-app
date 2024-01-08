@@ -135,22 +135,16 @@
 <script lang="ts">
 import Vue from 'vue'
 
-type Data = {
-  storage_bookmarks: (string | null)[]
-}
-
 export default Vue.extend({
   props: {
     group: {
       type: Object,
       required: true,
     },
-  },
-
-  data(): Data {
-    return {
-      storage_bookmarks: [],
-    }
+    storage_bookmarks: {
+      type: Array,
+      required: true,
+    },
   },
 
   methods: {
