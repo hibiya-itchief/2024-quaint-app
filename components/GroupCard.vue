@@ -40,62 +40,41 @@
         <!--</v-avatar>-->
       </div>
       <div class="px-1 text-truncate" style="width: 100%">
-        <div v-if="$vuetify.breakpoint.xs">
-          <v-card-title class="pb-2 text-truncate">
-            {{ group.title }}
-          </v-card-title>
-          <v-card-subtitle
-            class="pb-0 pt-1 text-truncate"
-            style="font-size: 14px"
+        <v-card-title
+          class="pb-2 text-truncate"
+          :style="
+            $vuetify.breakpoint.xs ? 'font-size: 20px' : 'font-size: 24px'
+          "
+        >
+          {{ group.title }}
+        </v-card-title>
+        <v-card-subtitle
+          class="pb-0 pt-1 text-truncate"
+          :style="
+            $vuetify.breakpoint.xs ? 'font-size: 14px' : 'font-size: 18px'
+          "
+        >
+          {{ group.groupname }}
+        </v-card-subtitle>
+        <v-card-text
+          class="my-0 py-0 grey--text text-truncate"
+          :style="
+            $vuetify.breakpoint.xs ? 'font-size: 12px' : 'font-size: 16px'
+          "
+        >
+          {{ group.description }}
+        </v-card-text>
+        <v-card-actions class="py-0">
+          <v-chip-group column>
+            <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
+              {{ tag.tagname }}
+            </v-chip>
+          </v-chip-group>
+          <v-spacer />
+          <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+            >mdi-bookmark</v-icon
           >
-            {{ group.groupname }}
-          </v-card-subtitle>
-          <v-card-text
-            class="my-0 py-0 grey--text text-truncate"
-            style="font-size: 12px"
-          >
-            {{ group.description }}
-          </v-card-text>
-          <v-card-actions class="py-0">
-            <v-chip-group column>
-              <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
-                {{ tag.tagname }}
-              </v-chip>
-            </v-chip-group>
-            <v-spacer />
-            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
-              >mdi-bookmark</v-icon
-            >
-          </v-card-actions>
-        </div>
-        <div v-else>
-          <v-card-title class="pb-2 text-truncate" style="font-size: 24px">
-            {{ group.title }}
-          </v-card-title>
-          <v-card-subtitle
-            class="pb-0 pt-1 text-truncate"
-            style="font-size: 18px"
-          >
-            {{ group.groupname }}
-          </v-card-subtitle>
-          <v-card-text
-            class="my-0 py-0 grey--text text-truncate"
-            style="font-size: 16px"
-          >
-            {{ group.description }}
-          </v-card-text>
-          <v-card-actions class="py-0">
-            <v-chip-group column>
-              <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
-                {{ tag.tagname }}
-              </v-chip>
-            </v-chip-group>
-            <v-spacer />
-            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
-              >mdi-bookmark</v-icon
-            >
-          </v-card-actions>
-        </div>
+        </v-card-actions>
       </div>
     </div>
   </v-card>
