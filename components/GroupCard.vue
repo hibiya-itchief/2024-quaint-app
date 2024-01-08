@@ -4,7 +4,7 @@
     class="d-flex flex-column ma-0 pa-2"
     :to="'/groups/' + group.id"
   >
-    <div class="d-flex flex-no-wrap">
+    <div class="d-flex flex-nowrap">
       <div v-if="$vuetify.breakpoint.xs">
         <!--<v-avatar v-if="$vuetify.breakpoint.xs" size="100" rounded="0">-->
         <v-img
@@ -39,9 +39,17 @@
         ></v-img>
         <!--</v-avatar>-->
       </div>
-      <div class="px-1 text-truncate" style="width: 100%">
+      <div
+        class="px-1"
+        :class="
+          $vuetify.breakpoint.xs
+            ? 'text-truncate-clamp-1'
+            : 'text-truncate-clamp-2'
+        "
+        style="width: 100%"
+      >
         <v-card-title
-          class="pb-2 text-truncate"
+          class="pb-2 text-truncate-clamp-1"
           :style="
             $vuetify.breakpoint.xs ? 'font-size: 20px' : 'font-size: 24px'
           "
@@ -49,7 +57,7 @@
           {{ group.title }}
         </v-card-title>
         <v-card-subtitle
-          class="pb-0 pt-1 text-truncate"
+          class="pb-0 pt-1 text-truncate-clamp-1"
           :class="$vuetify.breakpoint.xs ? '' : 'pt-2'"
           :style="
             $vuetify.breakpoint.xs ? 'font-size: 14px' : 'font-size: 18px'
@@ -57,25 +65,68 @@
         >
           {{ group.groupname }}
         </v-card-subtitle>
-        <v-card-text
-          class="my-0 py-0 grey--text text-truncate"
-          :style="
-            $vuetify.breakpoint.xs ? 'font-size: 12px' : 'font-size: 16px'
-          "
-        >
-          {{ group.description }}
-        </v-card-text>
-        <v-card-actions class="py-0">
-          <v-chip-group column>
-            <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
-              {{ tag.tagname }}
-            </v-chip>
-          </v-chip-group>
-          <v-spacer />
-          <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
-            >mdi-bookmark</v-icon
+        <div v-if="$vuetify.breakpoint.xs">
+          <v-card-text
+            id="group-description"
+            class="my-0 py-0 grey--text text-truncate-clamp-1"
+            style="font-size: 12px"
           >
-        </v-card-actions>
+            {{ group.description }}
+          </v-card-text>
+          <v-card-actions class="py-0">
+            <v-chip-group column>
+              <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
+                {{ tag.tagname }}
+              </v-chip>
+            </v-chip-group>
+            <v-spacer />
+            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+              >mdi-bookmark</v-icon
+            >
+          </v-card-actions>
+        </div>
+        <div v-else>
+          <div v-if="Object.keys(group.tags).length <= 2">
+            <v-card-text
+              id="group-description"
+              class="my-0 py-0 grey--text text-truncate-clamp-2"
+              style="font-size: 16px"
+            >
+              {{ group.description }}
+            </v-card-text>
+            <v-card-actions class="py-0">
+              <v-chip-group column>
+                <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
+                  {{ tag.tagname }}
+                </v-chip>
+              </v-chip-group>
+              <v-spacer />
+              <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+                >mdi-bookmark</v-icon
+              >
+            </v-card-actions>
+          </div>
+          <div v-else>
+            <v-card-text
+              id="group-description"
+              class="my-0 py-0 grey--text text-truncate-clamp-1"
+              style="font-size: 16px"
+            >
+              {{ group.description }}
+            </v-card-text>
+            <v-card-actions class="py-0">
+              <v-chip-group column>
+                <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
+                  {{ tag.tagname }}
+                </v-chip>
+              </v-chip-group>
+              <v-spacer />
+              <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+                >mdi-bookmark</v-icon
+              >
+            </v-card-actions>
+          </div>
+        </div>
       </div>
     </div>
   </v-card>

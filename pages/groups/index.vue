@@ -136,7 +136,7 @@
             cols="12"
             sm="6"
             md="6"
-            lg="4"
+            lg="6"
             class="my-0 py-2"
           >
             <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
