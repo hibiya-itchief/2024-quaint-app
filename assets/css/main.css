@@ -39,15 +39,10 @@
 }
 
 .text-truncate {
-  display: block;
+  display: block !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.group-title {
-  display: block;
-  white-space: normal;
 }
 
 .pages-xs {
