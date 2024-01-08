@@ -50,6 +50,7 @@
         </v-card-title>
         <v-card-subtitle
           class="pb-0 pt-1 text-truncate"
+          :class="$vuetify.breakpoint.xs ? '' : 'pt-2'"
           :style="
             $vuetify.breakpoint.xs ? 'font-size: 14px' : 'font-size: 18px'
           "
