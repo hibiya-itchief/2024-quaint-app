@@ -41,7 +41,7 @@
       </div>
       <div class="px-1 text-truncate" style="width: 100%">
         <div v-if="$vuetify.breakpoint.xs">
-          <v-card-title class="pb-2 group-title" style="font-size: 20px">
+          <v-card-title class="pb-2 text-truncate">
             {{ group.title }}
           </v-card-title>
           <v-card-subtitle
@@ -68,8 +68,8 @@
             >
           </v-card-actions>
         </div>
-        <div v-if="!$vuetify.breakpoint.xs">
-          <v-card-title class="pb-2 group-title" style="font-size: 24px">
+        <div v-else>
+          <v-card-title class="pb-2 text-truncate" style="font-size: 24px">
             {{ group.title }}
           </v-card-title>
           <v-card-subtitle
