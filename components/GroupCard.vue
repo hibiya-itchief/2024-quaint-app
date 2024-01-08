@@ -44,7 +44,7 @@
         :class="
           $vuetify.breakpoint.xs
             ? 'text-truncate-clamp-1'
-            : 'text-truncate-clamp-2'
+            : 'text-truncate-clamp-3'
         "
         style="width: 100%"
       >
@@ -86,46 +86,24 @@
           </v-card-actions>
         </div>
         <div v-else>
-          <div v-if="Object.keys(group.tags).length <= 2">
-            <v-card-text
-              id="group-description"
-              class="my-0 py-0 grey--text text-truncate-clamp-2"
-              style="font-size: 16px"
+          <v-card-text
+            id="group-description"
+            class="my-0 py-0 grey--text text-truncate-clamp-3"
+            style="font-size: 16px"
+          >
+            {{ group.description }}
+          </v-card-text>
+          <v-card-actions class="py-0">
+            <v-chip-group column>
+              <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
+                {{ tag.tagname }}
+              </v-chip>
+            </v-chip-group>
+            <v-spacer />
+            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+              >mdi-bookmark</v-icon
             >
-              {{ group.description }}
-            </v-card-text>
-            <v-card-actions class="py-0">
-              <v-chip-group column>
-                <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
-                  {{ tag.tagname }}
-                </v-chip>
-              </v-chip-group>
-              <v-spacer />
-              <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
-                >mdi-bookmark</v-icon
-              >
-            </v-card-actions>
-          </div>
-          <div v-else>
-            <v-card-text
-              id="group-description"
-              class="my-0 py-0 grey--text text-truncate-clamp-1"
-              style="font-size: 16px"
-            >
-              {{ group.description }}
-            </v-card-text>
-            <v-card-actions class="py-0">
-              <v-chip-group column>
-                <v-chip v-for="tag in group.tags" :key="tag.id" disabled small>
-                  {{ tag.tagname }}
-                </v-chip>
-              </v-chip-group>
-              <v-spacer />
-              <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
-                >mdi-bookmark</v-icon
-              >
-            </v-card-actions>
-          </div>
+          </v-card-actions>
         </div>
       </div>
     </div>
