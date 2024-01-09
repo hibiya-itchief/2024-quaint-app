@@ -119,7 +119,7 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    storage_bookmarks: {
+    storageBookmarks: {
       type: Array,
       required: true,
     },
@@ -129,7 +129,7 @@ export default Vue.extend({
     // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
     FilterBookmarks(id: string) {
       // お気に入りならtrue
-      return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
+      return this.storageBookmarks.includes('seiryofes.groups.favorite.' + id)
     },
 
     HashColor(text: string) {
