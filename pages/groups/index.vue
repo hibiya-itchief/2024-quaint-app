@@ -140,7 +140,7 @@
             class="my-0 py-2"
           >
             <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
-            <GroupCard :group="group" :storageBookmarks="storage_bookmarks" />
+            <GroupCard :group="group" :storageBookmarks="storageBookmarks" />
           </v-col>
         </v-row>
         <p v-show="display_bookmarks" class="mt-10" style="text-align: center">
@@ -165,7 +165,7 @@ type Data = {
   sort_displayname: string
   query_cache: any
   search_result_number: number
-  storage_bookmarks: (string | null)[]
+  storageBookmarks: (string | null)[]
   display_bookmarks: boolean
   selectedTag: Tag | undefined
 }
@@ -190,7 +190,7 @@ export default Vue.extend({
       search_result_number: 0,
       search_query: '',
       sort_displayname: 'デフォルト順',
-      storage_bookmarks: [],
+      storageBookmarks: [],
       display_bookmarks: false,
       query_cache: undefined,
     }
@@ -259,7 +259,7 @@ export default Vue.extend({
   mounted() {
     for (let i = 0; i < localStorage.length; i++) {
       if (localStorage.key(i)?.includes('seiryofes.groups.favorite')) {
-        this.storage_bookmarks.push(localStorage.key(i))
+        this.storageBookmarks.push(localStorage.key(i))
       }
     }
 
@@ -379,11 +379,6 @@ export default Vue.extend({
         return false
       }
     }, // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
-
-    FilterBookmarks(id: string) {
-      // お気に入りならtrue
-      return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
-    },
 
     HashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
