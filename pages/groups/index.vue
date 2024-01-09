@@ -136,7 +136,7 @@
             cols="12"
             sm="6"
             md="6"
-            lg="6"
+            lg="4"
             class="my-0 py-2"
           >
             <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
@@ -379,6 +379,11 @@ export default Vue.extend({
         return false
       }
     }, // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
+
+    FilterBookmarks(id: string) {
+      // お気に入りならtrue
+      return this.storageBookmarks.includes('seiryofes.groups.favorite.' + id)
+    },
 
     HashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
