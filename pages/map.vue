@@ -3,7 +3,12 @@
     <v-container>
       <h1 id="title">校内マップ</h1>
       <v-row justify="center">
-        <v-btn-toggle v-model="selectedFloor" mandatory color="sairai" group>
+        <v-btn-toggle
+          v-model="selectedFloor"
+          mandatory
+          color="theme_color"
+          group
+        >
           <v-btn value="1F">1F</v-btn>
           <v-btn value="2F">2F</v-btn>
           <v-btn value="3F">3F</v-btn>
@@ -45,16 +50,16 @@ h2 {
   font-weight: normal;
 }
 
+.img {
+  border: 9px solid var(--theme-color);
+}
+
 #title {
   display: inline-block;
   padding: 0.5rem 3rem 0.5rem 0;
   margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
+  border-bottom: 3px solid var(--theme-color);
   font-family: serif;
   font-weight: bold;
-}
-
-.img {
-  border: 9px solid #b49656;
 }
 </style>

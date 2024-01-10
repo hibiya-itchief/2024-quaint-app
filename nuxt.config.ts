@@ -85,7 +85,7 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/userrole.ts'],
@@ -209,7 +209,7 @@ const nuxtConfig: NuxtConfig = {
       dark: false,
       themes: {
         light: {
-          sairai: '#b49656',
+          theme_color: '#335594',
         },
         dark: {
           primary: colors.blue.darken2,
@@ -279,6 +279,11 @@ const nuxtConfig: NuxtConfig = {
         ...groupDataRoutes,
       ]
     },
+  },
+
+  loading: {
+    color: '#335594',
+    height: '5px',
   },
 }
 export default nuxtConfig

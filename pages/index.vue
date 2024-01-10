@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <!-- 次にvideoを追加するときのサンプルとするために2023年度版のものを取っておきます-->
+    <!--
     <div v-if="showVideo" class="splash-video">
       <video
         src="/images/sairai_short2.mp4"
@@ -9,8 +11,10 @@
         muted
       ></video>
     </div>
+  -->
     <v-row justify="center">
       <v-col cols="12">
+        <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
         <v-parallax src="/images/topBackground2.jpg" height="600">
           <v-row align="center" justify="center">
             <v-col cols="10" md="5" sm="10">
@@ -18,8 +22,10 @@
                 <v-card-title class="justify-center"
                   >日比谷高校文化祭</v-card-title
                 >
+                <!-- 2023年度のものをサンプルとして取っておきます
                 <v-img src="/images/Sairai.jpeg"></v-img>
-                <v-card-title class="justify-center">星陵祭2023</v-card-title>
+                -->
+                <v-card-title class="justify-center">星陵祭2024</v-card-title>
               </v-card>
             </v-col>
           </v-row>
@@ -30,7 +36,7 @@
         <h1 class="info-title">開催概要</h1>
         <v-row>
           <v-col cols="12" sm="6" md="6">
-            <h2 class="info-subtitle">令和5年度</h2>
+            <h2 class="info-subtitle">令和6年度</h2>
             <h2 class="info-subtitle">
               9月16日(<span style="color: blue">土</span>)ー17日(<span
                 style="color: red"
@@ -39,14 +45,19 @@
             </h2>
             <br />
             <h2 class="info-subtitle">
-              第48回 <ruby>星陵<rt>せいりょう</rt></ruby
+              第49回 <ruby>星陵<rt>せいりょう</rt></ruby
               >祭
             </h2>
             <h1
               class="info-subtitle"
-              style="font-family: serif; font-weight: bold; color: #b49656"
+              style="
+                font-family: serif;
+                font-weight: bold;
+                color: var(--theme-color);
+              "
             >
-              「<ruby>祭徠<rt>さいらい</rt></ruby
+              <!-- テーマが決まったら変更してください -->
+              「<ruby>未定<rt>みてい</rt></ruby
               >」
             </h1>
             <br />
@@ -82,7 +93,13 @@
         </v-row>
       </v-col>
     </v-row>
-    <div style="margin-top: 30px; width: 100%; background-color: #b49656">
+    <div
+      style="
+        margin-top: 30px;
+        width: 100%;
+        background-color: var(--theme-color);
+      "
+    >
       <v-row justify="center" class="pb-10">
         <v-col cols="10">
           <h1 class="pages-title">ご案内</h1>
@@ -97,7 +114,7 @@
               :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
             >
               <v-card class="pa-1" outlined :to="page.link">
-                <v-icon size="100" color="sairai" style="display: flex">{{
+                <v-icon size="100" color="theme_color" style="display: flex">{{
                   page.icon
                 }}</v-icon>
                 <p class="pages-text">{{ page.text }}</p>
@@ -119,7 +136,7 @@
         ><v-card class="my-auto" to="/tickets">
           <div>
             <v-card-title
-              ><v-icon x-large color="sairai">mdi-ticket</v-icon
+              ><v-icon x-large color="theme_color">mdi-ticket</v-icon
               >あなたの整理券</v-card-title
             >
           </div>
@@ -265,55 +282,6 @@ export default Vue.extend({
 body {
   margin: 0;
   padding: 0;
-}
-
-.info-title {
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #b49656;
-  font-family: serif;
-  font-weight: bold;
-}
-
-.info-subtitle {
-  text-align: center;
-  font-weight: normal;
-}
-
-.info-caption {
-  text-align: center;
-  font-weight: normal;
-  color: #666;
-}
-
-.pages-title {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 0.5rem 3rem 0.5rem 0;
-  margin-bottom: 5rem;
-  border-bottom: 3px solid #fff;
-  font-family: serif;
-  font-weight: bold;
-  color: #fff;
-}
-
-.pages-xs {
-  font-size: 20px;
-}
-
-.pages-else {
-  font-size: 30px;
-}
-
-.pages-else:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.pages-text {
-  text-align: center;
-  font-family: serif;
-  font-weight: bold;
 }
 
 html,

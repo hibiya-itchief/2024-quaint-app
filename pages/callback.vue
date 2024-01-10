@@ -7,7 +7,7 @@
       <v-progress-circular
         v-if="$vuetify.breakpoint.xs"
         indeterminate
-        color="sairai"
+        color="theme_color"
         size="100"
         width="8"
       >
@@ -15,7 +15,7 @@
       <v-progress-circular
         v-else
         indeterminate
-        color="sairai"
+        color="theme_color"
         size="150"
         width="10"
       >
