@@ -144,7 +144,8 @@
                   >現地で見たい公演の整理券を取得できます。詳しい時間帯は<NuxtLink
                     to="/schedule"
                     >配布スケジュール</NuxtLink
-                  >やパンフレットをご覧ください。</v-card-subtitle
+                  >
+                  やパンフレットをご覧ください。</v-card-subtitle
                 >
                 <v-card-subtitle v-if="!$auth.loggedIn"
                   ><v-btn
@@ -425,6 +426,8 @@ export default Vue.extend({
     // nuxt generate時はpayloadを代入
     const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
 
+    const links = await $axios.$get('/groups/' + params.groupId + '/links')
+
     // 各ticketsを取得
     if (events.length !== 0) {
       const getTicketsInfo = []
@@ -441,9 +444,9 @@ export default Vue.extend({
           listTakenTickets.push(ticketsInfo[i].taken_tickets)
         }
       })
-      return { group, events, listStock, listTakenTickets }
+      return { group, events, listStock, listTakenTickets, links }
     } else {
-      return { group, events }
+      return { group, events, links }
     }
   },
   data(): Data {
@@ -531,13 +534,6 @@ export default Vue.extend({
         })
       }
     }
-    this.$axios
-      .$get('/groups/' + this.$route.params.groupId + '/links')
-      .then((res) => {
-        for (let i = 0; i < res.length; i++) {
-          this.links.push(res[i])
-        }
-      })
     this.$axios
       .$get(
         '/ga/screenpageview?start_date=7daysAgo&end_date=today&page_path=' +
