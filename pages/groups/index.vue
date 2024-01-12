@@ -140,7 +140,7 @@
             class="my-0 py-2"
           >
             <!-- <class="d-flex flex-column">で，「もっと見る」が常に最下部に -->
-            <GroupCard :group="group" :storageBookmarks="storageBookmarks" />
+            <GroupCard :group="group" :storage-bookmarks="storageBookmarks" />
           </v-col>
         </v-row>
         <p v-show="display_bookmarks" class="mt-10" style="text-align: center">
