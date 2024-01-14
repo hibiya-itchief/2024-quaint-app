@@ -154,3 +154,13 @@
   margin-left: 8.5rem;
   margin-bottom: 0;
 }
+
+@keyframes fade-in-name {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
