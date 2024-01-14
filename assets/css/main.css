@@ -155,6 +155,10 @@
   margin-bottom: 0;
 }
 
+.group-card-xs-else:hover {
+  transform: scale(1.08, 1.08);
+}
+
 @keyframes fade-in-name {
   from {
     opacity: 0;

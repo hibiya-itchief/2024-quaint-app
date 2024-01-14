@@ -2,6 +2,7 @@
   <v-card
     height="100%"
     class="d-flex flex-column ma-0 pa-2"
+    :class="$vuetify.breakpoint.xs ? '' : 'group-card-xs-else'"
     :to="'/groups/' + group.id"
   >
     <div class="d-flex flex-nowrap">
