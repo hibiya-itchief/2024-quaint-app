@@ -346,16 +346,6 @@ h3 {
   font-weight: normal;
 }
 
-@keyframes fade-in-name {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 .img {
   border: 9px solid var(--theme-color);
 }
