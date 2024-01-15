@@ -8,6 +8,7 @@
               v-model="search_query"
               solo
               label="検索"
+              hide-details="auto"
               color="theme_color"
               prepend-inner-icon="mdi-magnify"
               @input="SearchGroups()"
@@ -20,9 +21,10 @@
             </v-text-field>
           </v-col>
           <v-col class="mt-2 mb-5 py-0" cols="12" sm="8" md="8">
-            <p v-show="search_query !== ''" class="ma-0 pa-0 text-caption">
+            <p v-if="search_query !== ''" class="ma-0 pa-0 text-caption">
               "{{ search_query }}"の検索結果({{ search_result_number }}件)
             </p>
+            <p v-else class="ma-0 pa-0 text-caption"><br /></p>
 
             <v-menu offset-y>
               <template #activator="{ on, attrs }">
