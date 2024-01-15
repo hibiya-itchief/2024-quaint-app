@@ -24,7 +24,9 @@
             <p v-if="search_query !== ''" class="ma-0 pa-0 text-caption">
               "{{ search_query }}"の検索結果({{ search_result_number }}件)
             </p>
-            <p v-else class="ma-0 pa-0 text-caption"><br /></p>
+            <p v-else class="ma-0 pa-0 text-caption">
+              <br />
+            </p>
 
             <v-menu offset-y>
               <template #activator="{ on, attrs }">
