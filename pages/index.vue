@@ -111,9 +111,13 @@
               sm="4"
               md="3"
               class="my-0 py-2"
-              :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
             >
-              <v-card class="pa-1" outlined :to="page.link">
+              <v-card
+                class="pa-1"
+                :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
+                outlined
+                :to="page.link"
+              >
                 <v-icon size="100" color="theme_color" style="display: flex">{{
                   page.icon
                 }}</v-icon>
