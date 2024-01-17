@@ -162,69 +162,75 @@
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
                 <div v-for="(event, index) in suitableEvents()" :key="event.id">
-                  <v-card
-                    class="ma-2 d-flex"
-                    :disabled="
-                      !isAvailable(event) ||
-                      listTakenTickets[index] >= listStock[index]
-                    "
-                    @click.stop="selectEvent(event)"
-                  >
-                    <div>
-                      <v-card-text
-                        class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
-                      >
-                        {{ dateFormatter(event.starts_at) }}
-                        {{ event.eventname }}
-                      </v-card-text>
-                      <v-spacer></v-spacer>
-                      <v-card-title class="pt-0 pb-1 text-h5">
-                        {{ timeFormatter(event.starts_at) }}
-                        <span class="caption pl-1">
-                          - {{ timeFormatter(event.ends_at) }}</span
+                  <div v-if="isAvailable(event)">
+                    <v-card
+                      class="ma-2 d-flex"
+                      :disabled="
+                        !isAvailable(event) ||
+                        listTakenTickets[index] >= listStock[index]
+                      "
+                      @click.stop="selectEvent(event)"
+                    >
+                      <div>
+                        <v-card-text
+                          class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
                         >
-                      </v-card-title>
-                    </div>
-                    <v-spacer></v-spacer>
-                    <div class="my-auto mx-2">
-                      <!--ここから配布ステータスの条件分岐-->
-                      <v-btn
-                        v-if="!isAvailable(event)"
-                        color="grey"
-                        outlined
-                        style="font-weight: bold"
-                        >時間外<v-icon>mdi-cancel</v-icon></v-btn
-                      >
-                      <v-btn
-                        v-else-if="
-                          listTakenTickets[index] / listStock[index] < 0.5
-                        "
-                        color="green"
-                        outlined
-                        style="font-weight: bold"
-                        >配布中<v-icon>mdi-circle-double</v-icon></v-btn
-                      >
-                      <!--5割以上で黄色になる-->
-                      <v-btn
-                        v-else-if="
-                          listTakenTickets[index] / listStock[index] >= 0.5 &&
-                          listTakenTickets[index] < listStock[index]
-                        "
-                        color="orange"
-                        outlined
-                        style="font-size: 80%; font-weight: bold"
-                        >残りわずか<v-icon>mdi-triangle-outline</v-icon></v-btn
-                      >
-                      <v-btn
-                        v-else-if="listTakenTickets[index] >= listStock[index]"
-                        color="red"
-                        outlined
-                        style="font-weight: bold"
-                        >完売<v-icon>mdi-close</v-icon></v-btn
-                      >
-                      <!--ここまで配布ステータスの条件分岐-->
-                    </div>
-                  </v-card>
+                          {{ dateFormatter(event.starts_at) }}
+                          {{ event.eventname }}
+                        </v-card-text>
+                        <v-spacer></v-spacer>
+                        <v-card-title class="pt-0 pb-1 text-h5">
+                          {{ timeFormatter(event.starts_at) }}
+                          <span class="caption pl-1">
+                            - {{ timeFormatter(event.ends_at) }}</span
+                          >
+                        </v-card-title>
+                      </div>
+                      <v-spacer></v-spacer>
+                      <div class="my-auto mx-2">
+                        <!--ここから配布ステータスの条件分岐-->
+                        <v-btn
+                          v-if="!isAvailable(event)"
+                          color="grey"
+                          outlined
+                          style="font-weight: bold"
+                          >時間外<v-icon>mdi-cancel</v-icon></v-btn
+                        >
+                        <v-btn
+                          v-else-if="
+                            listTakenTickets[index] / listStock[index] < 0.5
+                          "
+                          color="green"
+                          outlined
+                          style="font-weight: bold"
+                          >配布中<v-icon>mdi-circle-double</v-icon></v-btn
+                        >
+                        <!--5割以上で黄色になる-->
+                        <v-btn
+                          v-else-if="
+                            listTakenTickets[index] / listStock[index] >= 0.5 &&
+                            listTakenTickets[index] < listStock[index]
+                          "
+                          color="orange"
+                          outlined
+                          style="font-size: 80%; font-weight: bold"
+                          >残りわずか<v-icon
+                            >mdi-triangle-outline</v-icon
+                          ></v-btn
+                        >
+                        <v-btn
+                          v-else-if="
+                            listTakenTickets[index] >= listStock[index]
+                          "
+                          color="red"
+                          outlined
+                          style="font-weight: bold"
+                          >完売<v-icon>mdi-close</v-icon></v-btn
+                        >
+                        <!--ここまで配布ステータスの条件分岐-->
+                      </div>
+                    </v-card>
+                  </div>
                 </div>
                 <v-dialog
                   v-if="selected_event"
@@ -294,6 +300,41 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
+
+                <v-col cols="12">
+                  <v-alert type="info" border="top" colored-border
+                    >{{ out_time_events.length }}つの配布時間外チケット</v-alert
+                  >
+
+                  <v-dialog
+                    v-model="dialog"
+                    fullscreen
+                    hide-overlay
+                    transition="dialog-bottom-transition"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn color="primary" dark v-bind="attrs" v-on="on"
+                        >全ての公演を表示</v-btn
+                      >
+                    </template>
+                    <v-card>
+                      <v-toolbar dark color="primary">
+                        <v-row>
+                          <v-col class="d-flex justify-space-around">
+                            <v-toolbar-title> 公演一覧</v-toolbar-title>
+                          </v-col>
+                        </v-row>
+                        <v-spacer></v-spacer>
+                        <v-toolbar-items>
+                          <v-btn dark text @click="dialog = false">
+                            <v-icon>mdi-close</v-icon>
+                          </v-btn>
+                        </v-toolbar-items>
+                      </v-toolbar>
+                      <v-list> </v-list>
+                    </v-card>
+                  </v-dialog>
+                </v-col>
 
                 <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
                 <v-col v-if="suitableEvents().length === 0" cols="12">
@@ -383,6 +424,7 @@ type Data = {
   }
   group: Group | undefined
   events: Event[]
+  out_time_events: Event[]
   links: GroupLink[]
   filteredEvents: Event[] //  ユーザ属性（e,g.students, parents）に合致する整理券のみが格納される配列
   selected_event: Event | null
@@ -462,6 +504,7 @@ export default Vue.extend({
       },
       group: undefined,
       events: [],
+      out_time_events: [],
       links: [],
       filteredEvents: [],
       selected_event: null,
@@ -564,6 +607,15 @@ export default Vue.extend({
         break
       }
     }
+
+    // 配布時間外のチケットをout_time_eventsに格納
+    for (const event of this.events) {
+      if (!this.isAvailable(event)) {
+        this.out_time_events.push(event)
+      }
+    }
+
+    // ロードページの終了
     this.nowloading = false
   },
 
