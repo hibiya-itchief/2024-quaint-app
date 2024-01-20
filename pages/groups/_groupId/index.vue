@@ -375,6 +375,9 @@ export default Vue.extend({
     }
   },
   created() {
+    // ページリロード時にasyncData内のプログラムを走らせるために再読み込み
+    this.$nuxt.refresh()
+
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
     if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {

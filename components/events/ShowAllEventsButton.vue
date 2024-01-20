@@ -59,7 +59,7 @@ export default Vue.extend({
       required: true,
     },
     events: {
-      type: Object,
+      type: Array,
       required: true,
     },
     listStock: {
@@ -82,7 +82,7 @@ export default Vue.extend({
   created() {
     //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfilteredEventsに格納される
     //  '&& this.isToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
-    this.filteredEvents = this.events.filter((val: Event) => {
+    this.filteredEvents = (this.events as Event[]).filter((val: Event) => {
       return this.$quaintUserRole(val.target, this.$auth.user)
     })
   },
