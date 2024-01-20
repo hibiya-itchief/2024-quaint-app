@@ -49,8 +49,6 @@ import Vue from 'vue'
 
 type Data = {
   dialog: boolean
-  listStock: number[]
-  listTakenTickets: number[]
   filteredEvents: Event[]
 }
 
@@ -61,7 +59,7 @@ export default Vue.extend({
       required: true,
     },
     events: {
-      type: Array,
+      type: Object,
       required: true,
     },
     listStock: {

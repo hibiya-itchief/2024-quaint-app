@@ -6,7 +6,9 @@
           class="ma-2 d-flex"
           v-bind="attrs"
           :disabled="
-            !isAvailable(event) || listTakenTickets[index] >= listStock[index]
+            !isAvailable(event) ||
+            listTakenTickets[index] >= listStock[index] ||
+            !$auth.loggedIn
           "
           v-on="on"
           @click.stop="selectEvent(event)"
