@@ -175,6 +175,18 @@
                 </div>
 
                 <v-col cols="12">
+                  <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
+                  <v-col
+                    v-if="suitableEvents().length === out_time_events.length"
+                    cols="12"
+                  >
+                    <v-card class="pa-2">
+                      <span class="grey--text text-h5"
+                        >現在選択できる公演はありません。</span
+                      >
+                    </v-card>
+                  </v-col>
+
                   <!--配布時間外のチケットがある場合はいくつあるかをインフォーム-->
                   <div v-if="out_time_events.length !== 0">
                     <EventsTimeOutEventInform
@@ -190,15 +202,6 @@
                       :list-taken-tickets="listTakenTickets"
                     />
                   </div>
-                </v-col>
-
-                <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
-                <v-col v-if="suitableEvents().length === 0" cols="12">
-                  <v-card class="pa-2">
-                    <span class="grey--text text-h5"
-                      >現在選択できる公演はありません。</span
-                    >
-                  </v-card>
                 </v-col>
               </v-card>
               <v-card v-else class="pa-2">
