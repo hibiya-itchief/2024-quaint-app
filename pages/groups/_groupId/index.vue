@@ -175,9 +175,12 @@
                 </div>
 
                 <v-col cols="12">
-                  <v-alert type="info" border="top" colored-border
-                    >{{ out_time_events.length }}つの配布時間外チケット</v-alert
-                  >
+                  <!--配布時間外のチケットがある場合はいくつあるかをインフォーム-->
+                  <div v-if="out_time_events.length !== 0">
+                    <EventsTimeOutEventInform
+                      :number="out_time_events.length"
+                    />
+                  </div>
 
                   <EventsShowAllEventsButton
                     :group="group"

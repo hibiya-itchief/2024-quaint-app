@@ -1,3 +1,4 @@
+<!--イベントを表示するコンポーネント-->
 <template>
   <div>
     <v-dialog v-model="dialog" max-width="500" persistent>
