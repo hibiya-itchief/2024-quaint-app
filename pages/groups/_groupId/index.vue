@@ -182,12 +182,14 @@
                     />
                   </div>
 
-                  <EventsShowAllEventsButton
-                    :group="group"
-                    :events="events"
-                    :list-stock="listStock"
-                    :list-taken-tickets="listTakenTickets"
-                  />
+                  <div v-if="suitableEvents().length > 0">
+                    <EventsShowAllEventsButton
+                      :group="group"
+                      :events="suitableEvents()"
+                      :list-stock="listStock"
+                      :list-taken-tickets="listTakenTickets"
+                    />
+                  </div>
                 </v-col>
 
                 <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
@@ -238,7 +240,7 @@ type Data = {
   }
   group: Group | undefined
   events: Event[]
-  out_time_events: Event[]
+  out_time_events: Event[] // ユーザー属性に適したイベントのうち配布時間外のイベントを格納する
   links: GroupLink[]
   filteredEvents: Event[] //  ユーザ属性（e,g.students, parents）に合致する整理券のみが格納される配列
   selected_event: Event | null
@@ -426,7 +428,7 @@ export default Vue.extend({
     }
 
     // 配布時間外のチケットをout_time_eventsに格納
-    for (const event of this.events) {
+    for (const event of this.suitableEvents()) {
       if (!this.isAvailable(event)) {
         this.out_time_events.push(event)
       }
