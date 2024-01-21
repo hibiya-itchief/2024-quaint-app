@@ -158,7 +158,11 @@
                 >
                 <v-divider class="mb-3"></v-divider>
 
-                <v-btn class="ma-2" color="primary" @click="$nuxt.refresh()"
+                <v-btn
+                  class="ma-2"
+                  color="theme_color"
+                  dark
+                  @click="$nuxt.refresh()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
                 <div v-for="(event, index) in suitableEvents()" :key="event.id">

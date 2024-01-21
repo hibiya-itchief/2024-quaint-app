@@ -9,12 +9,12 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on"
+        <v-btn color="theme_color" dark v-bind="attrs" v-on="on"
           >全ての公演を表示</v-btn
         >
       </template>
       <v-card>
-        <v-toolbar dark color="primary">
+        <v-toolbar dark color="theme_color">
           <v-row>
             <v-col class="d-flex justify-space-around">
               <v-toolbar-title> 公演一覧</v-toolbar-title>
