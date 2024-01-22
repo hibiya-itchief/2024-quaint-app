@@ -198,14 +198,16 @@
                     />
                   </div>
 
-                  <div v-if="suitableEvents().length > 0">
-                    <EventsShowAllEventsButton
-                      :group="group"
-                      :events="suitableEvents()"
-                      :list-stock="listStock"
-                      :list-taken-tickets="listTakenTickets"
-                    />
-                  </div>
+                  <v-row justify="center">
+                    <div v-if="suitableEvents().length > 0">
+                      <EventsShowAllEventsButton
+                        :group="group"
+                        :events="suitableEvents()"
+                        :list-stock="listStock"
+                        :list-taken-tickets="listTakenTickets"
+                      />
+                    </div>
+                  </v-row>
                 </v-col>
               </v-card>
               <v-card v-else class="pa-2">
