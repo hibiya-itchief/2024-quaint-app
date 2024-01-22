@@ -160,7 +160,7 @@
 
                 <v-btn
                   class="ma-2"
-                  color="theme_color"
+                  color="primary"
                   dark
                   @click="$nuxt.refresh()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
