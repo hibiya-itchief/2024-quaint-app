@@ -2,17 +2,15 @@
 <template>
   <div>
     <!--全てのチケットを表示する-->
+    <v-btn v-ripple depressed color="primary" @click="dialog = true"
+      >全ての公演を表示</v-btn
+    >
     <v-dialog
       v-model="dialog"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
     >
-      <template #activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on"
-          >全ての公演を表示</v-btn
-        >
-      </template>
       <v-card>
         <v-toolbar dark color="theme_color">
           <v-row>
