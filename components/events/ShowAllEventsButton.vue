@@ -5,12 +5,7 @@
     <v-btn v-ripple depressed color="primary" @click="dialog = true"
       >全ての公演を表示</v-btn
     >
-    <v-dialog
-      v-model="dialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" hide-overlay max-width="500px">
       <v-card>
         <v-toolbar dark color="theme_color">
           <v-row>
@@ -26,17 +21,21 @@
           </v-toolbar-items>
         </v-toolbar>
 
-        <div v-for="(event, index) in suitableEvents()" :key="event.id">
-          <div>
-            <EventsEventCard
-              :group="group"
-              :event="event"
-              :index="index"
-              :list-taken-tickets="listTakenTickets"
-              :list-stock="listStock"
-            />
-          </div>
-        </div>
+        <v-row>
+          <v-col>
+            <div v-for="(event, index) in suitableEvents()" :key="event.id">
+              <div>
+                <EventsEventCard
+                  :group="group"
+                  :event="event"
+                  :index="index"
+                  :list-taken-tickets="listTakenTickets"
+                  :list-stock="listStock"
+                />
+              </div>
+            </div>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
   </div>
