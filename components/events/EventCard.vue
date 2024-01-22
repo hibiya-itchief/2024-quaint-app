@@ -2,7 +2,7 @@
 <template>
   <div>
     <v-dialog v-model="dialog" max-width="500" persistent>
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ on, attrs }">
         <v-card
           class="ma-2 d-flex"
           v-bind="attrs"
