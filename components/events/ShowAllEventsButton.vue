@@ -25,13 +25,25 @@
           <v-col>
             <div v-for="(event, index) in suitableEvents()" :key="event.id">
               <div>
-                <EventsEventCard
-                  :group="group"
-                  :event="event"
-                  :index="index"
-                  :list-taken-tickets="listTakenTickets"
-                  :list-stock="listStock"
-                />
+                <div v-if="$vuetify.breakpoint.xs">
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                    :cut-volume="true"
+                  />
+                </div>
+                <div v-else>
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                  />
+                </div>
               </div>
             </div>
           </v-col>

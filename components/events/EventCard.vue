@@ -37,14 +37,16 @@
               color="grey"
               outlined
               style="font-weight: bold"
-              >時間外<v-icon>mdi-cancel</v-icon></v-btn
+              ><div v-if="!cutVolume">時間外</div>
+              <v-icon>mdi-cancel</v-icon></v-btn
             >
             <v-btn
               v-else-if="listTakenTickets[index] / listStock[index] < 0.5"
               color="green"
               outlined
               style="font-weight: bold"
-              >配布中<v-icon>mdi-circle-double</v-icon></v-btn
+              ><div v-if="!cutVolume">配布中</div>
+              <v-icon>mdi-circle-double</v-icon></v-btn
             >
             <!--5割以上で黄色になる-->
             <v-btn
@@ -55,14 +57,16 @@
               color="orange"
               outlined
               style="font-size: 80%; font-weight: bold"
-              >残りわずか<v-icon>mdi-triangle-outline</v-icon></v-btn
+              ><div v-if="!cutVolume">残りわずか</div>
+              <v-icon>mdi-triangle-outline</v-icon></v-btn
             >
             <v-btn
               v-else-if="listTakenTickets[index] >= listStock[index]"
               color="red"
               outlined
               style="font-weight: bold"
-              >完売<v-icon>mdi-close</v-icon></v-btn
+              ><div v-if="!cutVolume">完売</div>
+              <v-icon>mdi-close</v-icon></v-btn
             >
             <!--ここまで配布ステータスの条件分岐-->
           </div>
@@ -201,6 +205,11 @@ export default Vue.extend({
     listStock: {
       type: Array,
       required: true,
+    },
+    cutVolume: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 
