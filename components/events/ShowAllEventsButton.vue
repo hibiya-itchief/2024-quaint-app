@@ -5,14 +5,10 @@
     <v-btn v-ripple depressed color="primary" @click="dialog = true"
       >全ての公演を表示</v-btn
     >
-    <v-dialog v-model="dialog" hide-overlay max-width="500px">
+    <v-dialog v-model="dialog" hide-overlay max-width="500px" scrollable>
       <v-card>
         <v-toolbar dark color="theme_color">
-          <v-row>
-            <v-col class="d-flex justify-space-around">
-              <v-toolbar-title> 公演一覧</v-toolbar-title>
-            </v-col>
-          </v-row>
+          <v-toolbar-title>公演一覧</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark text @click="dialog = false">
@@ -21,33 +17,37 @@
           </v-toolbar-items>
         </v-toolbar>
 
-        <v-row>
-          <v-col>
-            <div v-for="(event, index) in suitableEvents()" :key="event.id">
-              <div>
-                <div v-if="$vuetify.breakpoint.xs">
-                  <EventsEventCard
-                    :group="group"
-                    :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
-                    :cut-volume="true"
-                  />
-                </div>
-                <div v-else>
-                  <EventsEventCard
-                    :group="group"
-                    :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
-                  />
+        <v-divider></v-divider>
+
+        <v-card-text>
+          <v-row>
+            <v-col>
+              <div v-for="(event, index) in suitableEvents()" :key="event.id">
+                <div>
+                  <div v-if="$vuetify.breakpoint.xs">
+                    <EventsEventCard
+                      :group="group"
+                      :event="event"
+                      :index="index"
+                      :list-taken-tickets="listTakenTickets"
+                      :list-stock="listStock"
+                      :cut-volume="true"
+                    />
+                  </div>
+                  <div v-else>
+                    <EventsEventCard
+                      :group="group"
+                      :event="event"
+                      :index="index"
+                      :list-taken-tickets="listTakenTickets"
+                      :list-stock="listStock"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </v-col>
-        </v-row>
+            </v-col>
+          </v-row>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </div>
