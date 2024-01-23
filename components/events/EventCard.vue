@@ -1,78 +1,72 @@
 <!--イベントを表示するコンポーネント-->
 <template>
   <div>
-    <v-dialog v-model="dialog" max-width="500" persistent>
-      <template #activator="{ on, attrs }">
-        <v-card
-          class="ma-2 d-flex"
-          v-bind="attrs"
-          :disabled="
-            !isAvailable(event) ||
-            listTakenTickets[index] >= listStock[index] ||
-            !$auth.loggedIn
-          "
-          v-on="on"
-          @click.stop="selectEvent(event)"
+    <v-card
+      class="ma-2 d-flex"
+      :disabled="
+        !isAvailable(event) || listTakenTickets[index] >= listStock[index]
+      "
+      @click.stop="selectEvent(event)"
+    >
+      <div>
+        <v-card-text
+          class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
         >
-          <div>
-            <v-card-text
-              class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
-            >
-              {{ dateFormatter(event.starts_at) }}
-              {{ event.eventname }}
-            </v-card-text>
-            <v-spacer></v-spacer>
-            <v-card-title class="pt-0 pb-1 text-h5">
-              {{ timeFormatter(event.starts_at) }}
-              <span class="caption pl-1">
-                - {{ timeFormatter(event.ends_at) }}</span
-              >
-            </v-card-title>
-          </div>
-          <v-spacer></v-spacer>
-          <div class="my-auto mx-2">
-            <!--ここから配布ステータスの条件分岐-->
-            <v-btn
-              v-if="!isAvailable(event)"
-              color="grey"
-              outlined
-              style="font-weight: bold"
-              ><div v-if="!cutVolume">時間外</div>
-              <v-icon>mdi-cancel</v-icon></v-btn
-            >
-            <v-btn
-              v-else-if="listTakenTickets[index] / listStock[index] < 0.5"
-              color="green"
-              outlined
-              style="font-weight: bold"
-              ><div v-if="!cutVolume">配布中</div>
-              <v-icon>mdi-circle-double</v-icon></v-btn
-            >
-            <!--5割以上で黄色になる-->
-            <v-btn
-              v-else-if="
-                listTakenTickets[index] / listStock[index] >= 0.5 &&
-                listTakenTickets[index] < listStock[index]
-              "
-              color="orange"
-              outlined
-              style="font-size: 80%; font-weight: bold"
-              ><div v-if="!cutVolume">残りわずか</div>
-              <v-icon>mdi-triangle-outline</v-icon></v-btn
-            >
-            <v-btn
-              v-else-if="listTakenTickets[index] >= listStock[index]"
-              color="red"
-              outlined
-              style="font-weight: bold"
-              ><div v-if="!cutVolume">完売</div>
-              <v-icon>mdi-close</v-icon></v-btn
-            >
-            <!--ここまで配布ステータスの条件分岐-->
-          </div>
-        </v-card>
-      </template>
+          {{ dateFormatter(event.starts_at) }}
+          {{ event.eventname }}
+        </v-card-text>
+        <v-spacer></v-spacer>
+        <v-card-title class="pt-0 pb-1 text-h5">
+          {{ timeFormatter(event.starts_at) }}
+          <span class="caption pl-1">
+            - {{ timeFormatter(event.ends_at) }}</span
+          >
+        </v-card-title>
+      </div>
+      <v-spacer></v-spacer>
+      <div class="my-auto mx-2">
+        <!--ここから配布ステータスの条件分岐-->
+        <v-btn
+          v-if="!isAvailable(event)"
+          color="grey"
+          outlined
+          style="font-weight: bold"
+          ><div v-if="!cutVolume">時間外</div>
+          <v-icon>mdi-cancel</v-icon></v-btn
+        >
+        <v-btn
+          v-else-if="listTakenTickets[index] / listStock[index] < 0.5"
+          color="green"
+          outlined
+          style="font-weight: bold"
+          ><div v-if="!cutVolume">配布中</div>
+          <v-icon>mdi-circle-double</v-icon></v-btn
+        >
+        <!--5割以上で黄色になる-->
+        <v-btn
+          v-else-if="
+            listTakenTickets[index] / listStock[index] >= 0.5 &&
+            listTakenTickets[index] < listStock[index]
+          "
+          color="orange"
+          outlined
+          style="font-size: 80%; font-weight: bold"
+          ><div v-if="!cutVolume">残りわずか</div>
+          <v-icon>mdi-triangle-outline</v-icon></v-btn
+        >
+        <v-btn
+          v-else-if="listTakenTickets[index] >= listStock[index]"
+          color="red"
+          outlined
+          style="font-weight: bold"
+          ><div v-if="!cutVolume">完売</div>
+          <v-icon>mdi-close</v-icon></v-btn
+        >
+        <!--ここまで配布ステータスの条件分岐-->
+      </div>
+    </v-card>
 
+    <v-dialog v-model="dialog" max-width="500" persistent>
       <v-card class="pa-2">
         <v-card-title>この公演の整理券をとりますか？</v-card-title>
 
