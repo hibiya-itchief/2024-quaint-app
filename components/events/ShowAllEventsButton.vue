@@ -19,7 +19,7 @@
 
         <v-divider></v-divider>
 
-        <v-card-text>
+        <v-card-text style="height: 80vh">
           <v-row>
             <v-col>
               <div v-for="(event, index) in suitableEvents()" :key="event.id">
