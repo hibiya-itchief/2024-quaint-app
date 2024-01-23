@@ -12,8 +12,12 @@
         <v-card-text
           class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
         >
-          {{ dateFormatter(event.starts_at) }}
-          {{ event.eventname }}
+          <div v-if="!cutVolumeDate">
+            {{ dateFormatter(event.starts_at) }}
+          </div>
+          <div v-if="!cutVolumeTime">
+            {{ event.eventname }}
+          </div>
         </v-card-text>
         <v-spacer></v-spacer>
         <v-card-title class="pt-0 pb-1 text-h5">
@@ -31,7 +35,7 @@
           color="grey"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolume">時間外</div>
+          ><div v-if="!cutVolumeIconText">時間外</div>
           <v-icon>mdi-cancel</v-icon></v-btn
         >
         <v-btn
@@ -39,7 +43,7 @@
           color="green"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolume">配布中</div>
+          ><div v-if="!cutVolumeIconText">配布中</div>
           <v-icon>mdi-circle-double</v-icon></v-btn
         >
         <!--5割以上で黄色になる-->
@@ -51,7 +55,7 @@
           color="orange"
           outlined
           style="font-size: 80%; font-weight: bold"
-          ><div v-if="!cutVolume">残りわずか</div>
+          ><div v-if="!cutVolumeIconText">残りわずか</div>
           <v-icon>mdi-triangle-outline</v-icon></v-btn
         >
         <v-btn
@@ -59,7 +63,7 @@
           color="red"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolume">完売</div>
+          ><div v-if="!cutVolumeIconText">完売</div>
           <v-icon>mdi-close</v-icon></v-btn
         >
         <!--ここまで配布ステータスの条件分岐-->
@@ -200,7 +204,20 @@ export default Vue.extend({
       type: Array,
       required: true,
     },
-    cutVolume: {
+    // 配布状況のアイコンの横のテキストをカットするか
+    cutVolumeIconText: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    // チケットの日付をカットするか
+    cutVolumeDate: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    // チケットの公演時間をカットするか
+    cutVolumeTime: {
       type: Boolean,
       required: false,
       default: false,

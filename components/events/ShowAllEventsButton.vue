@@ -22,8 +22,10 @@
         <v-card-text style="height: 80vh">
           <v-row>
             <v-col>
+              <!--各チケットの描画-->
               <div v-for="(event, index) in suitableEvents()" :key="event.id">
                 <div>
+                  <!--スマホ表示の時はチケットの情報を少なくしてコンパクトに収まるように調整している-->
                   <div v-if="$vuetify.breakpoint.xs">
                     <EventsEventCard
                       :group="group"
@@ -31,7 +33,8 @@
                       :index="index"
                       :list-taken-tickets="listTakenTickets"
                       :list-stock="listStock"
-                      :cut-volume="true"
+                      :cut-volume-icon-text="true"
+                      :cut-volume-date="true"
                     />
                   </div>
                   <div v-else>
