@@ -22,30 +22,59 @@
         <v-card-text style="height: 80vh">
           <v-row>
             <v-col>
+              <!--一日目の欄-->
+              <v-card-subtitle>一日目({{ date['1'] }})</v-card-subtitle>
               <!--各チケットの描画-->
-              <div v-for="(event, index) in suitableEvents()" :key="event.id">
-                <div>
-                  <!--スマホ表示の時はチケットの情報を少なくしてコンパクトに収まるように調整している-->
-                  <div v-if="$vuetify.breakpoint.xs">
-                    <EventsEventCard
-                      :group="group"
-                      :event="event"
-                      :index="index"
-                      :list-taken-tickets="listTakenTickets"
-                      :list-stock="listStock"
-                      :cut-volume-icon-text="true"
-                      :cut-volume-date="true"
-                    />
-                  </div>
-                  <div v-else>
-                    <EventsEventCard
-                      :group="group"
-                      :event="event"
-                      :index="index"
-                      :list-taken-tickets="listTakenTickets"
-                      :list-stock="listStock"
-                    />
-                  </div>
+              <div v-for="(event, index) in first_day_events" :key="event.id">
+                <!--スマホ表示の時はチケットの情報を少なくしてコンパクトに収まるように調整している-->
+                <div v-if="$vuetify.breakpoint.xs">
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                    :cut-volume-icon-text="true"
+                    :cut-volume-date="true"
+                  />
+                </div>
+                <div v-else>
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                  />
+                </div>
+              </div>
+
+              <v-divider></v-divider>
+
+              <!--二日目の欄-->
+              <v-card-subtitle>二日目({{ date['2'] }})</v-card-subtitle>
+              <!--各チケットの描画-->
+              <div v-for="(event, index) in second_day_events" :key="event.id">
+                <!--スマホ表示の時はチケットの情報を少なくしてコンパクトに収まるように調整している-->
+                <div v-if="$vuetify.breakpoint.xs">
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                    :cut-volume-icon-text="true"
+                    :cut-volume-date="true"
+                  />
+                </div>
+                <div v-else>
+                  <EventsEventCard
+                    :group="group"
+                    :event="event"
+                    :index="index"
+                    :list-taken-tickets="listTakenTickets"
+                    :list-stock="listStock"
+                  />
                 </div>
               </div>
             </v-col>
@@ -63,6 +92,9 @@ import Vue from 'vue'
 type Data = {
   dialog: boolean
   filteredEvents: Event[]
+  first_day_events: Event[] // 一日目のチケットを格納する
+  second_day_events: Event[] // 二日目のチケットを格納する
+  date: { [date: string]: string } // 星陵祭１日目、２日目の日付を入れる dialogの１日目、２日目の欄にチケットを振り分けるのに使用
 }
 
 export default Vue.extend({
@@ -89,6 +121,12 @@ export default Vue.extend({
     return {
       dialog: false,
       filteredEvents: [],
+      first_day_events: [],
+      second_day_events: [],
+      date: {
+        '1': '9/16',
+        '2': '9/17',
+      },
     }
   },
 
@@ -98,16 +136,31 @@ export default Vue.extend({
     this.filteredEvents = (this.events as Event[]).filter((val: Event) => {
       return this.$quaintUserRole(val.target, this.$auth.user)
     })
+
+    // eventsを一日目のものと二日目のものに振り分け
+    // first_day_eventsに一日目、second_day_eventsに二日目のチケットを代入する
+    for (const event of this.suitableEvents()) {
+      if (this.dateFormatter(event.starts_at) === this.date['1']) {
+        this.first_day_events.push(event)
+      } else if (this.dateFormatter(event.starts_at) === this.date['2']) {
+        this.second_day_events.push(event)
+      }
+    }
   },
 
   methods: {
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
     suitableEvents() {
       if (!this.$auth.loggedIn) {
-        return this.events
+        return this.events as Event[]
       } else {
-        return this.filteredEvents
+        return this.filteredEvents as Event[]
       }
+    },
+
+    dateFormatter(inputDate: string) {
+      const d = new Date(inputDate)
+      return d.getMonth() + 1 + '/' + d.getDate()
     },
   },
 })
