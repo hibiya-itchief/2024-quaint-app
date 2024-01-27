@@ -323,12 +323,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style>
-a.link-snackbar {
-  color: white;
-  font-weight: bold;
-  text-decoration: underline;
-  text-decoration-color: white;
-}
-</style>
