@@ -160,10 +160,10 @@
 }
 
 a.link-snackbar {
-  color: white;
-  font-weight: bold;
-  text-decoration: underline;
-  text-decoration-color: white;
+  color: white !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+  text-decoration-color: white !important;
 }
 
 @keyframes fade-in-name {
