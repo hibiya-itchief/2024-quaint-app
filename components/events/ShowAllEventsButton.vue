@@ -77,6 +77,34 @@
                   />
                 </div>
               </div>
+
+              <!--その他の配布時間のチケット-->
+              <div v-if="other_day_events.length !== 0">
+                <v-divider></v-divider>
+                <v-card-subtitle>その他</v-card-subtitle>
+                <div v-for="(event, index) in other_day_events" :key="event.id">
+                  <!--スマホ表示の時はチケットの情報を少なくしてコンパクトに収まるように調整している-->
+                  <div v-if="$vuetify.breakpoint.xs">
+                    <EventsEventCard
+                      :group="group"
+                      :event="event"
+                      :index="index"
+                      :list-taken-tickets="listTakenTickets"
+                      :list-stock="listStock"
+                      :cut-volume-icon-text="true"
+                    />
+                  </div>
+                  <div v-else>
+                    <EventsEventCard
+                      :group="group"
+                      :event="event"
+                      :index="index"
+                      :list-taken-tickets="listTakenTickets"
+                      :list-stock="listStock"
+                    />
+                  </div>
+                </div>
+              </div>
             </v-col>
           </v-row>
         </v-card-text>
@@ -94,6 +122,7 @@ type Data = {
   filteredEvents: Event[]
   first_day_events: Event[] // 一日目のチケットを格納する
   second_day_events: Event[] // 二日目のチケットを格納する
+  other_day_events: Event[] // 開催期間外のチケットを格納する
   date: { [date: string]: string } // 星陵祭１日目、２日目の日付を入れる dialogの１日目、２日目の欄にチケットを振り分けるのに使用
 }
 
@@ -123,6 +152,7 @@ export default Vue.extend({
       filteredEvents: [],
       first_day_events: [],
       second_day_events: [],
+      other_day_events: [],
       date: {
         '1': '9/16',
         '2': '9/17',
@@ -144,6 +174,9 @@ export default Vue.extend({
         this.first_day_events.push(event)
       } else if (this.dateFormatter(event.starts_at) === this.date['2']) {
         this.second_day_events.push(event)
+      } else {
+        // 開催期間外のチケットをother_day_eventsに格納
+        this.other_day_events.push(event)
       }
     }
   },

@@ -15,7 +15,7 @@
           <div v-if="!cutVolumeDate">
             {{ dateFormatter(event.starts_at) }}
           </div>
-          <div v-if="!cutVolumeTime">
+          <div v-if="!cutVolumeTitle">
             {{ event.eventname }}
           </div>
         </v-card-text>
@@ -216,8 +216,8 @@ export default Vue.extend({
       required: false,
       default: false,
     },
-    // チケットの公演時間をカットするか
-    cutVolumeTime: {
+    // チケットのタイトル
+    cutVolumeTitle: {
       type: Boolean,
       required: false,
       default: false,
