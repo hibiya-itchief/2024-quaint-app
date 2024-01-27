@@ -2,7 +2,13 @@
 <template>
   <div>
     <!--全てのチケットを表示する-->
-    <v-btn v-ripple depressed color="primary" @click="dialog = true"
+    <v-btn
+      v-ripple
+      depressed
+      color="primary"
+      dark
+      outlined
+      @click="dialog = true"
       >全ての公演を表示</v-btn
     >
     <v-dialog v-model="dialog" hide-overlay max-width="500px" scrollable>
