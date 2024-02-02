@@ -11,7 +11,14 @@
       @click="dialog = true"
       >全ての公演を表示</v-btn
     >
-    <v-dialog v-model="dialog" hide-overlay max-width="500px" scrollable>
+    <v-dialog
+      v-model="dialog"
+      hide-overlay
+      max-width="500px"
+      scrollable
+      persistent
+      no-click-animation
+    >
       <v-card>
         <v-toolbar dark color="theme_color">
           <v-toolbar-title>公演一覧</v-toolbar-title>
