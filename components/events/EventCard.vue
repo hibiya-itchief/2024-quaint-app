@@ -124,44 +124,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    <div>
-      <v-snackbar v-model="success_alert" color="success" elevation="2">
-        {{ success_message }}
-        <a
-          v-show="success_snackbar_link"
-          :href="success_snackbar_link"
-          class="link-snackbar"
-        >
-          取得した整理券を表示
-        </a>
-        <template #action="{ attrs }">
-          <v-btn
-            color="white"
-            icon
-            v-bind="attrs"
-            @click="success_alert = false"
-          >
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </template>
-      </v-snackbar>
-      <v-snackbar v-model="error_alert" color="red" elevation="2">
-        {{ error_message }}
-        <a
-          v-show="error_snackbar_link"
-          :href="error_snackbar_link"
-          class="link-snackbar"
-        >
-          ログイン
-        </a>
-        <template #action="{ attrs }">
-          <v-btn color="white" icon v-bind="attrs" @click="error_alert = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </template>
-      </v-snackbar>
-    </div>
   </div>
 </template>
 
@@ -174,12 +136,6 @@ type Data = {
   ticket_person: number
   person_labels: any[]
   person_icons: any[]
-  success_alert: boolean
-  error_alert: boolean
-  success_message: string
-  error_message: string
-  success_snackbar_link: string | undefined
-  error_snackbar_link: string | undefined
 }
 
 export default Vue.extend({
@@ -227,12 +183,6 @@ export default Vue.extend({
   data(): Data {
     return {
       dialog: false,
-      success_alert: false,
-      error_alert: false,
-      success_message: '',
-      error_message: '',
-      success_snackbar_link: undefined,
-      error_snackbar_link: undefined,
       ticket_person: 1,
       person_labels: ['1人', '2人', '3人'],
       person_icons: [
@@ -271,9 +221,10 @@ export default Vue.extend({
 
     async CreateTicket(event: Event, person: number) {
       if (!this.$auth.loggedIn) {
-        this.error_message = '整理券の取得には'
-        this.error_snackbar_link = '/login'
-        this.error_alert = true
+        this.$store.commit('showErrorSnackbar', {
+          message: '整理券の取得には',
+          link: '/login',
+        })
         return 1
       }
       this.dialog = false
@@ -287,19 +238,24 @@ export default Vue.extend({
             person
         )
         .then(() => {
-          this.success_message = '整理券を取得できました！'
-          this.success_snackbar_link = '/tickets'
-          this.success_alert = true
+          this.$store.commit('showSuccessSnackbar', {
+            message: '整理券を取得できました！',
+            link: '/tickets',
+          })
         })
         .catch((e) => {
           if (e.response) {
-            this.error_message = e.response.data.detail
+            this.$store.commit('showErrorSnackbar', {
+              message: e.response.data.detail,
+              link: '',
+            })
           } else {
-            this.error_message =
-              '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️'
+            this.$store.commit('showErrorSnackbar', {
+              message:
+                '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️',
+              link: '',
+            })
           }
-          this.error_snackbar_link = undefined
-          this.error_alert = true
         })
     },
 
@@ -308,16 +264,18 @@ export default Vue.extend({
         new Date() < new Date(event.sell_starts) ||
         new Date(event.sell_ends) < new Date()
       ) {
-        this.error_message = '配布時間外です'
-        this.error_snackbar_link = undefined
-        this.error_alert = true
+        this.$store.commit('showErrorSnackbar', {
+          message: '配布時間外です',
+          link: '',
+        })
       } else if (!this.$auth.loggedIn) {
-        this.error_message = '整理券の取得には'
-        this.error_snackbar_link = '/login'
-        this.error_alert = true
+        this.$store.commit('showErrorSnackbar', {
+          message: '整理券の取得には',
+          link: '/login',
+        })
       } else {
         this.dialog = true
-        this.error_alert = false
+        this.$store.commit('closeErrorSnackbar')
       }
     },
   },
