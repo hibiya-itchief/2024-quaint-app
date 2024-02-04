@@ -356,10 +356,13 @@ export default Vue.extend({
     this.links = await this.getLinks()
     // 各チケットの取得
     this.listStock = await this.getListStock(this.events, this.group)
-    this.listTakenTickets = await this.getListTakenTickets(
-      this.events,
-      this.group
-    )
+
+    if (this.group && this.events) {
+      this.listTakenTickets = await this.getListTakenTickets(
+        this.events,
+        this.group
+      )
+    }
 
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
@@ -426,16 +429,20 @@ export default Vue.extend({
       this.is_bookmarked = false
     },
     IsNotClassroom(group: Group) {
-      for (let i = 0; i < group.tags.length; i++) {
-        if (
-          group.tags[i].tagname === 'Hebe' ||
-          group.tags[i].tagname === '外部団体' ||
-          group.tags[i].tagname === '部活動'
-        ) {
-          return true
+      if (group) {
+        for (let i = 0; i < group.tags.length; i++) {
+          if (
+            group.tags[i].tagname === 'Hebe' ||
+            group.tags[i].tagname === '外部団体' ||
+            group.tags[i].tagname === '部活動'
+          ) {
+            return true
+          }
         }
+        return false
+      } else {
+        return false
       }
-      return false
     },
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
