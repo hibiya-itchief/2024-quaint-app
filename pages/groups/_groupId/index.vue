@@ -162,7 +162,7 @@
                   class="ma-2"
                   color="primary"
                   dark
-                  @click="$nuxt.refresh()"
+                  @click="getAllEventsData()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
                 <div v-for="(event, index) in suitableEvents()" :key="event.id">
@@ -355,19 +355,8 @@ export default Vue.extend({
   },
 
   async created() {
-    // イベント情報の取得
-    this.events = await this.getEvents()
-    // linksの取得
-    this.links = await this.getLinks()
-    // 各チケットの取得
-    this.listStock = await this.getListStock(this.events, this.group)
-
-    if (this.group && this.events) {
-      this.listTakenTickets = await this.getListTakenTickets(
-        this.events,
-        this.group
-      )
-    }
+    // チケット情報関連の総取得
+    await this.getAllEventsData()
 
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
@@ -509,6 +498,23 @@ export default Vue.extend({
       }
       index = index % colors.length
       return colors[index]
+    },
+
+    // チケット情報の取得をまとめたもの
+    async getAllEventsData() {
+      // イベント情報の取得
+      this.events = await this.getEvents()
+      // linksの取得
+      this.links = await this.getLinks()
+      // 各チケットの取得
+      this.listStock = await this.getListStock(this.events, this.group)
+
+      if (this.group && this.events) {
+        this.listTakenTickets = await this.getListTakenTickets(
+          this.events,
+          this.group
+        )
+      }
     },
 
     // Eventsを取得
