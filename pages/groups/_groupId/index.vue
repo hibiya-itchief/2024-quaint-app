@@ -275,6 +275,11 @@ export default Vue.extend({
   name: 'IndivisualGroupPage',
   auth: false,
 
+  async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
+    const group = payload ?? (await $axios.get('/groups/' + params.groupId))
+    return { group: group.data }
+  },
+
   data(): Data {
     return {
       userGroups: {
@@ -315,6 +320,7 @@ export default Vue.extend({
       view_count: '...',
     }
   },
+
   head() {
     return {
       title: this.group?.groupname + ' 「' + this.group?.title + '」',
@@ -347,11 +353,10 @@ export default Vue.extend({
       ],
     }
   },
+
   async created() {
     // イベント情報の取得
     this.events = await this.getEvents()
-    // 団体情報の取得
-    this.group = await this.getGroup()
     // linksの取得
     this.links = await this.getLinks()
     // 各チケットの取得
@@ -429,20 +434,16 @@ export default Vue.extend({
       this.is_bookmarked = false
     },
     IsNotClassroom(group: Group) {
-      if (group) {
-        for (let i = 0; i < group.tags.length; i++) {
-          if (
-            group.tags[i].tagname === 'Hebe' ||
-            group.tags[i].tagname === '外部団体' ||
-            group.tags[i].tagname === '部活動'
-          ) {
-            return true
-          }
+      for (let i = 0; i < group.tags.length; i++) {
+        if (
+          group.tags[i].tagname === 'Hebe' ||
+          group.tags[i].tagname === '外部団体' ||
+          group.tags[i].tagname === '部活動'
+        ) {
+          return true
         }
-        return false
-      } else {
-        return false
       }
+      return false
     },
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
@@ -541,22 +542,6 @@ export default Vue.extend({
       return res
     },
 
-    // groupを取得
-    async getGroup(): Promise<Group> {
-      const res = await this.$axios
-        .$get('/groups/' + this.$route.params.groupId)
-        .then(
-          (result) => {
-            return result
-          },
-          (error) => {
-            console.log(error)
-            return undefined
-          }
-        )
-      return res
-    },
-
     // linksの取得
     async getLinks(): Promise<GroupLink[]> {
       const res = await this.$axios
@@ -576,27 +561,31 @@ export default Vue.extend({
 
     // 各チケットの取得
     // listStockの取得
-    async getListStock(events: Event[], group: Group) {
-      if (events.length !== 0) {
-        const getTicketsInfo = []
+    async getListStock(events: Event[], group: Group | undefined) {
+      if (typeof group !== 'undefined') {
+        if (events.length !== 0) {
+          const getTicketsInfo = []
 
-        for (let i = 0; i < events.length; i++) {
-          getTicketsInfo.push(
-            await this.$axios.$get(
-              `/groups/${group.id}/events/${events[i].id}/tickets`
+          for (let i = 0; i < events.length; i++) {
+            getTicketsInfo.push(
+              await this.$axios.$get(
+                `/groups/${group.id}/events/${events[i].id}/tickets`
+              )
             )
-          )
-        }
-
-        const listStock: number[] = []
-
-        Promise.all(getTicketsInfo).then((ticketsInfo) => {
-          for (let i = 0; i < ticketsInfo.length; i++) {
-            listStock.push(ticketsInfo[i].stock)
           }
-        })
 
-        return listStock
+          const listStock: number[] = []
+
+          Promise.all(getTicketsInfo).then((ticketsInfo) => {
+            for (let i = 0; i < ticketsInfo.length; i++) {
+              listStock.push(ticketsInfo[i].stock)
+            }
+          })
+
+          return listStock
+        } else {
+          return []
+        }
       } else {
         return []
       }
