@@ -276,8 +276,8 @@ export default Vue.extend({
   auth: false,
 
   async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
-    const group = payload ?? (await $axios.get('/groups/' + params.groupId))
-    return { group: group.data }
+    const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
+    return { group }
   },
 
   data(): Data {
@@ -388,6 +388,9 @@ export default Vue.extend({
     this.filteredEvents = this.events.filter((val: Event) => {
       return this.$quaintUserRole(val.target, this.$auth.user)
     })
+
+    // ロードページの終了
+    this.nowloading = false
   },
 
   mounted() {
@@ -408,9 +411,6 @@ export default Vue.extend({
         this.out_time_events.push(event)
       }
     }
-
-    // ロードページの終了
-    this.nowloading = false
   },
 
   methods: {
