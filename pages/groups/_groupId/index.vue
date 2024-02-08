@@ -123,10 +123,10 @@
                     v-if="is_bookmarked"
                     icon
                     color="theme_color"
-                    @click="removeBookmark(group.id)"
+                    @click="RemoveBookmark(group.id)"
                     ><v-icon>mdi-bookmark</v-icon></v-btn
                   >
-                  <v-btn v-else icon @click="addBookmark(group.id)"
+                  <v-btn v-else icon @click="AddBookmark(group.id)"
                     ><v-icon>mdi-bookmark-outline</v-icon></v-btn
                   >
                 </v-card-actions>
@@ -162,12 +162,12 @@
                   class="ma-2"
                   color="primary"
                   dark
-                  @click="getAllEventsData()"
+                  @click="GetAllEventsData()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
-                <div v-for="(event, index) in suitableEvents()" :key="event.id">
+                <div v-for="(event, index) in SuitableEvents()" :key="event.id">
                   <!-- 配布中のチケットを表示 -->
-                  <div v-if="isAvailable(event)">
+                  <div v-if="IsAvailable(event)">
                     <EventsEventCard
                       :group="group"
                       :event="event"
@@ -179,9 +179,9 @@
                 </div>
 
                 <v-col cols="12">
-                  <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
+                  <!--SuitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
                   <v-col
-                    v-if="suitableEvents().length === out_time_events.length"
+                    v-if="SuitableEvents().length === out_time_events.length"
                     cols="12"
                   >
                     <v-card class="pa-2">
@@ -199,10 +199,10 @@
                   </div>
 
                   <v-row justify="center">
-                    <div v-if="suitableEvents().length > 0">
+                    <div v-if="SuitableEvents().length > 0">
                       <EventsShowAllEventsButton
                         :group="group"
-                        :events="suitableEvents()"
+                        :events="SuitableEvents()"
                         :list-stock="listStock"
                         :list-taken-tickets="listTakenTickets"
                       />
@@ -356,7 +356,7 @@ export default Vue.extend({
 
   async created() {
     // チケット情報関連の総取得
-    await this.getAllEventsData()
+    await this.GetAllEventsData()
 
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
@@ -384,7 +384,7 @@ export default Vue.extend({
       })
 
     //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfilteredEventsに格納される
-    //  '&& this.isToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
+    //  '&& this.IsToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
     this.filteredEvents = this.events.filter((val: Event) => {
       return this.$quaintUserRole(val.target, this.$auth.user)
     })
@@ -406,19 +406,19 @@ export default Vue.extend({
     }
 
     // 配布時間外のチケットをout_time_eventsに格納
-    for (const event of this.suitableEvents()) {
-      if (!this.isAvailable(event)) {
+    for (const event of this.SuitableEvents()) {
+      if (!this.IsAvailable(event)) {
         this.out_time_events.push(event)
       }
     }
   },
 
   methods: {
-    addBookmark(id: string) {
+    AddBookmark(id: string) {
       localStorage.setItem('seiryofes.groups.favorite.' + id, id)
       this.is_bookmarked = true
     },
-    removeBookmark(id: string) {
+    RemoveBookmark(id: string) {
       localStorage.removeItem('seiryofes.groups.favorite.' + id)
       this.is_bookmarked = false
     },
@@ -436,7 +436,7 @@ export default Vue.extend({
     },
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
-    suitableEvents() {
+    SuitableEvents() {
       if (!this.$auth.loggedIn) {
         return this.events
       } else {
@@ -445,8 +445,8 @@ export default Vue.extend({
     },
 
     // 配布日or公演日が今日かどうか判断するmethod
-    // 使い方：isToday(event.sell_starts, event.sell_ends, event.starts_at)"
-    isToday(
+    // 使い方：IsToday(event.sell_starts, event.sell_ends, event.starts_at)"
+    IsToday(
       inputSellStarts: string,
       inputSellEnds: string,
       inputStarts: string
@@ -464,8 +464,8 @@ export default Vue.extend({
       }
     },
 
-    // isAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
-    isAvailable(event: Event) {
+    // IsAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
+    IsAvailable(event: Event) {
       if (
         new Date() > new Date(event.sell_starts) &&
         new Date(event.sell_ends) > new Date()
@@ -532,7 +532,7 @@ export default Vue.extend({
     },
 
     // チケット情報の取得をまとめたもの
-    async getAllEventsData() {
+    async GetAllEventsData() {
       // イベント情報の取得
       this.events = await this.getEvents()
       // 各チケットの取得
@@ -550,30 +550,13 @@ export default Vue.extend({
             result.sort((x: Event, y: Event) => {
               return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
             })
-            // 下はisAvailableと同じ処理
+            // 下はIsAvailableと同じ処理
             result.sort((i: Event) => {
               return new Date() > new Date(i.sell_starts) &&
                 new Date(i.sell_ends) > new Date()
                 ? -1
                 : 1
             })
-            return result
-          },
-          (error) => {
-            console.log(error)
-            return undefined
-          }
-        )
-
-      return res
-    },
-
-    // linksの取得
-    async getLinks(): Promise<GroupLink[]> {
-      const res = await this.$axios
-        .$get('/groups/' + this.$route.params.groupId + '/links')
-        .then(
-          (result) => {
             return result
           },
           (error) => {
