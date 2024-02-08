@@ -519,7 +519,6 @@ export default Vue.extend({
 
     // Eventsを取得
     async getEvents(): Promise<Event[]> {
-      // ページリロード時にasyncData内のプログラムを走らせるために再読み込み
       const res = await this.$axios
         .$get('/groups/' + this.$route.params.groupId + '/events')
         .then(
