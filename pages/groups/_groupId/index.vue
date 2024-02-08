@@ -534,7 +534,7 @@ export default Vue.extend({
     // チケット情報の取得をまとめたもの
     async GetAllEventsData() {
       // イベント情報の取得
-      this.events = await this.getEvents()
+      this.events = await this.GetEvents()
       // 各チケットの取得
       const res = this.GetTickets(this.events, this.group)
       this.listStock = res.listStock
@@ -542,7 +542,7 @@ export default Vue.extend({
     },
 
     // Eventsを取得
-    async getEvents(): Promise<Event[]> {
+    async GetEvents(): Promise<Event[]> {
       const res = await this.$axios
         .$get('/groups/' + this.$route.params.groupId + '/events')
         .then(
@@ -553,7 +553,7 @@ export default Vue.extend({
             return result
           },
           (error) => {
-            console.log(error)
+            console.error(error)
             return undefined
           }
         )
