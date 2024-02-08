@@ -523,9 +523,6 @@ export default Vue.extend({
         .$get('/groups/' + this.$route.params.groupId + '/events')
         .then(
           (result) => {
-            result.sort((i: Event) => {
-              return i.target === 'paper' ? 1 : -1
-            })
             result.sort((x: Event, y: Event) => {
               return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
             })
