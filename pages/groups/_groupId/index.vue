@@ -550,13 +550,6 @@ export default Vue.extend({
             result.sort((x: Event, y: Event) => {
               return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
             })
-            // 下はIsAvailableと同じ処理
-            result.sort((i: Event) => {
-              return new Date() > new Date(i.sell_starts) &&
-                new Date(i.sell_ends) > new Date()
-                ? -1
-                : 1
-            })
             return result
           },
           (error) => {
