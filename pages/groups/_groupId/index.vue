@@ -564,7 +564,7 @@ export default Vue.extend({
     // 各チケットの取得
     // listStockの取得
     async getListStock(events: Event[], group: Group | undefined) {
-      if (typeof group !== 'undefined') {
+      if (group !== undefined) {
         if (events.length !== 0) {
           const getTicketsInfo = []
 
@@ -594,27 +594,31 @@ export default Vue.extend({
     },
 
     // listTakenTicketsの取得
-    async getListTakenTickets(events: Event[], group: Group) {
-      if (events.length !== 0) {
-        const getTicketsInfo = []
+    async getListTakenTickets(events: Event[], group: Group | undefined) {
+      if (group !== undefined) {
+        if (events.length !== 0) {
+          const getTicketsInfo = []
 
-        for (let i = 0; i < events.length; i++) {
-          getTicketsInfo.push(
-            await this.$axios.$get(
-              `/groups/${group.id}/events/${events[i].id}/tickets`
+          for (let i = 0; i < events.length; i++) {
+            getTicketsInfo.push(
+              await this.$axios.$get(
+                `/groups/${group.id}/events/${events[i].id}/tickets`
+              )
             )
-          )
-        }
-
-        const listTakenTickets: number[] = []
-
-        Promise.all(getTicketsInfo).then((ticketsInfo) => {
-          for (let i = 0; i < ticketsInfo.length; i++) {
-            listTakenTickets.push(ticketsInfo[i].taken_tickets)
           }
-        })
 
-        return listTakenTickets
+          const listTakenTickets: number[] = []
+
+          Promise.all(getTicketsInfo).then((ticketsInfo) => {
+            for (let i = 0; i < ticketsInfo.length; i++) {
+              listTakenTickets.push(ticketsInfo[i].taken_tickets)
+            }
+          })
+
+          return listTakenTickets
+        } else {
+          return []
+        }
       } else {
         return []
       }
