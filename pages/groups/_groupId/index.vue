@@ -179,7 +179,7 @@
                 </div>
 
                 <v-col cols="12">
-                  <!--SuitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
+                  <!--表示する公演が無い時，以下のメッセージを表示-->
                   <v-col
                     v-if="SuitableEvents().length === out_time_events.length"
                     cols="12"
@@ -389,6 +389,13 @@ export default Vue.extend({
       return this.$quaintUserRole(val.target, this.$auth.user)
     })
 
+    // 配布時間外のチケットをout_time_eventsに格納
+    for (const event of this.SuitableEvents()) {
+      if (!this.IsAvailable(event)) {
+        this.out_time_events.push(event)
+      }
+    }
+
     // ロードページの終了
     this.nowloading = false
   },
@@ -402,13 +409,6 @@ export default Vue.extend({
         // お気に入りならtrue
         this.is_bookmarked = true
         break
-      }
-    }
-
-    // 配布時間外のチケットをout_time_eventsに格納
-    for (const event of this.SuitableEvents()) {
-      if (!this.IsAvailable(event)) {
-        this.out_time_events.push(event)
       }
     }
   },
