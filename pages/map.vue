@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">校内マップ</h1>
       <v-row justify="center">
         <v-btn-toggle

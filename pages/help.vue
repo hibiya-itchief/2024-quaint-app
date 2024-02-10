@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">ヘルプ</h1>
       <v-row justify="center">
         <v-col cols="12">

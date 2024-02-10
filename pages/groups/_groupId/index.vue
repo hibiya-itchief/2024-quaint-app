@@ -7,9 +7,7 @@
             <v-col cols="12" sm="6" lg="6">
               <!--作品情報-->
               <!--タイトル，団体，お気に入り，映像で鑑賞ボタン-->
-              <v-btn icon fab small @click="$router.go(-1)">
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
+              <ToolsBackButton />
               <v-card v-if="group">
                 <v-img
                   v-if="group.public_thumbnail_image_url != null"
