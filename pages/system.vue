@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">整理券制度</h1>
       <v-row justify="center">
         <v-col cols="12" sm="6" md="6">

@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">スケジュール</h1>
       <v-row class="mb-10" justify="center">
         <v-col cols="12" sm="6" md="6">
