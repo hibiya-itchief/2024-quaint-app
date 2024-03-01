@@ -489,12 +489,18 @@ export default Vue.extend({
         }
         const listStock: number[] = []
         const listTakenTickets: number[] = []
-        Promise.all(getTicketsInfo).then((ticketsInfo) => {
-          for (let i = 0; i < ticketsInfo.length; i++) {
-            listStock.push(ticketsInfo[i].stock)
-            listTakenTickets.push(ticketsInfo[i].taken_tickets)
-          }
-        })
+        Promise.all(getTicketsInfo)
+          .then((ticketsInfo) => {
+            for (let i = 0; i < ticketsInfo.length; i++) {
+              listStock.push(ticketsInfo[i].stock)
+              listTakenTickets.push(ticketsInfo[i].taken_tickets)
+            }
+          })
+          .catch(() => {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '情報の取得に失敗しました。再読み込みしてください',
+            })
+          })
         return { listStock, listTakenTickets }
       } else {
         return { listStock: [], listTakenTickets: [] }
@@ -512,8 +518,10 @@ export default Vue.extend({
             })
             return result
           },
-          (error) => {
-            console.error(error)
+          () => {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '情報の取得に失敗しました。再読み込みしてください',
+            })
             return undefined
           }
         )

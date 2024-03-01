@@ -1,8 +1,10 @@
 export const state = () => ({
   success_alert: false, // 成功のSnackbarか
   error_alert: false, // 失敗のSnackbarか
+  internet_error_alert: false, // APIを使用した情報取得に失敗したとき
   success_message: '', // 成功時のSnackbarに表示するメッセージ
   error_message: '', // 失敗時のSnackbarに表示するメッセージ
+  internet_error_message: '', // API使用時の取得エラー時のメッセージ
   success_snackbar_link: '', // 成功時のSnackbarに表示するメッセージのハイパーリンク
   error_snackbar_link: '', // 失敗時のSnackbarに表示するメッセージのハイパーリンク
 })
@@ -36,5 +38,15 @@ export const mutations = {
     state.error_alert = false
     state.error_message = ''
     state.error_snackbar_link = ''
+  },
+
+  ShowInternetErrorSnackbar(state, payload) {
+    state.internet_error_alert = true
+    state.internet_error_message = payload.message
+  },
+
+  CloseInternetErrorSnackbar(state) {
+    state.internet_error_alert = false
+    state.internet_error_message = ''
   },
 }

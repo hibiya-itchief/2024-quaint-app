@@ -40,6 +40,19 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar v-model="internet_error_alert" color="orange" elevation="2">
+      {{ $store.state.internet_error_message }}
+      <template #action="{ attrs }">
+        <v-btn
+          color="white"
+          icon
+          v-bind="attrs"
+          @click="$store.commit('CloseInternetErrorSnackbar')"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -56,6 +69,12 @@ export default Vue.extend({
     error_alert: {
       get() {
         return this.$store.state.error_alert
+      },
+    },
+
+    internet_error_alert: {
+      get() {
+        return this.$store.state.internet_error_alert
       },
     },
   },
