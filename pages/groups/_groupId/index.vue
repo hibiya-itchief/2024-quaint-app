@@ -500,6 +500,16 @@ export default Vue.extend({
       return colors[index]
     },
 
+    // チケット情報の取得をまとめたもの
+    async GetAllEventsData() {
+      // イベント情報の取得
+      this.events = await this.GetEvents()
+      // 各チケットの取得
+      const res = this.GetTickets(this.events, this.group)
+      this.listStock = res.listStock
+      this.listTakenTickets = res.listTakenTickets
+    },
+
     // 各チケットの取得
     // listStockの取得
     // listTakenTicketsの取得
@@ -529,16 +539,6 @@ export default Vue.extend({
       } else {
         return { listStock: [], listTakenTickets: [] }
       }
-    },
-
-    // チケット情報の取得をまとめたもの
-    async GetAllEventsData() {
-      // イベント情報の取得
-      this.events = await this.GetEvents()
-      // 各チケットの取得
-      const res = this.GetTickets(this.events, this.group)
-      this.listStock = res.listStock
-      this.listTakenTickets = res.listTakenTickets
     },
 
     // Eventsを取得
