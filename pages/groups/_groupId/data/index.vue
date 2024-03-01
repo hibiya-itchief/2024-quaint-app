@@ -184,24 +184,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    isToday(
-      inputSellStarts: string,
-      inputSellEnds: string,
-      inputStarts: string
-    ) {
-      const today = new Date().toDateString()
-      const sellStartsDate = new Date(inputSellStarts).toDateString()
-      const sellEndsDate = new Date(inputSellEnds).toDateString()
-      const startDate = new Date(inputStarts).toDateString()
-      if (startDate === today) {
-        return true
-      } else if (sellStartsDate < today && today < sellEndsDate) {
-        return true
-      } else {
-        return false
-      }
-    },
-
     // isAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
     isAvailable(event: Event) {
       if (

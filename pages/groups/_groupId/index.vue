@@ -443,26 +443,6 @@ export default Vue.extend({
       }
     },
 
-    // 配布日or公演日が今日かどうか判断するmethod
-    // 使い方：IsToday(event.sell_starts, event.sell_ends, event.starts_at)"
-    IsToday(
-      inputSellStarts: string,
-      inputSellEnds: string,
-      inputStarts: string
-    ) {
-      const today = new Date().toDateString()
-      const sellStartsDate = new Date(inputSellStarts).toDateString()
-      const sellEndsDate = new Date(inputSellEnds).toDateString()
-      const startDate = new Date(inputStarts).toDateString()
-      if (startDate === today) {
-        return true
-      } else if (sellStartsDate < today && today < sellEndsDate) {
-        return true
-      } else {
-        return false
-      }
-    },
-
     // IsAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
     IsAvailable(event: Event) {
       if (
