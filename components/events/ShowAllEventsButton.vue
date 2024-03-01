@@ -126,7 +126,6 @@ import Vue from 'vue'
 
 type Data = {
   dialog: boolean
-  filteredEvents: Event[]
   first_day_events: Event[] // 一日目のチケットを格納する
   second_day_events: Event[] // 二日目のチケットを格納する
   other_day_events: Event[] // 開催期間外のチケットを格納する
@@ -156,7 +155,6 @@ export default Vue.extend({
   data(): Data {
     return {
       dialog: false,
-      filteredEvents: [],
       first_day_events: [],
       second_day_events: [],
       other_day_events: [],
@@ -168,12 +166,6 @@ export default Vue.extend({
   },
 
   created() {
-    //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfilteredEventsに格納される
-    //  '&& this.isToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
-    this.filteredEvents = (this.events as Event[]).filter((val: Event) => {
-      return this.$quaintUserRole(val.target, this.$auth.user)
-    })
-
     // eventsを一日目のものと二日目のものに振り分け
     // first_day_eventsに一日目、second_day_eventsに二日目のチケットを代入する
     for (const event of this.suitableEvents()) {
@@ -191,10 +183,18 @@ export default Vue.extend({
   methods: {
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
     suitableEvents() {
+      //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfiltered_eventsに格納される
+      //  '&& this.isToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
+      const filtered_events: Event[] = (this.events as Event[]).filter(
+        (val: Event) => {
+          return this.$quaintUserRole(val.target, this.$auth.user)
+        }
+      )
+
       if (!this.$auth.loggedIn) {
         return this.events as Event[]
       } else {
-        return this.filteredEvents as Event[]
+        return filtered_events as Event[]
       }
     },
 

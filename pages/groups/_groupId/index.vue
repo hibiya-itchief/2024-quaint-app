@@ -250,7 +250,6 @@ type Data = {
   events: Event[]
   out_time_events: Event[] // ユーザー属性に適したイベントのうち配布時間外のイベントを格納する
   links: GroupLink[]
-  filteredEvents: Event[] //  ユーザ属性（e,g.students, parents）に合致する整理券のみが格納される配列
   selected_event: Event | null
   editable: boolean
   dialog: boolean
@@ -288,7 +287,6 @@ export default Vue.extend({
       events: [],
       out_time_events: [],
       links: [],
-      filteredEvents: [],
       selected_event: null,
       editable: false, // 権限を持つユーザーがアクセスするとtrueになりページを編集できる
 
@@ -370,12 +368,6 @@ export default Vue.extend({
         this.view_count = 'エラー'
       })
 
-    //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfilteredEventsに格納される
-    //  '&& this.IsToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
-    this.filteredEvents = this.events.filter((val: Event) => {
-      return this.$quaintUserRole(val.target, this.$auth.user)
-    })
-
     // 配布時間外のチケットをout_time_eventsに格納
     for (const event of this.SuitableEvents()) {
       if (!this.IsAvailable(event)) {
@@ -424,10 +416,15 @@ export default Vue.extend({
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
     SuitableEvents() {
+      //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfiltered_eventsに格納される
+      //  '&& this.IsToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
+      const filtered_events: Event[] = this.events.filter((val: Event) => {
+        return this.$quaintUserRole(val.target, this.$auth.user)
+      })
       if (!this.$auth.loggedIn) {
         return this.events
       } else {
-        return this.filteredEvents
+        return filtered_events
       }
     },
 
