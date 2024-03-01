@@ -221,7 +221,7 @@ export default Vue.extend({
 
     async CreateTicket(event: Event, person: number) {
       if (!this.$auth.loggedIn) {
-        this.$store.commit('showErrorSnackbar', {
+        this.$store.commit('ShowErrorSnackbar', {
           message: '整理券の取得には',
           link: '/login',
         })
@@ -238,19 +238,19 @@ export default Vue.extend({
             person
         )
         .then(() => {
-          this.$store.commit('showSuccessSnackbar', {
+          this.$store.commit('ShowSuccessSnackbar', {
             message: '整理券を取得できました！',
             link: '/tickets',
           })
         })
         .catch((e) => {
           if (e.response) {
-            this.$store.commit('showErrorSnackbar', {
+            this.$store.commit('ShowErrorSnackbar', {
               message: e.response.data.detail,
               link: '',
             })
           } else {
-            this.$store.commit('showErrorSnackbar', {
+            this.$store.commit('ShowErrorSnackbar', {
               message:
                 '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️',
               link: '',
@@ -264,18 +264,18 @@ export default Vue.extend({
         new Date() < new Date(event.sell_starts) ||
         new Date(event.sell_ends) < new Date()
       ) {
-        this.$store.commit('showErrorSnackbar', {
+        this.$store.commit('ShowErrorSnackbar', {
           message: '配布時間外です',
           link: '',
         })
       } else if (!this.$auth.loggedIn) {
-        this.$store.commit('showErrorSnackbar', {
+        this.$store.commit('ShowErrorSnackbar', {
           message: '整理券の取得には',
           link: '/login',
         })
       } else {
         this.dialog = true
-        this.$store.commit('closeErrorSnackbar')
+        this.$store.commit('CloseErrorSnackbar')
       }
     },
   },

@@ -10,14 +10,14 @@ export const state = () => ({
 export const mutations = {
   // 成功時のSnackbarを表示
   // 引数 message, link
-  showSuccessSnackbar(state, payload) {
+  ShowSuccessSnackbar(state, payload) {
     state.success_alert = true
     state.success_message = payload.message
     state.success_snackbar_link = payload.link
   },
 
   // 成功時のSnackbarを閉じる
-  closeSuccessSnackbar(state) {
+  CloseSuccessSnackbar(state) {
     state.success_alert = false
     state.success_message = ''
     state.success_snackbar_link = ''
@@ -25,14 +25,14 @@ export const mutations = {
 
   // 失敗時のSnackbarを表示
   // 引数 message, link
-  showErrorSnackbar(state, payload) {
+  ShowErrorSnackbar(state, payload) {
     state.error_alert = true
     state.error_message = payload.message
     state.error_snackbar_link = payload.link
   },
 
   // 失敗時のSnackbarを閉じる
-  closeErrorSnackbar(state) {
+  CloseErrorSnackbar(state) {
     state.error_alert = false
     state.error_message = ''
     state.error_snackbar_link = ''

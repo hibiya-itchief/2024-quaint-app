@@ -14,7 +14,7 @@
           color="white"
           icon
           v-bind="attrs"
-          @click="$store.commit('closeSuccessSnackbar')"
+          @click="$store.commit('CloseSuccessSnackbar')"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -34,7 +34,7 @@
           color="white"
           icon
           v-bind="attrs"
-          @click="$store.commit('closeErrorSnackbar')"
+          @click="$store.commit('CloseErrorSnackbar')"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
