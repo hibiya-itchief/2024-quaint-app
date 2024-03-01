@@ -171,9 +171,8 @@
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :index="index"
-                      :list-taken-tickets="listTakenTickets"
-                      :list-stock="listStock"
+                      :taken-tickets="listTakenTickets[index]"
+                      :ticket-stock="listStock[index]"
                     />
                   </div>
                 </div>

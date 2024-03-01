@@ -44,9 +44,8 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
+                    :taken-tickets="listTakenTickets[index]"
+                    :ticket-stock="listStock[index]"
                     :cut-volume-icon-text="true"
                     :cut-volume-date="true"
                   />
@@ -55,9 +54,8 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
+                    :taken-tickets="listTakenTickets[index]"
+                    :ticket-stock="listStock[index]"
                   />
                 </div>
               </div>
@@ -73,9 +71,8 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
+                    :taken-tickets="listTakenTickets[index]"
+                    :ticket-stock="listStock[index]"
                     :cut-volume-icon-text="true"
                     :cut-volume-date="true"
                   />
@@ -84,9 +81,8 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :index="index"
-                    :list-taken-tickets="listTakenTickets"
-                    :list-stock="listStock"
+                    :taken-tickets="listTakenTickets[index]"
+                    :ticket-stock="listStock[index]"
                   />
                 </div>
               </div>
@@ -101,9 +97,8 @@
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :index="index"
-                      :list-taken-tickets="listTakenTickets"
-                      :list-stock="listStock"
+                      :taken-tickets="listTakenTickets[index]"
+                      :ticket-stock="listStock[index]"
                       :cut-volume-icon-text="true"
                     />
                   </div>
@@ -111,9 +106,8 @@
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :index="index"
-                      :list-taken-tickets="listTakenTickets"
-                      :list-stock="listStock"
+                      :taken-tickets="listTakenTickets[index]"
+                      :ticket-stock="listStock[index]"
                     />
                   </div>
                 </div>

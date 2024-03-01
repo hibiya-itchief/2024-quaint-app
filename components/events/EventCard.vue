@@ -3,9 +3,7 @@
   <div>
     <v-card
       class="ma-2 d-flex"
-      :disabled="
-        !isAvailable(event) || listTakenTickets[index] >= listStock[index]
-      "
+      :disabled="!isAvailable(event) || takenTickets >= ticketStock"
       @click.stop="selectEvent(event)"
     >
       <div>
@@ -39,7 +37,7 @@
           <v-icon>mdi-cancel</v-icon></v-btn
         >
         <v-btn
-          v-else-if="listTakenTickets[index] / listStock[index] < 0.5"
+          v-else-if="takenTickets / ticketStock < 0.5"
           color="green"
           outlined
           style="font-weight: bold"
@@ -49,8 +47,7 @@
         <!--5割以上で黄色になる-->
         <v-btn
           v-else-if="
-            listTakenTickets[index] / listStock[index] >= 0.5 &&
-            listTakenTickets[index] < listStock[index]
+            takenTickets / ticketStock >= 0.5 && takenTickets < ticketStock
           "
           color="orange"
           outlined
@@ -59,7 +56,7 @@
           <v-icon>mdi-triangle-outline</v-icon></v-btn
         >
         <v-btn
-          v-else-if="listTakenTickets[index] >= listStock[index]"
+          v-else-if="takenTickets >= ticketStock"
           color="red"
           outlined
           style="font-weight: bold"
@@ -148,16 +145,12 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    index: {
+    takenTickets: {
       type: Number,
       required: true,
     },
-    listTakenTickets: {
-      type: Array,
-      required: true,
-    },
-    listStock: {
-      type: Array,
+    ticketStock: {
+      type: Number,
       required: true,
     },
     // 配布状況のアイコンの横のテキストをカットするか
