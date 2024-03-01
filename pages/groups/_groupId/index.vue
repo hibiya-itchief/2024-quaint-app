@@ -484,7 +484,7 @@ export default Vue.extend({
       // イベント情報の取得
       this.events = await this.GetEvents()
       // 各チケットの取得
-      const res = this.GetTickets(this.events, this.group)
+      const res = this.GetTickets(this.events)
       this.listStock = res.listStock
       this.listTakenTickets = res.listTakenTickets
     },
@@ -492,29 +492,25 @@ export default Vue.extend({
     // 各チケットの取得
     // listStockの取得
     // listTakenTicketsの取得
-    GetTickets(events: Event[], group: Group | undefined) {
-      if (group !== undefined) {
-        if (events.length !== 0) {
-          const getTicketsInfo = []
-          for (let i = 0; i < events.length; i++) {
-            getTicketsInfo.push(
-              this.$axios.$get(
-                `/groups/${group.id}/events/${events[i].id}/tickets`
-              )
+    GetTickets(events: Event[]) {
+      if (events.length !== 0) {
+        const getTicketsInfo = []
+        for (let i = 0; i < events.length; i++) {
+          getTicketsInfo.push(
+            this.$axios.$get(
+              `/groups/${this.$route.params.groupId}/events/${events[i].id}/tickets`
             )
-          }
-          const listStock: number[] = []
-          const listTakenTickets: number[] = []
-          Promise.all(getTicketsInfo).then((ticketsInfo) => {
-            for (let i = 0; i < ticketsInfo.length; i++) {
-              listStock.push(ticketsInfo[i].stock)
-              listTakenTickets.push(ticketsInfo[i].taken_tickets)
-            }
-          })
-          return { listStock, listTakenTickets }
-        } else {
-          return { listStock: [], listTakenTickets: [] }
+          )
         }
+        const listStock: number[] = []
+        const listTakenTickets: number[] = []
+        Promise.all(getTicketsInfo).then((ticketsInfo) => {
+          for (let i = 0; i < ticketsInfo.length; i++) {
+            listStock.push(ticketsInfo[i].stock)
+            listTakenTickets.push(ticketsInfo[i].taken_tickets)
+          }
+        })
+        return { listStock, listTakenTickets }
       } else {
         return { listStock: [], listTakenTickets: [] }
       }
