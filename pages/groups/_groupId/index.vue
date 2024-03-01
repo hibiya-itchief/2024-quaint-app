@@ -253,13 +253,7 @@ type Data = {
   filteredEvents: Event[] //  ユーザ属性（e,g.students, parents）に合致する整理券のみが格納される配列
   selected_event: Event | null
   editable: boolean
-  success_alert: boolean
-  error_alert: boolean
-  success_message: string
-  error_message: string
   dialog: boolean
-  success_snackbar_link: string | undefined
-  error_snackbar_link: string | undefined
 
   ticket_person: number
   person_labels: any[]
@@ -305,13 +299,7 @@ export default Vue.extend({
         'mdi-account-multiple',
         'mdi-account-group',
       ],
-      success_alert: false,
-      error_alert: false,
-      success_message: '',
-      error_message: '',
       dialog: false,
-      success_snackbar_link: undefined,
-      error_snackbar_link: undefined,
       nowloading: true,
       is_bookmarked: false,
       listStock: [],
