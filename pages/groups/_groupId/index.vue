@@ -498,7 +498,7 @@ export default Vue.extend({
           })
           .catch(() => {
             this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '情報の取得に失敗しました。再読み込みしてください',
+              message: '情報の取得に失敗しました。再読み込みしてください。',
             })
           })
         return { listStock, listTakenTickets }
@@ -520,7 +520,7 @@ export default Vue.extend({
           },
           () => {
             this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '情報の取得に失敗しました。再読み込みしてください',
+              message: '情報の取得に失敗しました。再読み込みしてください。',
             })
             return undefined
           }
