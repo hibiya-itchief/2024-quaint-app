@@ -201,19 +201,19 @@ export default Vue.extend({
       showVideo: true,
       prevRoute: null,
       pages: [
-        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/about' },
+        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/info/about' },
         {
           icon: 'mdi-ticket-confirmation',
           text: '整理券制度',
           link: '/system',
         },
-        { icon: 'mdi-train', text: 'アクセス', link: '/access' },
-        { icon: 'mdi-map', text: '校内マップ', link: '/map' },
-        { icon: 'mdi-clock', text: 'スケジュール', link: '/schedule' },
+        { icon: 'mdi-train', text: 'アクセス', link: '/info/access' },
+        { icon: 'mdi-map', text: '校内マップ', link: '/info/map' },
+        { icon: 'mdi-clock', text: 'スケジュール', link: '/info/schedule' },
         {
           icon: 'mdi-tooltip-question-outline',
           text: 'ヘルプ',
-          link: '/help',
+          link: '/info/help',
         },
       ],
     }
