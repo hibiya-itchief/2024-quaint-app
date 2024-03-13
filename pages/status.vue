@@ -3,6 +3,7 @@
     <v-container>
       <div v-if="!now_loading">
         <h1 class="pages-title" style="color: black">配布状況一覧</h1>
+        <h2>情報には最大で一分間の遅れがあります。</h2>
         <v-row>
           <v-col>
             <v-card class="justify-center" cols="10">
@@ -19,12 +20,17 @@
                 <v-tab href="#tab-2"> 2階 </v-tab>
                 <v-tab href="#tab-3"> 3階 </v-tab>
                 <v-tab href="#tab-4"> 4階 </v-tab>
+                <v-tab href="#tab-0">その他</v-tab>
               </v-tabs>
 
               <v-tabs-items v-model="tab">
-                <v-tab-item v-for="i in 4" :key="i" :value="'tab-' + i">
+                <v-tab-item
+                  v-for="i in [0, 1, 2, 3, 4]"
+                  :key="i"
+                  :value="'tab-' + i"
+                >
                   <div v-for="group of filtered_groups[i]" :key="group.id">
-                    <StatusCard :group="group" :events="events[group.id]" />
+                    <StatusCard :group="group" :all-events="events[group.id]" />
                   </div>
                 </v-tab-item>
               </v-tabs-items>
@@ -40,13 +46,13 @@
 </template>
 
 <script lang="ts">
-import { Group, Tag, Event } from 'types/quaint'
+import { Group, Tag, BoardEvent } from 'types/quaint'
 import Vue from 'vue'
 
 type Data = {
   tags: Tag[]
   groups: Group[]
-  events: { [key: string]: Event[] }
+  events: { [key: string]: BoardEvent[] }
   filtered_groups: [Group[], Group[], Group[], Group[], Group[]]
 
   tab: boolean | null
@@ -94,7 +100,6 @@ export default Vue.extend({
         this.filtered_groups[0].push(group)
       }
     }
-
     this.now_loading = false
   },
 })

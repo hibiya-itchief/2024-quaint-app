@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-list-item>
-      <v-list-item-title>{{
-        DateFormatter(event.starts_at)
-      }}</v-list-item-title>
+      <v-list-item-title
+        >{{ DateFormatter(event.starts_at) }}
+        {{ TimeFormatter(event.starts_at) }}</v-list-item-title
+      >
       <v-list-item-icon>
         <div class="my-auto mx-2">
           <!--ここから配布ステータスの条件分岐-->
@@ -50,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { Event } from 'types/quaint'
+import { BoardEvent } from 'types/quaint'
 import Vue from 'vue'
 
 type Data = {
@@ -77,23 +78,20 @@ export default Vue.extend({
     }
   },
 
-  async created() {
-    const res = await this.$axios.$get(
-      '/api/groups/' + this.group.id + '/events/' + this.event.id + '/tickets'
-    )
-    this.ticket_stock = res.stock
-    this.taken_tickets = res.taken_tickets
+  created() {
+    this.ticket_stock = this.event.ticket_stock
+    this.taken_tickets = this.event.taken_tickets
   },
 
   methods: {
     DateFormatter(inputDate: string) {
       const d = new Date(inputDate)
+      return d.getMonth() + 1 + '月' + d.getDate() + '日 '
+    },
+
+    TimeFormatter(inputDate: string) {
+      const d = new Date(inputDate)
       return (
-        d.getMonth() +
-        1 +
-        '月' +
-        d.getDate() +
-        '日 ' +
         d.getHours().toString().padStart(2, '0') +
         ':' +
         d.getMinutes().toString().padStart(2, '0')
@@ -101,7 +99,7 @@ export default Vue.extend({
     },
 
     // IsAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
-    IsAvailable(event: Event) {
+    IsAvailable(event: BoardEvent) {
       if (
         new Date() > new Date(event.sell_starts) &&
         new Date(event.sell_ends) > new Date()
