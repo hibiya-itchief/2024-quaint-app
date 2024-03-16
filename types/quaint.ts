@@ -34,8 +34,8 @@ export type GroupEdit = {
   public_thumbnail_image_url?: string | null
   public_page_content_url?: string | null
   private_page_content_url?: string | null
-  // floor: number | null
-  // place: string | null
+  floor?: number | null
+  place?: string | null
 }
 export type Event = {
   id: string
@@ -48,20 +48,6 @@ export type Event = {
   target: string
   ticket_stock: number
   lottery: boolean
-}
-
-export type BoardEvent = {
-  id: string
-  group_id: string
-  eventname: string
-  starts_at: string
-  ends_at: string
-  sell_starts: string
-  sell_ends: string
-  target: string
-  ticket_stock: number
-  lottery: boolean
-  taken_tickets: number
 }
 
 export type Ticket = {
