@@ -187,6 +187,8 @@
           <v-icon>mdi-ticket</v-icon>
         </v-btn>
       </v-bottom-navigation>
+
+      <LayoutSnackBar />
     </client-only>
   </v-app>
 </template>
