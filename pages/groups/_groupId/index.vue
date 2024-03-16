@@ -474,6 +474,28 @@ export default Vue.extend({
       this.listTakenTickets = res.listTakenTickets
     },
 
+    // Eventsを取得
+    async GetEvents(): Promise<Event[]> {
+      const res = await this.$axios
+        .$get('/groups/' + this.$route.params.groupId + '/events')
+        .then(
+          (result) => {
+            result.sort((x: Event, y: Event) => {
+              return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
+            })
+            return result
+          },
+          () => {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '情報の取得に失敗しました。再読み込みしてください。',
+            })
+            return undefined
+          }
+        )
+
+      return res
+    },
+
     // 各チケットの取得
     // listStockの取得
     // listTakenTicketsの取得
@@ -505,28 +527,6 @@ export default Vue.extend({
       } else {
         return { listStock: [], listTakenTickets: [] }
       }
-    },
-
-    // Eventsを取得
-    async GetEvents(): Promise<Event[]> {
-      const res = await this.$axios
-        .$get('/groups/' + this.$route.params.groupId + '/events')
-        .then(
-          (result) => {
-            result.sort((x: Event, y: Event) => {
-              return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
-            })
-            return result
-          },
-          () => {
-            this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '情報の取得に失敗しました。再読み込みしてください。',
-            })
-            return undefined
-          }
-        )
-
-      return res
     },
   },
 })
