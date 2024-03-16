@@ -56,14 +56,16 @@ export default Vue.extend({
     if (this.events) {
       // eventsの並び替え
       this.events.sort((x: Event, y: Event) => {
-        return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
-      })
-
-      this.events.sort((i: Event) => {
-        return new Date() > new Date(i.sell_starts) &&
-          new Date(i.sell_ends) < new Date()
-          ? -1
-          : 1
+        // return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
+        if (new Date() > new Date(x.sell_ends)) {
+          if (new Date(x.starts_at) < new Date(y.starts_at)) {
+            return -1
+          } else {
+            return 1
+          }
+        } else {
+          return 1
+        }
       })
     }
   },

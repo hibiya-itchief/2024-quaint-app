@@ -3,7 +3,6 @@
     <v-container>
       <div v-if="!now_loading">
         <h1 class="pages-title" style="color: black">配布状況一覧</h1>
-        <h2>情報には最大で一分間の遅れがあります。</h2>
         <v-row>
           <v-col>
             <v-card class="justify-center" cols="10">
@@ -46,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import { Group, Tag, BoardEvent } from 'types/quaint'
+import { Group, Tag, Event } from 'types/quaint'
 import Vue from 'vue'
 
 type Data = {
   tags: Tag[]
   groups: Group[]
-  events: { [key: string]: BoardEvent[] }
+  events: { [key: string]: Event[] }
   filtered_groups: [Group[], Group[], Group[], Group[], Group[]]
 
   tab: boolean | null
@@ -72,18 +71,15 @@ export default Vue.extend({
   },
 
   async created() {
-    // 最新の情報をredisが保持するようにAPIに要請
-    await this.$axios.$post('/api/board/update')
-
     // URLを本番用に置き換える
-    this.groups = await this.$axios.$get('/api/board/groups')
-    this.tags = await this.$axios.$get('/api/tags')
+    this.groups = await this.$axios.$get('/groups')
+    this.tags = await this.$axios.$get('/tags')
 
     // eventsを作成(key:group name, object:event)
     for (const group of this.groups as Group[]) {
       // URLを本番用に置き換える
       this.events[group.id] = await this.$axios.$get(
-        '/api/board/groups/' + group.id + '/events'
+        '/groups/' + group.id + '/events'
       )
     }
 

@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { BoardEvent } from 'types/quaint'
+import { Event } from 'types/quaint'
 import Vue from 'vue'
 
 type Data = {
@@ -78,9 +78,12 @@ export default Vue.extend({
     }
   },
 
-  created() {
+  async created() {
     this.ticket_stock = this.event.ticket_stock
-    this.taken_tickets = this.event.taken_tickets
+    const res = await this.$axios.$get(
+      '/groups/' + this.group.id + '/events/' + this.event.id + '/tickets'
+    )
+    this.taken_tickets = res.taken_tickets
   },
 
   methods: {
@@ -99,7 +102,7 @@ export default Vue.extend({
     },
 
     // IsAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
-    IsAvailable(event: BoardEvent) {
+    IsAvailable(event: Event) {
       if (
         new Date() > new Date(event.sell_starts) &&
         new Date(event.sell_ends) > new Date()
