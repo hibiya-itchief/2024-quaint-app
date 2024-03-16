@@ -7,32 +7,89 @@
           <v-col>
             <v-card class="justify-center" cols="10">
               <v-tabs
-                v-model="tab"
+                v-model="mode"
                 center-active
                 dark
                 centered
                 background-color="theme_color"
               >
-                <v-tabs-slider></v-tabs-slider>
+                <v-tab href="#mode-1">階別</v-tab>
+                <v-tab href="#mode-2">学年別</v-tab>
 
-                <v-tab href="#tab-1"> 1階 </v-tab>
-                <v-tab href="#tab-2"> 2階 </v-tab>
-                <v-tab href="#tab-3"> 3階 </v-tab>
-                <v-tab href="#tab-4"> 4階 </v-tab>
-                <v-tab href="#tab-0">その他</v-tab>
+                <v-tabs-items v-model="mode">
+                  <!--階別表示-->
+                  <v-tab-item :value="'mode-1'">
+                    <v-tabs
+                      v-model="tab"
+                      center-active
+                      dark
+                      centered
+                      background-color="theme_color"
+                    >
+                      <v-tabs-slider></v-tabs-slider>
+
+                      <v-tab href="#tab-1"> 1階 </v-tab>
+                      <v-tab href="#tab-2"> 2階 </v-tab>
+                      <v-tab href="#tab-3"> 3階 </v-tab>
+                      <v-tab href="#tab-4"> 4階 </v-tab>
+                      <v-tab href="#tab-0">その他</v-tab>
+                    </v-tabs>
+
+                    <v-tabs-items v-model="tab">
+                      <v-tab-item
+                        v-for="i in [0, 1, 2, 3, 4]"
+                        :key="i"
+                        :value="'tab-' + i"
+                      >
+                        <div
+                          v-for="group of floor_filtered_groups[i]"
+                          :key="group.id"
+                        >
+                          <StatusCard
+                            :group="group"
+                            :all-events="events[group.id]"
+                          />
+                        </div>
+                      </v-tab-item>
+                    </v-tabs-items>
+                  </v-tab-item>
+                  <!--学年別表示-->
+                  <v-tab-item :value="'mode-2'">
+                    <v-tabs
+                      v-model="tab"
+                      center-active
+                      dark
+                      centered
+                      background-color="theme_color"
+                    >
+                      <v-tabs-slider></v-tabs-slider>
+
+                      <v-tab href="#tab-1"> 第一学年 </v-tab>
+                      <v-tab href="#tab-2"> 第二学年 </v-tab>
+                      <v-tab href="#tab-3"> 第三学年 </v-tab>
+                      <v-tab href="#tab-0">その他</v-tab>
+                    </v-tabs>
+
+                    <v-tabs-items v-model="tab">
+                      <v-tab-item
+                        v-for="i in [0, 1, 2, 3]"
+                        :key="i"
+                        :value="'tab-' + i"
+                      >
+                        <div
+                          v-for="group of grade_filtered_groups[i]"
+                          :key="group.id"
+                        >
+                          <StatusCard
+                            :group="group"
+                            :all-events="events[group.id]"
+                          />
+                        </div>
+                      </v-tab-item>
+                    </v-tabs-items>
+                  </v-tab-item>
+                </v-tabs-items>
               </v-tabs>
-
-              <v-tabs-items v-model="tab">
-                <v-tab-item
-                  v-for="i in [0, 1, 2, 3, 4]"
-                  :key="i"
-                  :value="'tab-' + i"
-                >
-                  <div v-for="group of filtered_groups[i]" :key="group.id">
-                    <StatusCard :group="group" :all-events="events[group.id]" />
-                  </div>
-                </v-tab-item>
-              </v-tabs-items>
             </v-card>
           </v-col>
         </v-row>
@@ -52,9 +109,11 @@ type Data = {
   tags: Tag[]
   groups: Group[]
   events: { [key: string]: Event[] }
-  filtered_groups: [Group[], Group[], Group[], Group[], Group[]]
+  floor_filtered_groups: [Group[], Group[], Group[], Group[], Group[]]
+  grade_filtered_groups: [Group[], Group[], Group[], Group[]]
 
   tab: boolean | null
+  mode: boolean | null
   now_loading: boolean
 }
 
@@ -64,8 +123,10 @@ export default Vue.extend({
       tags: [],
       groups: [],
       events: { '': [] },
-      filtered_groups: [[], [], [], [], []],
+      floor_filtered_groups: [[], [], [], [], []],
+      grade_filtered_groups: [[], [], [], []],
       tab: null,
+      mode: null,
       now_loading: true,
     }
   },
@@ -83,7 +144,7 @@ export default Vue.extend({
       )
     }
 
-    // 階ごとに分けた辞書オブジェクトを作成
+    // 階、学年ごとに分けた配列を作成
     for (const group of this.groups) {
       if (
         group.floor === 1 ||
@@ -91,11 +152,27 @@ export default Vue.extend({
         group.floor === 3 ||
         group.floor === 4
       ) {
-        this.filtered_groups[group.floor].push(group)
+        this.floor_filtered_groups[group.floor].push(group)
       } else {
-        this.filtered_groups[0].push(group)
+        this.floor_filtered_groups[0].push(group)
+      }
+
+      switch (group.id.slice(0, 1)) {
+        case '1':
+          this.grade_filtered_groups[1].push(group)
+          break
+        case '2':
+          this.grade_filtered_groups[2].push(group)
+          break
+        case '3':
+          this.grade_filtered_groups[3].push(group)
+          break
+        default:
+          this.grade_filtered_groups[0].push(group)
+          break
       }
     }
+
     this.now_loading = false
   },
 })
