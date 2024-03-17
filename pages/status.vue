@@ -25,6 +25,9 @@
                       dark
                       centered
                       background-color="theme_color"
+                      next-icon="mdi-arrow-right-bold-box-outline"
+                      prev-icon="mdi-arrow-left-bold-box-outline"
+                      show-arrows
                     >
                       <v-tabs-slider></v-tabs-slider>
 
@@ -61,6 +64,9 @@
                       dark
                       centered
                       background-color="theme_color"
+                      next-icon="mdi-arrow-right-bold-box-outline"
+                      prev-icon="mdi-arrow-left-bold-box-outline"
+                      show-arrows
                     >
                       <v-tabs-slider></v-tabs-slider>
 

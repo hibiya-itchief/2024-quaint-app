@@ -6,12 +6,12 @@
           <v-card-title>{{ group.groupname }}</v-card-title>
         </v-col>
         <v-col cols="8">
-          <div v-if="allEvents.length >= 2">
+          <div v-if="events.length >= 2">
             <div v-for="i in [0, 1]" :key="i">
               <StatusEventCard :group="group" :event="events[i]" />
             </div>
           </div>
-          <div v-else-if="allEvents.length == 1">
+          <div v-else-if="events.length == 1">
             <StatusEventCard :group="group" :event="events[0]" />
           </div>
           <div v-else>
@@ -47,17 +47,24 @@ export default Vue.extend({
   data(): Data {
     return {
       filtered_events: [],
-      events: this.allEvents as Event[],
+      events: [],
     }
   },
 
   created() {
+    // eventsにまだ演劇が終了していないeventを追加していく
+    const res_events = this.allEvents as Event[]
+    this.events = res_events.filter(
+      (event) => new Date(event.ends_at) > new Date()
+    )
+
     // groupがeventsを保持している
     if (this.events) {
       // eventsの並び替え
       this.events.sort((x: Event, y: Event) => {
-        // return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
-        if (new Date() > new Date(x.sell_ends)) {
+        // 販売が終了していたら後ろに
+        if (new Date() < new Date(x.sell_ends)) {
+          // 講演開始が先なら前、後なら後ろ
           if (new Date(x.starts_at) < new Date(y.starts_at)) {
             return -1
           } else {
