@@ -5,7 +5,7 @@
       <h1 id="title">校内マップ</h1>
       <v-row justify="center">
         <v-btn-toggle
-          v-model="selectedFloor"
+          v-model="selected_floor"
           mandatory
           color="theme_color"
           group
@@ -20,7 +20,7 @@
         <v-col cols="12" md="6">
           <v-img
             class="img"
-            :src="`/images/map${selectedFloor}.png`"
+            :src="`/images/map${selected_floor}.png`"
             alt="1階の地図"
           />
         </v-col>
@@ -36,7 +36,7 @@ export default Vue.extend({
   auth: false,
   data() {
     return {
-      selectedFloor: '2F',
+      selected_floor: '2F',
     }
   },
   head: {
