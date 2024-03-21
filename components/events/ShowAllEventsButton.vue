@@ -44,18 +44,18 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :taken-tickets="listTakenTickets[index]"
-                    :ticket-stock="listStock[index]"
-                    :cut-volume-icon-text="true"
-                    :cut-volume-date="true"
+                    :taken_tickets="list_taken_tickets[index]"
+                    :ticket_stock="list_stock[index]"
+                    :cut_volume_icon_text="true"
+                    :cut_volume_date="true"
                   />
                 </div>
                 <div v-else>
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :taken-tickets="listTakenTickets[index]"
-                    :ticket-stock="listStock[index]"
+                    :taken_tickets="list_taken_tickets[index]"
+                    :ticket_stock="list_stock[index]"
                   />
                 </div>
               </div>
@@ -71,18 +71,18 @@
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :taken-tickets="listTakenTickets[index]"
-                    :ticket-stock="listStock[index]"
-                    :cut-volume-icon-text="true"
-                    :cut-volume-date="true"
+                    :taken_tickets="list_taken_tickets[index]"
+                    :ticket_stock="list_stock[index]"
+                    :cut_volume_icon_text="true"
+                    :cut_volume_date="true"
                   />
                 </div>
                 <div v-else>
                   <EventsEventCard
                     :group="group"
                     :event="event"
-                    :taken-tickets="listTakenTickets[index]"
-                    :ticket-stock="listStock[index]"
+                    :taken_tickets="list_taken_tickets[index]"
+                    :ticket_stock="list_stock[index]"
                   />
                 </div>
               </div>
@@ -97,17 +97,17 @@
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :taken-tickets="listTakenTickets[index]"
-                      :ticket-stock="listStock[index]"
-                      :cut-volume-icon-text="true"
+                      :taken_tickets="list_taken_tickets[index]"
+                      :ticket_stock="list_stock[index]"
+                      :cut_volume_icon_text="true"
                     />
                   </div>
                   <div v-else>
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :taken-tickets="listTakenTickets[index]"
-                      :ticket-stock="listStock[index]"
+                      :taken_tickets="list_taken_tickets[index]"
+                      :ticket_stock="list_stock[index]"
                     />
                   </div>
                 </div>
@@ -142,11 +142,11 @@ export default Vue.extend({
       type: Array,
       required: true,
     },
-    listStock: {
+    list_stock: {
       type: Array,
       required: true,
     },
-    listTakenTickets: {
+    list_taken_tickets: {
       type: Array,
       required: true,
     },
@@ -198,8 +198,8 @@ export default Vue.extend({
       }
     },
 
-    dateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return d.getMonth() + 1 + '/' + d.getDate()
     },
   },

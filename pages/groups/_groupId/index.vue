@@ -17,7 +17,7 @@
                 ></v-img>
                 <v-img
                   v-else
-                  :class="HashColor(group.id ?? 'hashcolor')"
+                  :class="hashColor(group.id ?? 'hashcolor')"
                   height="180px"
                 ></v-img>
                 <v-card-title>{{ group.title }}</v-card-title>
@@ -73,7 +73,7 @@
                   </v-btn>
                 </v-card-actions>
                 <v-card-actions
-                  v-if="editable == true && !IsNotClassroom(group)"
+                  v-if="editable == true && !isNotClassroom(group)"
                   class="py-1"
                 >
                   <v-btn
@@ -121,10 +121,10 @@
                     v-if="is_bookmarked"
                     icon
                     color="theme_color"
-                    @click="RemoveBookmark(group.id)"
+                    @click="removeBookmark(group.id)"
                     ><v-icon>mdi-bookmark</v-icon></v-btn
                   >
-                  <v-btn v-else icon @click="AddBookmark(group.id)"
+                  <v-btn v-else icon @click="addBookmark(group.id)"
                     ><v-icon>mdi-bookmark-outline</v-icon></v-btn
                   >
                 </v-card-actions>
@@ -132,7 +132,7 @@
             </v-col>
             <v-col cols="12" sm="6" lg="4">
               <!--公演時間の選択-->
-              <v-card v-if="!IsNotClassroom(group)" class="pa-2">
+              <v-card v-if="!isNotClassroom(group)" class="pa-2">
                 <v-card-title>
                   <v-icon>mdi-ticket</v-icon>
                   観劇予約
@@ -160,17 +160,17 @@
                   class="ma-2"
                   color="primary"
                   dark
-                  @click="GetAllEventsData()"
+                  @click="getAllEventsData()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
-                <div v-for="(event, index) in SuitableEvents()" :key="event.id">
+                <div v-for="(event, index) in suitableEvents()" :key="event.id">
                   <!-- 配布中のチケットを表示 -->
-                  <div v-if="IsAvailable(event)">
+                  <div v-if="isAvailable(event)">
                     <EventsEventCard
                       :group="group"
                       :event="event"
-                      :taken-tickets="listTakenTickets[index]"
-                      :ticket-stock="listStock[index]"
+                      :taken_tickets="list_taken_tickets[index]"
+                      :ticket_stock="list_stock[index]"
                     />
                   </div>
                 </div>
@@ -178,7 +178,7 @@
                 <v-col cols="12">
                   <!--表示する公演が無い時，以下のメッセージを表示-->
                   <v-col
-                    v-if="SuitableEvents().length === out_time_events.length"
+                    v-if="suitableEvents().length === out_time_events.length"
                     cols="12"
                   >
                     <v-card class="pa-2">
@@ -196,12 +196,12 @@
                   </div>
 
                   <v-row justify="center">
-                    <div v-if="SuitableEvents().length > 0">
+                    <div v-if="suitableEvents().length > 0">
                       <EventsShowAllEventsButton
                         :group="group"
-                        :events="SuitableEvents()"
-                        :list-stock="listStock"
-                        :list-taken-tickets="listTakenTickets"
+                        :events="suitableEvents()"
+                        :list_stock="list_stock"
+                        :list_taken_tickets="list_taken_tickets"
                       />
                     </div>
                   </v-row>
@@ -235,7 +235,7 @@
 import { Event, Group, GroupLink } from 'types/quaint'
 import Vue from 'vue'
 type Data = {
-  userGroups: {
+  user_groups: {
     admin: string
     entry: string
     owner: string
@@ -257,8 +257,8 @@ type Data = {
   person_icons: any[]
   nowloading: boolean
   is_bookmarked: boolean
-  listStock: number[]
-  listTakenTickets: number[]
+  list_stock: number[]
+  list_taken_tickets: number[]
   view_count: number | string
 }
 export default Vue.extend({
@@ -272,7 +272,7 @@ export default Vue.extend({
 
   data(): Data {
     return {
-      userGroups: {
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         entry: process.env.AZURE_AD_GROUPS_QUAINT_ENTRY as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
@@ -298,8 +298,8 @@ export default Vue.extend({
       dialog: false,
       nowloading: true,
       is_bookmarked: false,
-      listStock: [],
-      listTakenTickets: [],
+      list_stock: [],
+      list_taken_tickets: [],
       view_count: '...',
     }
   },
@@ -339,14 +339,14 @@ export default Vue.extend({
 
   async created() {
     // チケット情報関連の総取得
-    await this.GetAllEventsData()
+    await this.getAllEventsData()
 
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
     if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {
-      if (this.$auth.user?.groups.includes(this.userGroups.admin)) {
+      if (this.$auth.user?.groups.includes(this.user_groups.admin)) {
         this.editable = true
-      } else if (this.$auth.user?.groups.includes(this.userGroups.owner)) {
+      } else if (this.$auth.user?.groups.includes(this.user_groups.owner)) {
         this.$axios.$get('/users/me/owner_of').then((res: string[]) => {
           if (res.includes(this.group?.id as string)) {
             this.editable = true
@@ -367,8 +367,8 @@ export default Vue.extend({
       })
 
     // 配布時間外のチケットをout_time_eventsに格納
-    for (const event of this.SuitableEvents()) {
-      if (!this.IsAvailable(event)) {
+    for (const event of this.suitableEvents()) {
+      if (!this.isAvailable(event)) {
         this.out_time_events.push(event)
       }
     }
@@ -391,15 +391,15 @@ export default Vue.extend({
   },
 
   methods: {
-    AddBookmark(id: string) {
+    addBookmark(id: string) {
       localStorage.setItem('seiryofes.groups.favorite.' + id, id)
       this.is_bookmarked = true
     },
-    RemoveBookmark(id: string) {
+    removeBookmark(id: string) {
       localStorage.removeItem('seiryofes.groups.favorite.' + id)
       this.is_bookmarked = false
     },
-    IsNotClassroom(group: Group) {
+    isNotClassroom(group: Group) {
       for (let i = 0; i < group.tags.length; i++) {
         if (
           group.tags[i].tagname === 'Hebe' ||
@@ -413,7 +413,7 @@ export default Vue.extend({
     },
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
-    SuitableEvents() {
+    suitableEvents() {
       //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfiltered_eventsに格納される
       //  '&& this.IsToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
       const filtered_events: Event[] = this.events.filter((val: Event) => {
@@ -426,8 +426,8 @@ export default Vue.extend({
       }
     },
 
-    // IsAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
-    IsAvailable(event: Event) {
+    // isAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
+    isAvailable(event: Event) {
       if (
         new Date() > new Date(event.sell_starts) &&
         new Date(event.sell_ends) > new Date()
@@ -438,7 +438,7 @@ export default Vue.extend({
       }
     },
 
-    HashColor(text: string) {
+    hashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
       const colors = [
         'blue-grey',
@@ -463,17 +463,17 @@ export default Vue.extend({
     },
 
     // チケット情報の取得をまとめたもの
-    async GetAllEventsData() {
+    async getAllEventsData() {
       // イベント情報の取得
-      this.events = await this.GetEvents()
+      this.events = await this.getEvents()
       // 各チケットの取得
-      const res = this.GetTickets(this.events)
-      this.listStock = res.listStock
-      this.listTakenTickets = res.listTakenTickets
+      const res = this.getTickets(this.events)
+      this.list_stock = res.list_stock
+      this.list_taken_tickets = res.list_taken_tickets
     },
 
     // Eventsを取得
-    async GetEvents(): Promise<Event[]> {
+    async getEvents(): Promise<Event[]> {
       const res = await this.$axios
         .$get('/groups/' + this.$route.params.groupId + '/events')
         .then(
@@ -495,25 +495,25 @@ export default Vue.extend({
     },
 
     // 各チケットの取得
-    // listStockの取得
-    // listTakenTicketsの取得
-    GetTickets(events: Event[]) {
+    // list_stockの取得
+    // list_taken_ticketsの取得
+    getTickets(events: Event[]) {
       if (events.length !== 0) {
-        const getTicketsInfo = []
+        const get_tickets_info = []
         for (let i = 0; i < events.length; i++) {
-          getTicketsInfo.push(
+          get_tickets_info.push(
             this.$axios.$get(
               `/groups/${this.$route.params.groupId}/events/${events[i].id}/tickets`
             )
           )
         }
-        const listStock: number[] = []
-        const listTakenTickets: number[] = []
-        Promise.all(getTicketsInfo)
-          .then((ticketsInfo) => {
-            for (let i = 0; i < ticketsInfo.length; i++) {
-              listStock.push(ticketsInfo[i].stock)
-              listTakenTickets.push(ticketsInfo[i].taken_tickets)
+        const list_stock: number[] = []
+        const list_taken_tickets: number[] = []
+        Promise.all(get_tickets_info)
+          .then((tickets_info) => {
+            for (let i = 0; i < tickets_info.length; i++) {
+              list_stock.push(tickets_info[i].stock)
+              list_taken_tickets.push(tickets_info[i].taken_tickets)
             }
           })
           .catch(() => {
@@ -521,9 +521,9 @@ export default Vue.extend({
               message: '情報の取得に失敗しました。再読み込みしてください。',
             })
           })
-        return { listStock, listTakenTickets }
+        return { list_stock, list_taken_tickets }
       } else {
-        return { listStock: [], listTakenTickets: [] }
+        return { list_stock: [], list_taken_tickets: [] }
       }
     },
   },

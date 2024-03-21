@@ -15,7 +15,7 @@
         >
         <h2 class="my-2">使用しているサービスへのリンク</h2>
         <h3>
-          <a :href="apiUrl + 'docs'">{{ apiUrl }}docs</a>
+          <a :href="api_url + 'docs'">{{ api_url }}docs</a>
         </h3>
         <p>quaint-apiのAPIドキュメント、およびSwagger-ui</p>
         <h3>
@@ -55,15 +55,17 @@ import Vue from 'vue'
 export default Vue.extend({
   data() {
     return {
-      apiUrl: process.env.BASEURL,
-      userGroups: {
+      api_url: process.env.BASEURL,
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
       },
       isAdmin: false,
     }
   },
   created() {
-    if ((this.$auth.user?.groups as string[]).includes(this.userGroups.admin)) {
+    if (
+      (this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
+    ) {
       this.isAdmin = true
     } else {
       this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
