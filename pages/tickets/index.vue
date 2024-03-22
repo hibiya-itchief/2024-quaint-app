@@ -5,14 +5,14 @@
         <v-row justify="center" align-content="center">
           <v-col cols="12" sm="6" lg="6">
             <v-btn
-              v-show="$auth.user?.groups?.includes(userGroups.parents)"
+              v-show="$auth.user?.groups?.includes(user_groups.parents)"
               href="https://forms.office.com/Pages/ResponsePage.aspx?id=07VbxZj7okm9Yto1xwcA4mrjYZ4y3-RGkgE_OQbXv41UNEVDRU9BWUtWUlI5REtGTjZaUzNFVkNVNi4u"
               class="primary"
             >
               保護者用投票フォーム
             </v-btn>
             <v-btn
-              v-show="$auth.user?.groups?.includes(userGroups.students)"
+              v-show="$auth.user?.groups?.includes(user_groups.students)"
               href="https://forms.office.com/Pages/ResponsePage.aspx?id=07VbxZj7okm9Yto1xwcA4mrjYZ4y3-RGkgE_OQbXv41UOTNTRlIzRTJIMU1IQUI2UlFEM1dWTlk0RS4u"
               class="primary"
             >
@@ -45,7 +45,7 @@
               <v-img
                 class="mx-auto my-0"
                 style="display: block"
-                :src="qrcodeUrl"
+                :src="qrcode_url"
                 width="90%"
               />
               <!--mx-autoで画像を中央寄せに-->
@@ -76,16 +76,16 @@
 
             <!--開場中の整理券がある場合に上部に大きく表示-->
             <div
-              v-for="ticketInfo in tickets"
-              :key="ticketInfo.ticket.id"
+              v-for="ticket_info in tickets"
+              :key="ticket_info.ticket.id"
               focusable
             >
               <v-card
                 v-if="
                   isUpNext(
-                    new Date(ticketInfo.event.starts_at),
-                    new Date(ticketInfo.event.ends_at)
-                  ) && ticketInfo.ticket.status == 'active'
+                    new Date(ticket_info.event.starts_at),
+                    new Date(ticket_info.event.ends_at)
+                  ) && ticket_info.ticket.status == 'active'
                 "
               >
                 <v-card-title class="mb-2"
@@ -101,16 +101,16 @@
                 <v-divider></v-divider>
                 <div class="text-truncate">
                   <v-card-title class="text-h7 text-truncate">
-                    {{ ticketInfo.group.title }}
+                    {{ ticket_info.group.title }}
                   </v-card-title>
                   <v-card-subtitle
                     class="grey--text text--darken-2 text-h5 pb-0 text-truncate"
                   >
-                    {{ ticketInfo.event.eventname }}</v-card-subtitle
+                    {{ ticket_info.event.eventname }}</v-card-subtitle
                   >
 
                   <v-card-subtitle class="pb-0 text-truncate">
-                    {{ ticketInfo.group.groupname }}</v-card-subtitle
+                    {{ ticket_info.group.groupname }}</v-card-subtitle
                   >
                   <div style="display: flex">
                     <v-card-subtitle
@@ -120,20 +120,20 @@
                       <!--
                 <span class="text-h3"
                   ><v-icon>mdi-calendar</v-icon
-                  >{{ dateFormatter(ticketInfo.event.starts_at) }}</span
+                  >{{ dateFormatter(ticket_info.event.starts_at) }}</span
                 >
                 -->
                       <!--上演時刻-->
                       <span class="text-h3"
                         ><v-icon>mdi-clock-time-nine</v-icon
-                        >{{ timeFormatter(ticketInfo.event.starts_at) }}</span
+                        >{{ timeFormatter(ticket_info.event.starts_at) }}</span
                       >
-                      -{{ timeFormatter(ticketInfo.event.ends_at) }}
+                      -{{ timeFormatter(ticket_info.event.ends_at) }}
                       <v-spacer></v-spacer>
                       <!--入場人数-->
                       <span class="text-h3"
                         ><v-icon>mdi-account-supervisor</v-icon
-                        >{{ ticketInfo.ticket.person }}</span
+                        >{{ ticket_info.ticket.person }}</span
                       >人
                     </v-card-subtitle>
                     <v-spacer></v-spacer>
@@ -144,17 +144,17 @@
                   <v-spacer></v-spacer>
                   <!--終演時刻前の時だけ「整理券をキャンセル」ボタンを表示-->
                   <v-btn
-                    v-if="!isUsed(new Date(ticketInfo.event.ends_at))"
+                    v-if="!isUsed(new Date(ticket_info.event.ends_at))"
                     color="error"
-                    @click="selectCancelTicket(ticketInfo)"
+                    @click="selectCancelTicket(ticket_info)"
                   >
                     <v-icon>mdi-close</v-icon>
                     整理券をキャンセル
                   </v-btn>
                 </v-card-actions>
                 <v-img
-                  v-if="ticketInfo.group.public_thumbnail_image_url != null"
-                  :src="ticketInfo.group.public_thumbnail_image_url"
+                  v-if="ticket_info.group.public_thumbnail_image_url != null"
+                  :src="ticket_info.group.public_thumbnail_image_url"
                   width="100%"
                   contain
                   max-height="300px"
@@ -168,17 +168,17 @@
               >
               <v-expansion-panels inset>
                 <v-expansion-panel
-                  v-for="ticketInfo in tickets"
-                  :key="ticketInfo.ticket.id"
+                  v-for="ticket_info in tickets"
+                  :key="ticket_info.ticket.id"
                   focusable
                 >
                   <!--activeな整理券のみ表示．キャンセル済み整理券とUpNextな整理券は表示されない-->
                   <div
                     v-if="
-                      ticketInfo.ticket.status == 'active' &&
+                      ticket_info.ticket.status == 'active' &&
                       !isUpNext(
-                        new Date(ticketInfo.event.starts_at),
-                        new Date(ticketInfo.event.ends_at)
+                        new Date(ticket_info.event.starts_at),
+                        new Date(ticket_info.event.ends_at)
                       )
                     "
                   >
@@ -188,17 +188,19 @@
                           <div>
                             <v-img
                               v-if="
-                                ticketInfo.group.public_thumbnail_image_url !=
+                                ticket_info.group.public_thumbnail_image_url !=
                                 null
                               "
                               height="120px"
                               width="90px"
                               contain
-                              :src="ticketInfo.group.public_thumbnail_image_url"
+                              :src="
+                                ticket_info.group.public_thumbnail_image_url
+                              "
                             ></v-img>
                             <v-img
                               v-else
-                              :class="HashColor(ticketInfo.group.id)"
+                              :class="hashColor(ticket_info.group.id)"
                               height="120px"
                               width="90px"
                             ></v-img>
@@ -206,17 +208,17 @@
                           <div class="ma-2 text-truncate">
                             <!--取得した整理券の情報を表示-->
                             <v-list-item-subtitle class="text-truncate"
-                              >{{ dateFormatter(ticketInfo.event.starts_at) }}
+                              >{{ dateFormatter(ticket_info.event.starts_at) }}
                               {{
-                                ticketInfo.event.eventname
+                                ticket_info.event.eventname
                               }}</v-list-item-subtitle
                             >
                             <v-list-item-title class="text-h7 text-truncate">
-                              {{ ticketInfo.group.title }}
+                              {{ ticket_info.group.title }}
                             </v-list-item-title>
                             <v-list-item-subtitle class="text-truncate">
                               {{
-                                ticketInfo.group.groupname
+                                ticket_info.group.groupname
                               }}</v-list-item-subtitle
                             >
                             <v-list-item-subtitle
@@ -225,17 +227,17 @@
                               <span class="text-h5"
                                 ><v-icon>mdi-clock-time-nine</v-icon
                                 >{{
-                                  timeFormatter(ticketInfo.event.starts_at)
+                                  timeFormatter(ticket_info.event.starts_at)
                                 }}</span
                               >
-                              -{{ timeFormatter(ticketInfo.event.ends_at) }}
+                              -{{ timeFormatter(ticket_info.event.ends_at) }}
                             </v-list-item-subtitle>
                             <v-list-item-subtitle
                               class="mb-2 grey--text text--darken-2 text-truncate"
                             >
                               <span class="text-h5"
                                 ><v-icon>mdi-account-supervisor</v-icon
-                                >{{ ticketInfo.ticket.person }}</span
+                                >{{ ticket_info.ticket.person }}</span
                               >人
                             </v-list-item-subtitle>
 
@@ -243,8 +245,8 @@
                             <v-chip
                               v-if="
                                 isUpNext(
-                                  new Date(ticketInfo.event.starts_at),
-                                  new Date(ticketInfo.event.ends_at)
+                                  new Date(ticket_info.event.starts_at),
+                                  new Date(ticket_info.event.ends_at)
                                 )
                               "
                               color="primary"
@@ -254,7 +256,7 @@
                             >
                             <v-chip
                               v-else-if="
-                                isUsed(new Date(ticketInfo.event.ends_at))
+                                isUsed(new Date(ticket_info.event.ends_at))
                               "
                               color="error"
                               outlined
@@ -272,20 +274,20 @@
                       <v-divider></v-divider>
                       <v-card-text>
                         <p class="text-body-2 grey--text">
-                          ID: {{ ticketInfo.ticket.id }}
+                          ID: {{ ticket_info.ticket.id }}
                         </p>
                       </v-card-text>
                       <v-card-actions>
-                        <v-btn :href="'/groups/' + ticketInfo.group.id"
+                        <v-btn :href="'/groups/' + ticket_info.group.id"
                           >公演詳細
                         </v-btn>
                         <v-spacer></v-spacer>
 
                         <!--終演時刻前の時だけ「整理券をキャンセル」ボタンを表示-->
                         <v-btn
-                          v-if="!isUsed(new Date(ticketInfo.event.ends_at))"
+                          v-if="!isUsed(new Date(ticket_info.event.ends_at))"
                           color="error"
-                          @click="selectCancelTicket(ticketInfo)"
+                          @click="selectCancelTicket(ticket_info)"
                         >
                           <v-icon>mdi-close</v-icon>
                           整理券をキャンセル
@@ -299,8 +301,8 @@
 
             <!--整理券キャンセルの有無を問うダイアログ-->
             <v-dialog
-              v-if="selectedTicket"
-              v-model="cancelDialog"
+              v-if="selected_ticket"
+              v-model="cancel_dialog"
               max-width="500"
             >
               <v-card>
@@ -308,20 +310,20 @@
                   本当にキャンセルしますか？
                 </v-card-title>
                 <v-card-subtitle class="pt-5 pb-0"
-                  >{{ dateFormatter(selectedTicket.event.starts_at) }}
-                  {{ selectedTicket.event.eventname }}</v-card-subtitle
+                  >{{ dateFormatter(selected_ticket.event.starts_at) }}
+                  {{ selected_ticket.event.eventname }}</v-card-subtitle
                 >
                 <v-card-title class="pt-0">
-                  {{ selectedTicket.group.title }}
+                  {{ selected_ticket.group.title }}
                 </v-card-title>
                 <v-card-subtitle>{{
-                  selectedTicket.group.groupname
+                  selected_ticket.group.groupname
                 }}</v-card-subtitle>
                 <v-card-text>この操作は取り消せません</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn text @click="cancelDialog = false">いいえ</v-btn>
-                  <v-btn color="error" @click="CancelTicket(selectedTicket)"
+                  <v-btn text @click="cancel_dialog = false">いいえ</v-btn>
+                  <v-btn color="error" @click="cancelTicket(selected_ticket)"
                     >はい</v-btn
                   >
                 </v-card-actions>
@@ -377,11 +379,11 @@ type Data = {
   groups: Group[]
   events: Event[]
   tickets: TicketInfo[]
-  cancelDialog: boolean
-  selectedTicket: TicketInfo | null
+  cancel_dialog: boolean
+  selected_ticket: TicketInfo | null
   // template内の実装で該当部分を削除したため不要
   // display_userid: boolean
-  qrcodeUrl: string
+  qrcode_url: string
   success_alert: boolean
   error_alert: boolean
   success_message: string
@@ -389,7 +391,7 @@ type Data = {
   time: string
   seconds: string
   now_loading: boolean
-  userGroups: {
+  user_groups: {
     admin: string
     entry: string
     owner: string
@@ -408,11 +410,11 @@ export default Vue.extend({
       groups: [],
       events: [],
       tickets: [],
-      cancelDialog: false,
-      selectedTicket: null,
+      cancel_dialog: false,
+      selected_ticket: null,
       // template内の実装で該当部分を削除したため不要
       // display_userid: false,
-      qrcodeUrl: '',
+      qrcode_url: '',
       success_alert: false,
       error_alert: false,
       success_message: '',
@@ -420,7 +422,7 @@ export default Vue.extend({
       time: '',
       seconds: '',
       now_loading: true,
-      userGroups: {
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         entry: process.env.AZURE_AD_GROUPS_QUAINT_ENTRY as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
@@ -438,9 +440,9 @@ export default Vue.extend({
     this.fetchTicket()
     try {
       if (this.$auth.$state.strategy === 'ad') {
-        this.qrcodeUrl = await getQRCodeDataUrl(this.$auth.user?.oid as string)
+        this.qrcode_url = await getQRCodeDataUrl(this.$auth.user?.oid as string)
       } else {
-        this.qrcodeUrl = await getQRCodeDataUrl(this.$auth.user?.sub as string)
+        this.qrcode_url = await getQRCodeDataUrl(this.$auth.user?.sub as string)
       }
     } catch {}
     // 500msごとに現在時刻を取得
@@ -474,12 +476,12 @@ export default Vue.extend({
     isUpNext: function (start: Date, end: Date) {
       const date = new Date()
       // 現在時刻を取得
-      const currentTime: Date = new Date(date.getTime())
+      const current_time: Date = new Date(date.getTime())
       // 開演20分前の時刻を計算する
-      const MinutesBeforeStart = new Date(start.getTime() - 1000 * 60 * 20)
+      const minutes_before_start = new Date(start.getTime() - 1000 * 60 * 20)
 
       // 「 開演20分前<現在時刻」かつ「現在時刻<終演時刻」を判定
-      if (MinutesBeforeStart < currentTime && currentTime < end) {
+      if (minutes_before_start < current_time && current_time < end) {
         return true
       } else {
         return false
@@ -490,10 +492,10 @@ export default Vue.extend({
     // 引数には（終演時刻）を代入
     isUsed: function (end: Date) {
       const date = new Date()
-      const currentTime: Date = new Date(date.getTime())
+      const current_time: Date = new Date(date.getTime())
 
       // 「終演時刻<現在時刻」を判定
-      if (end < currentTime) {
+      if (end < current_time) {
         return true
       } else {
         return false
@@ -502,7 +504,7 @@ export default Vue.extend({
     async fetchTicket() {
       const tickets: Ticket[] = await this.$axios.$get('/users/me/tickets')
 
-      const ticketInfos: TicketInfo[] = []
+      const ticket_infos: TicketInfo[] = []
       for (const ticket of tickets) {
         if (ticket.status === 'active') {
           const group: Group = await this.$axios.$get(
@@ -511,16 +513,16 @@ export default Vue.extend({
           const event: Event = await this.$axios.$get(
             '/groups/' + ticket.group_id + '/events/' + ticket.event_id
           )
-          const ticketInfo: TicketInfo = {
+          const ticket_info: TicketInfo = {
             group,
             event,
             ticket,
           }
-          ticketInfos.push(ticketInfo)
+          ticket_infos.push(ticket_info)
         }
       }
 
-      ticketInfos.sort((first, second) => {
+      ticket_infos.sort((first, second) => {
         if (
           new Date(first.event.starts_at).getTime() <
           new Date(second.event.starts_at).getTime()
@@ -533,11 +535,11 @@ export default Vue.extend({
           return 1
         else return 0
       })
-      this.tickets = ticketInfos
+      this.tickets = ticket_infos
       this.now_loading = false
     },
-    timeFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    timeFormatter(input_date: string) {
+      const d = new Date(input_date)
       return (
         /*
         d.getMonth() +
@@ -551,23 +553,23 @@ export default Vue.extend({
         d.getMinutes().toString().padStart(2, '0')
       )
     },
-    dateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return d.getMonth() + 1 + '/' + d.getDate()
     },
-    selectCancelTicket(ticketInfo: TicketInfo) {
-      this.cancelDialog = true
-      this.selectedTicket = ticketInfo
+    selectCancelTicket(ticket_info: TicketInfo) {
+      this.cancel_dialog = true
+      this.selected_ticket = ticket_info
     },
-    async CancelTicket(deleteTicket: TicketInfo) {
+    async cancelTicket(delete_ticket: TicketInfo) {
       await this.$axios
         .delete(
           '/groups/' +
-            deleteTicket.group.id +
+            delete_ticket.group.id +
             '/events/' +
-            deleteTicket.event.id +
+            delete_ticket.event.id +
             '/tickets/' +
-            deleteTicket.ticket.id
+            delete_ticket.ticket.id
         )
         .then(() => {
           this.success_alert = true
@@ -577,10 +579,10 @@ export default Vue.extend({
           this.error_alert = true
           this.error_message = e.message
         })
-      this.cancelDialog = false
+      this.cancel_dialog = false
       this.fetchTicket()
     },
-    HashColor(text: string) {
+    hashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
       const colors = [
         'blue-grey',

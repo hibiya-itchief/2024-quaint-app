@@ -1561,7 +1561,7 @@ export default Vue.extend({
   async asyncData({ $axios }): Promise<Partial<Data>> {
     // 公演がある前提なので、ないと必ずエラーが出る
 
-    // ここでクラス劇オンリーのgroupsを作成(R_groups)
+    // ここでクラス劇オンリーのgroupsを作成(r_groups)
     const rooms_promises = []
     for (let i = 0; i < 24; i++) {
       const room_num =
@@ -1569,17 +1569,17 @@ export default Vue.extend({
       // 11~38までの24個
       rooms_promises.push($axios.$get(`/groups/${room_num}r`))
     }
-    const R_groups: Group[] = await Promise.all(rooms_promises)
+    const r_groups: Group[] = await Promise.all(rooms_promises)
 
     // 完成品の受け皿を作成
     // templateで使う際は、rooms[i]のiにあたる数字は11Rから38Rまでを順番に並べたときをイメージ
     const rooms: RoomData[] = []
 
     // 全クラスの必要な内容をroomsに詰める
-    for (let i = 0; i < R_groups.length; i++) {
+    for (let i = 0; i < r_groups.length; i++) {
       // ここで各クラスのsort済みeventsを作成、使うのは１つ目と２つ目だけ
       const events: Event[] = await $axios.$get(
-        `/groups/${R_groups[i].id}/events`
+        `/groups/${r_groups[i].id}/events`
       )
       events.sort((i: Event) => {
         return i.target === 'paper' ? 1 : -1
@@ -1596,11 +1596,11 @@ export default Vue.extend({
 
       // １つ目と２つ目の公演の残席状況を入手
       const tickets_info: any[] = await Promise.all([
-        $axios.$get(`/groups/${R_groups[i].id}/events/${events[0].id}/tickets`),
-        $axios.$get(`/groups/${R_groups[i].id}/events/${events[1].id}/tickets`),
+        $axios.$get(`/groups/${r_groups[i].id}/events/${events[0].id}/tickets`),
+        $axios.$get(`/groups/${r_groups[i].id}/events/${events[1].id}/tickets`),
       ])
       rooms.push({
-        group_id: R_groups[i].id,
+        group_id: r_groups[i].id,
         event_id_1st: events[0].id,
         event_id_2nd: events[1].id,
         starts_at_1st: events[0].starts_at,
@@ -1631,17 +1631,17 @@ export default Vue.extend({
   },
   created() {
     setInterval(() => {
-      this.DataRefresh()
+      this.dataRefresh()
     }, 60000)
   },
 
   methods: {
-    async DataRefresh() {
+    async dataRefresh() {
       // asyncData と内容は全く同じ。
 
       // 公演がある前提なので、ないと必ずエラーが出る
 
-      // ここでクラス劇オンリーのgroupsを作成(R_groups)
+      // ここでクラス劇オンリーのgroupsを作成(r_groups)
       const rooms_promises = []
       for (let i = 0; i < 24; i++) {
         const room_num =
@@ -1649,17 +1649,17 @@ export default Vue.extend({
         // 11~38までの24個
         rooms_promises.push(this.$axios.$get(`/groups/${room_num}r`))
       }
-      const R_groups: Group[] = await Promise.all(rooms_promises)
+      const r_groups: Group[] = await Promise.all(rooms_promises)
 
       // 完成品の受け皿を作成
       // templateで使う際は、rooms[i]のiにあたる数字は11Rから38Rまでを順番に並べたときをイメージ
       const rooms: RoomData[] = []
 
       // 全クラスの必要な内容をroomsに詰める
-      for (let i = 0; i < R_groups.length; i++) {
+      for (let i = 0; i < r_groups.length; i++) {
         // ここで各クラスのsort済みeventsを作成、使うのは１つ目と２つ目だけ
         const events: Event[] = await this.$axios.$get(
-          `/groups/${R_groups[i].id}/events`
+          `/groups/${r_groups[i].id}/events`
         )
         events.sort((i: Event) => {
           return i.target === 'paper' ? 1 : -1
@@ -1677,14 +1677,14 @@ export default Vue.extend({
         // １つ目と２つ目の公演の残席状況を入手
         const tickets_info: any[] = await Promise.all([
           this.$axios.$get(
-            `/groups/${R_groups[i].id}/events/${events[0].id}/tickets`
+            `/groups/${r_groups[i].id}/events/${events[0].id}/tickets`
           ),
           this.$axios.$get(
-            `/groups/${R_groups[i].id}/events/${events[1].id}/tickets`
+            `/groups/${r_groups[i].id}/events/${events[1].id}/tickets`
           ),
         ])
         rooms.push({
-          group_id: R_groups[i].id,
+          group_id: r_groups[i].id,
           event_id_1st: events[0].id,
           event_id_2nd: events[1].id,
           starts_at_1st: events[0].starts_at,

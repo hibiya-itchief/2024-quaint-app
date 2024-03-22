@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-row v-if="isAdmin" justify="center">
+    <v-row v-if="is_admin" justify="center">
       <v-col cols="12" md="8" lg="6">
         <v-btn icon fab small @click="$router.go(-1)">
           <v-icon>mdi-chevron-left</v-icon>
@@ -17,7 +17,7 @@
           </v-card-title>
           <v-data-table
             :headers="headers"
-            :items="ownerOf"
+            :items="owner_of"
             :items-per-page="-1"
             :search="search"
             class="elevation-1"
@@ -35,7 +35,7 @@
                       v-bind="attrs"
                       v-on="on"
                       @click="
-                        editedItem = {
+                        edited_item = {
                           group_id: '',
                           user_id: '',
                           note: '',
@@ -55,19 +55,19 @@
                         <v-row>
                           <v-col cols="12" sm="6" md="6">
                             <v-text-field
-                              v-model="editedItem.group_id"
+                              v-model="edited_item.group_id"
                               label="group_id"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6" md="6">
                             <v-text-field
-                              v-model="editedItem.user_id"
+                              v-model="edited_item.user_id"
                               label="user_id"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
-                              v-model="editedItem.note"
+                              v-model="edited_item.note"
                               label="メモ 「(期)_(4桁番号)(名前)」の形式"
                             ></v-text-field>
                           </v-col>
@@ -90,17 +90,17 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-                <v-dialog v-model="dialogDelete" max-width="500px">
+                <v-dialog v-model="dialog_delete" max-width="500px">
                   <v-card>
                     <v-card-title class="text-h5"
                       >本当にこのOwner権限の割り当てを削除していいですか?</v-card-title
                     >
                     <v-card-text>
-                      {{ editedItem.group_id }} - {{ editedItem.note }}
+                      {{ edited_item.group_id }} - {{ edited_item.note }}
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="primary" text @click="dialogDelete = false"
+                      <v-btn color="primary" text @click="dialog_delete = false"
                         >キャンセル</v-btn
                       >
                       <v-btn color="primary" @click="deleteItem()">削除</v-btn>
@@ -113,8 +113,8 @@
               <v-icon
                 small
                 @click="
-                  editedItem = item
-                  dialogDelete = true
+                  edited_item = item
+                  dialog_delete = true
                 "
               >
                 mdi-delete
@@ -130,19 +130,19 @@
 import Vue from 'vue'
 import { OwnerOf } from '~/types/quaint'
 type Data = {
-  userGroups: { admin: string }
-  ownerOf: OwnerOf[]
+  user_groups: { admin: string }
+  owner_of: OwnerOf[]
   headers: { text: string; value: string }[]
-  isAdmin: boolean
+  is_admin: boolean
   search: ''
-  editedItem: OwnerOf
+  edited_item: OwnerOf
   dialog: boolean
-  dialogDelete: boolean
+  dialog_delete: boolean
 }
 export default Vue.extend({
   data(): Data {
     return {
-      userGroups: {
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
       },
       headers: [
@@ -151,31 +151,33 @@ export default Vue.extend({
         { text: 'メモ', value: 'note' },
         { text: '操作', value: 'actions' },
       ],
-      ownerOf: [],
-      isAdmin: false,
+      owner_of: [],
+      is_admin: false,
       search: '',
-      editedItem: {
+      edited_item: {
         group_id: '',
         user_id: '',
         note: '',
       },
       dialog: false,
-      dialogDelete: false,
+      dialog_delete: false,
     }
   },
   async created() {
-    if ((this.$auth.user?.groups as string[]).includes(this.userGroups.admin)) {
-      this.isAdmin = true
+    if (
+      (this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
+    ) {
+      this.is_admin = true
     } else {
       this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
     }
-    this.ownerOf = (await this.$axios.$get('/users/owner_of')) as OwnerOf[]
+    this.owner_of = (await this.$axios.$get('/users/owner_of')) as OwnerOf[]
   },
   methods: {
     createOwnerOf() {
       this.$axios
         .$put(
-          `/users/${this.editedItem.user_id}/owner_of/?group_id=${this.editedItem.group_id}&note=${this.editedItem.note}`
+          `/users/${this.edited_item.user_id}/owner_of/?group_id=${this.edited_item.group_id}&note=${this.edited_item.note}`
         )
         .then(() => {
           this.$nuxt.refresh()
@@ -188,7 +190,7 @@ export default Vue.extend({
     deleteItem() {
       this.$axios
         .$delete(
-          `/users/${this.editedItem.user_id}/owner_of/?group_id=${this.editedItem.group_id}`
+          `/users/${this.edited_item.user_id}/owner_of/?group_id=${this.edited_item.group_id}`
         )
         .then(() => {
           this.$nuxt.refresh()
@@ -197,7 +199,7 @@ export default Vue.extend({
         .catch((e) => {
           window.alert('削除に失敗しました e=> ' + e)
         })
-      this.dialogDelete = false
+      this.dialog_delete = false
     },
   },
 })

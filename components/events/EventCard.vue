@@ -3,17 +3,17 @@
   <div>
     <v-card
       class="ma-2 d-flex"
-      :disabled="!isAvailable(event) || takenTickets >= ticketStock"
+      :disabled="!isAvailable(event) || taken_tickets >= ticket_stock"
       @click.stop="selectEvent(event)"
     >
       <div>
         <v-card-text
           class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
         >
-          <div v-if="!cutVolumeDate">
+          <div v-if="!cut_volume_date">
             {{ dateFormatter(event.starts_at) }}
           </div>
-          <div v-if="!cutVolumeTitle">
+          <div v-if="!cut_volume_title">
             {{ event.eventname }}
           </div>
         </v-card-text>
@@ -33,34 +33,34 @@
           color="grey"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolumeIconText">時間外</div>
+          ><div v-if="!cut_volume_icon_text">時間外</div>
           <v-icon>mdi-cancel</v-icon></v-btn
         >
         <v-btn
-          v-else-if="takenTickets / ticketStock < 0.5"
+          v-else-if="taken_tickets / ticket_stock < 0.5"
           color="green"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolumeIconText">配布中</div>
+          ><div v-if="!cut_volume_icon_text">配布中</div>
           <v-icon>mdi-circle-double</v-icon></v-btn
         >
         <!--5割以上で黄色になる-->
         <v-btn
           v-else-if="
-            takenTickets / ticketStock >= 0.5 && takenTickets < ticketStock
+            taken_tickets / ticket_stock >= 0.5 && taken_tickets < ticket_stock
           "
           color="orange"
           outlined
           style="font-size: 80%; font-weight: bold"
-          ><div v-if="!cutVolumeIconText">残りわずか</div>
+          ><div v-if="!cut_volume_icon_text">残りわずか</div>
           <v-icon>mdi-triangle-outline</v-icon></v-btn
         >
         <v-btn
-          v-else-if="takenTickets >= ticketStock"
+          v-else-if="taken_tickets >= ticket_stock"
           color="red"
           outlined
           style="font-weight: bold"
-          ><div v-if="!cutVolumeIconText">完売</div>
+          ><div v-if="!cut_volume_icon_text">完売</div>
           <v-icon>mdi-close</v-icon></v-btn
         >
         <!--ここまで配布ステータスの条件分岐-->
@@ -115,7 +115,7 @@
           <v-spacer></v-spacer>
 
           <v-btn color="red" text @click.stop="dialog = false"> いいえ </v-btn>
-          <v-btn color="primary" @click="CreateTicket(event, ticket_person)">
+          <v-btn color="primary" @click="createTicket(event, ticket_person)">
             はい
           </v-btn>
         </v-card-actions>
@@ -145,28 +145,28 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    takenTickets: {
+    taken_tickets: {
       type: Number,
       required: true,
     },
-    ticketStock: {
+    ticket_stock: {
       type: Number,
       required: true,
     },
     // 配布状況のアイコンの横のテキストをカットするか
-    cutVolumeIconText: {
+    cut_volume_icon_text: {
       type: Boolean,
       required: false,
       default: false,
     },
     // チケットの日付をカットするか
-    cutVolumeDate: {
+    cut_volume_date: {
       type: Boolean,
       required: false,
       default: false,
     },
     // チケットのタイトル
-    cutVolumeTitle: {
+    cut_volume_title: {
       type: Boolean,
       required: false,
       default: false,
@@ -198,13 +198,13 @@ export default Vue.extend({
       }
     },
 
-    dateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return d.getMonth() + 1 + '/' + d.getDate()
     },
 
-    timeFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    timeFormatter(input_date: string) {
+      const d = new Date(input_date)
       return (
         d.getHours().toString().padStart(2, '0') +
         ':' +
@@ -212,7 +212,7 @@ export default Vue.extend({
       )
     },
 
-    async CreateTicket(event: Event, person: number) {
+    async createTicket(event: Event, person: number) {
       if (!this.$auth.loggedIn) {
         this.$store.commit('ShowErrorSnackbar', {
           message: '整理券の取得には',

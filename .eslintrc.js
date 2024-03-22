@@ -19,6 +19,18 @@ module.exports = {
       'error',
       { ignoreRestSiblings: true },
     ],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: ['parameter', 'variable'],
+        format: ['snake_case'],
+      },
+      {
+        selector: 'function',
+        format: ['camelCase'],
+      },
+    ],
+    'vue/prop-name-casing': ['error', 'snake_case'],
     'import/order': 'off',
   },
 }

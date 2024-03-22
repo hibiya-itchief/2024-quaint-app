@@ -22,17 +22,17 @@ Vue.prototype.$quaintUserRole = (
     return false
   }
 
-  const B2C_ISSUER =
+  const b2c_issuer =
     'https://seiryofesb2c.b2clogin.com/450b2222-dcb5-471d-9657-bb4ee50acd97/v2.0' // trailing slashなしで統一してstring.includes()で判定する
-  const AD_ISSUER =
+  const ad_issuer =
     'https://login.microsoftonline.com/158e6d17-f3d5-4365-8428-26dfc74a9d27/v2.0' // trailing slashなしで統一してstring.includes()で判定する
-  const ADMIN = '5c091517-25de-44bc-9e42-ffcb8539435c'
-  const ENTRY = '63a40184-8dab-43b4-8367-54e84ace6e2a'
-  const OWNER = 'a577d858-64bf-4815-aaf6-d893c654e92e'
-  const PARENTS = 'ecd46dae-d84b-42d8-9357-ac24d480a168'
-  const STUDENTS = '865bb05d-cb7d-4919-b18d-8b977ec0499b'
-  const TEACHERS = '0a8ee476-cd37-4c31-bd6e-c34e750574f4'
-  const CHIEF = '67e48f08-22e0-4ec4-9674-1428aaa5c055'
+  const admin = '5c091517-25de-44bc-9e42-ffcb8539435c'
+  const entry = '63a40184-8dab-43b4-8367-54e84ace6e2a'
+  const owner = 'a577d858-64bf-4815-aaf6-d893c654e92e'
+  const parents = 'ecd46dae-d84b-42d8-9357-ac24d480a168'
+  const students = '865bb05d-cb7d-4919-b18d-8b977ec0499b'
+  const teachers = '0a8ee476-cd37-4c31-bd6e-c34e750574f4'
+  const chief = '67e48f08-22e0-4ec4-9674-1428aaa5c055'
 
   if (!(user.iss !== undefined && typeof user.iss === 'string')) {
     return false
@@ -40,109 +40,109 @@ Vue.prototype.$quaintUserRole = (
   switch (target) {
     case 'admin':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(ADMIN)
+        user.groups.includes(admin)
       )
     case 'owner':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(OWNER)
+        user.groups.includes(owner)
       )
     case 'chief':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(CHIEF)
+        user.groups.includes(chief)
       )
     case 'entry':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(ENTRY)
+        user.groups.includes(entry)
       )
     case 'everyone':
       return true
     case 'paper':
       return false
     case 'b2c':
-      return user.iss.includes(B2C_ISSUER)
+      return user.iss.includes(b2c_issuer)
     case 'b2c_visited':
       return (
-        user.iss.includes(B2C_ISSUER) &&
+        user.iss.includes(b2c_issuer) &&
         user.jobTitle !== undefined &&
         typeof user.jobTitle === 'string' &&
         (user.jobTitle.includes('Visited') || user.jobTitle.includes('visited'))
       )
     case 'ad':
-      return user.iss.includes(AD_ISSUER)
+      return user.iss.includes(ad_issuer)
     case 'parents':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(PARENTS)
+        user.groups.includes(parents)
       )
     case 'student':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        user.groups.includes(STUDENTS)
+        user.groups.includes(students)
       )
     case 'school':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        (user.groups.includes(STUDENTS) || user.groups.includes(TEACHERS))
+        (user.groups.includes(students) || user.groups.includes(teachers))
       )
     case 'visited':
       return (
-        (user.iss.includes(B2C_ISSUER) &&
+        (user.iss.includes(b2c_issuer) &&
           user.jobTitle !== undefined &&
           typeof user.jobTitle === 'string' &&
           (user.jobTitle.includes('Visited') ||
             user.jobTitle.includes('visited'))) ||
-        user.iss.includes(AD_ISSUER)
+        user.iss.includes(ad_issuer)
       )
     case 'visited_parents':
       return (
-        (user.iss.includes(B2C_ISSUER) &&
+        (user.iss.includes(b2c_issuer) &&
           user.jobTitle !== undefined &&
           typeof user.jobTitle === 'string' &&
           (user.jobTitle.includes('Visited') ||
             user.jobTitle.includes('visited'))) ||
-        (user.iss.includes(AD_ISSUER) &&
+        (user.iss.includes(ad_issuer) &&
           user.groups !== undefined &&
           Array.isArray(user.groups) &&
-          user.groups.includes(PARENTS))
+          user.groups.includes(parents))
       )
     case 'visited_school':
       return (
-        (user.iss.includes(B2C_ISSUER) &&
+        (user.iss.includes(b2c_issuer) &&
           user.jobTitle !== undefined &&
           typeof user.jobTitle === 'string' &&
           (user.jobTitle.includes('Visited') ||
             user.jobTitle.includes('visited'))) ||
-        (user.iss.includes(AD_ISSUER) &&
+        (user.iss.includes(ad_issuer) &&
           user.groups !== undefined &&
           Array.isArray(user.groups) &&
-          (user.groups.includes(STUDENTS) || user.groups.includes(TEACHERS)))
+          (user.groups.includes(students) || user.groups.includes(teachers)))
       )
     case 'school_parents':
       return (
-        user.iss.includes(AD_ISSUER) &&
+        user.iss.includes(ad_issuer) &&
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
-        (user.groups.includes(STUDENTS) ||
-          user.groups.includes(TEACHERS) ||
-          user.groups.includes(PARENTS))
+        (user.groups.includes(students) ||
+          user.groups.includes(teachers) ||
+          user.groups.includes(parents))
       )
 
     default:
