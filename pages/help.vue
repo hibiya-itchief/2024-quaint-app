@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">ヘルプ</h1>
       <v-row justify="center">
         <v-col cols="12">
@@ -344,16 +345,6 @@ h2 {
 h3 {
   text-align: center;
   font-weight: normal;
-}
-
-@keyframes fade-in-name {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }
 
 .img {

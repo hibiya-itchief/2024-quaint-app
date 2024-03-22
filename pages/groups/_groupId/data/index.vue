@@ -55,7 +55,7 @@
                     >
                     <v-btn
                       v-else-if="
-                        listTakenTickets[index] / listStock[index] < 0.5
+                        list_taken_tickets[index] / list_stock[index] < 0.5
                       "
                       color="green"
                       outlined
@@ -65,8 +65,8 @@
                     <!--5割以上で黄色になる-->
                     <v-btn
                       v-else-if="
-                        listTakenTickets[index] / listStock[index] >= 0.5 &&
-                        listTakenTickets[index] < listStock[index]
+                        list_taken_tickets[index] / list_stock[index] >= 0.5 &&
+                        list_taken_tickets[index] < list_stock[index]
                       "
                       color="orange"
                       outlined
@@ -74,7 +74,7 @@
                       >残りわずか<v-icon>mdi-triangle-outline</v-icon></v-btn
                     >
                     <v-btn
-                      v-else-if="listTakenTickets[index] >= listStock[index]"
+                      v-else-if="list_taken_tickets[index] >= list_stock[index]"
                       color="red"
                       outlined
                       style="font-weight: bold"
@@ -84,8 +84,8 @@
                   </div>
                 </v-card>
                 <span class="ma-3"
-                  >取得率：{{ listTakenTickets[index] ?? '-' }} /
-                  {{ listStock[index] ?? '-' }}
+                  >取得率：{{ list_taken_tickets[index] ?? '-' }} /
+                  {{ list_stock[index] ?? '-' }}
                 </span>
               </v-card>
             </v-col>
@@ -99,11 +99,11 @@
 import { Event, Group } from 'types/quaint'
 import Vue from 'vue'
 type Data = {
-  userGroups: { admin: string; owner: string }
+  user_groups: { admin: string; owner: string }
   group: Group | undefined
   events: Event[]
-  listStock: number[]
-  listTakenTickets: number[]
+  list_stock: number[]
+  list_taken_tickets: number[]
 }
 export default Vue.extend({
   name: 'IndivisualGroupPageData',
@@ -128,35 +128,35 @@ export default Vue.extend({
 
     // 各ticketsを取得
     if (events.length !== 0) {
-      const getTicketsInfo = []
+      const get_tickets_info = []
       for (let i = 0; i < events.length; i++) {
-        getTicketsInfo.push(
+        get_tickets_info.push(
           $axios.$get(`/groups/${group.id}/events/${events[i].id}/tickets`)
         )
       }
-      const listStock: number[] = []
-      const listTakenTickets: number[] = []
-      Promise.all(getTicketsInfo).then((ticketsInfo) => {
-        for (let i = 0; i < ticketsInfo.length; i++) {
-          listStock.push(ticketsInfo[i].stock)
-          listTakenTickets.push(ticketsInfo[i].taken_tickets)
+      const list_stock: number[] = []
+      const list_taken_tickets: number[] = []
+      Promise.all(get_tickets_info).then((tickets_info) => {
+        for (let i = 0; i < tickets_info.length; i++) {
+          list_stock.push(tickets_info[i].stock)
+          list_taken_tickets.push(tickets_info[i].taken_tickets)
         }
       })
-      return { group, events, listStock, listTakenTickets }
+      return { group, events, list_stock, list_taken_tickets }
     } else {
       return { group, events }
     }
   },
   data(): Data {
     return {
-      userGroups: {
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
       },
       group: undefined,
       events: [],
-      listStock: [],
-      listTakenTickets: [],
+      list_stock: [],
+      list_taken_tickets: [],
     }
   },
   head() {
@@ -166,10 +166,10 @@ export default Vue.extend({
   },
   async created() {
     if (
-      !(this.$auth.user?.groups as string[]).includes(this.userGroups.admin)
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
     ) {
       if (
-        (this.$auth.user?.groups as string[]).includes(this.userGroups.owner)
+        (this.$auth.user?.groups as string[]).includes(this.user_groups.owner)
       ) {
         if (
           !(
@@ -184,24 +184,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    isToday(
-      inputSellStarts: string,
-      inputSellEnds: string,
-      inputStarts: string
-    ) {
-      const today = new Date().toDateString()
-      const sellStartsDate = new Date(inputSellStarts).toDateString()
-      const sellEndsDate = new Date(inputSellEnds).toDateString()
-      const startDate = new Date(inputStarts).toDateString()
-      if (startDate === today) {
-        return true
-      } else if (sellStartsDate < today && today < sellEndsDate) {
-        return true
-      } else {
-        return false
-      }
-    },
-
     // isAvailable: 整理券が配布時間内であればtrue，それ以外はfalseを返すmethod
     isAvailable(event: Event) {
       if (
@@ -213,12 +195,12 @@ export default Vue.extend({
         return false
       }
     },
-    dateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return d.getMonth() + 1 + '/' + d.getDate()
     },
-    timeFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    timeFormatter(input_date: string) {
+      const d = new Date(input_date)
       return (
         d.getHours().toString().padStart(2, '0') +
         ':' +

@@ -2,7 +2,7 @@
   <v-app>
     <!-- 次にvideoを追加するときのサンプルとするために2023年度版のものを取っておきます-->
     <!--
-    <div v-if="showVideo" class="splash-video">
+    <div v-if="show_video" class="splash-video">
       <video
         src="/images/sairai_short2.mp4"
         webkit-playsinline
@@ -111,9 +111,13 @@
               sm="4"
               md="3"
               class="my-0 py-2"
-              :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
             >
-              <v-card class="pa-1" outlined :to="page.link">
+              <v-card
+                class="pa-1"
+                :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
+                outlined
+                :to="page.link"
+              >
                 <v-icon size="100" color="theme_color" style="display: flex">{{
                   page.icon
                 }}</v-icon>
@@ -178,8 +182,8 @@ import Vue from 'vue'
 import { Route } from 'vue-router'
 import CountDown from '~/components/CountDown.vue'
 type Data = {
-  showVideo: boolean
-  prevRoute: Route | null
+  show_video: boolean
+  prev_route: Route | null
   pages: any[]
 }
 export default Vue.extend({
@@ -189,13 +193,13 @@ export default Vue.extend({
   beforeRouteEnter(to, from, next) {
     // vue-routerの処理に割り込んで(?)リファラを取得する
     next((vm: any) => {
-      vm.prevRoute = from
+      vm.prev_route = from
     })
   },
   data(): Data {
     return {
-      showVideo: true,
-      prevRoute: null,
+      show_video: true,
+      prev_route: null,
       pages: [
         { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/about' },
         {
@@ -266,13 +270,13 @@ export default Vue.extend({
   mounted() {
     // リファラが「/」なら(リンク直アクセスor他オリジンから)、最初のさいらいビデオを流す
     if (
-      this.prevRoute?.fullPath !== undefined &&
-      this.prevRoute?.fullPath !== null &&
-      this.prevRoute?.fullPath === '/'
+      this.prev_route?.fullPath !== undefined &&
+      this.prev_route?.fullPath !== null &&
+      this.prev_route?.fullPath === '/'
     ) {
-      this.showVideo = true
+      this.show_video = true
     } else {
-      this.showVideo = false
+      this.show_video = false
     }
   },
 })

@@ -7,9 +7,7 @@
             <v-col cols="12" sm="6" lg="6">
               <!--作品情報-->
               <!--タイトル，団体，お気に入り，映像で鑑賞ボタン-->
-              <v-btn icon fab small @click="$router.go(-1)">
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
+              <ToolsBackButton />
               <v-card v-if="group">
                 <v-img
                   v-if="group.public_thumbnail_image_url != null"
@@ -19,7 +17,7 @@
                 ></v-img>
                 <v-img
                   v-else
-                  :class="HashColor(group.id ?? 'hashcolor')"
+                  :class="hashColor(group.id ?? 'hashcolor')"
                   height="180px"
                 ></v-img>
                 <v-card-title>{{ group.title }}</v-card-title>
@@ -75,7 +73,7 @@
                   </v-btn>
                 </v-card-actions>
                 <v-card-actions
-                  v-if="editable == true && !IsNotClassroom(group)"
+                  v-if="editable == true && !isNotClassroom(group)"
                   class="py-1"
                 >
                   <v-btn
@@ -134,7 +132,7 @@
             </v-col>
             <v-col cols="12" sm="6" lg="4">
               <!--公演時間の選択-->
-              <v-card v-if="!IsNotClassroom(group)" class="pa-2">
+              <v-card v-if="!isNotClassroom(group)" class="pa-2">
                 <v-card-title>
                   <v-icon>mdi-ticket</v-icon>
                   観劇予約
@@ -144,7 +142,8 @@
                   >現地で見たい公演の整理券を取得できます。詳しい時間帯は<NuxtLink
                     to="/schedule"
                     >配布スケジュール</NuxtLink
-                  >やパンフレットをご覧ください。</v-card-subtitle
+                  >
+                  やパンフレットをご覧ください。</v-card-subtitle
                 >
                 <v-card-subtitle v-if="!$auth.loggedIn"
                   ><v-btn
@@ -157,150 +156,55 @@
                 >
                 <v-divider class="mb-3"></v-divider>
 
-                <v-btn class="ma-2" color="primary" @click="$nuxt.refresh()"
+                <v-btn
+                  class="ma-2"
+                  color="primary"
+                  dark
+                  @click="getAllEventsData()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
                 <div v-for="(event, index) in suitableEvents()" :key="event.id">
-                  <v-card
-                    class="ma-2 d-flex"
-                    :disabled="
-                      !isAvailable(event) ||
-                      listTakenTickets[index] >= listStock[index]
-                    "
-                    @click.stop="selectEvent(event)"
-                  >
-                    <div>
-                      <v-card-text
-                        class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
-                      >
-                        {{ dateFormatter(event.starts_at) }}
-                        {{ event.eventname }}
-                      </v-card-text>
-                      <v-spacer></v-spacer>
-                      <v-card-title class="pt-0 pb-1 text-h5">
-                        {{ timeFormatter(event.starts_at) }}
-                        <span class="caption pl-1">
-                          - {{ timeFormatter(event.ends_at) }}</span
-                        >
-                      </v-card-title>
-                    </div>
-                    <v-spacer></v-spacer>
-                    <div class="my-auto mx-2">
-                      <!--ここから配布ステータスの条件分岐-->
-                      <v-btn
-                        v-if="!isAvailable(event)"
-                        color="grey"
-                        outlined
-                        style="font-weight: bold"
-                        >時間外<v-icon>mdi-cancel</v-icon></v-btn
-                      >
-                      <v-btn
-                        v-else-if="
-                          listTakenTickets[index] / listStock[index] < 0.5
-                        "
-                        color="green"
-                        outlined
-                        style="font-weight: bold"
-                        >配布中<v-icon>mdi-circle-double</v-icon></v-btn
-                      >
-                      <!--5割以上で黄色になる-->
-                      <v-btn
-                        v-else-if="
-                          listTakenTickets[index] / listStock[index] >= 0.5 &&
-                          listTakenTickets[index] < listStock[index]
-                        "
-                        color="orange"
-                        outlined
-                        style="font-size: 80%; font-weight: bold"
-                        >残りわずか<v-icon>mdi-triangle-outline</v-icon></v-btn
-                      >
-                      <v-btn
-                        v-else-if="listTakenTickets[index] >= listStock[index]"
-                        color="red"
-                        outlined
-                        style="font-weight: bold"
-                        >完売<v-icon>mdi-close</v-icon></v-btn
-                      >
-                      <!--ここまで配布ステータスの条件分岐-->
-                    </div>
-                  </v-card>
+                  <!-- 配布中のチケットを表示 -->
+                  <div v-if="isAvailable(event)">
+                    <EventsEventCard
+                      :group="group"
+                      :event="event"
+                      :taken_tickets="list_taken_tickets[index]"
+                      :ticket_stock="list_stock[index]"
+                    />
+                  </div>
                 </div>
-                <v-dialog
-                  v-if="selected_event"
-                  v-model="dialog"
-                  max-width="500"
-                >
-                  <v-card class="pa-2">
-                    <v-card-title>この公演の整理券をとりますか？</v-card-title>
 
-                    <v-card-subtitle class="pt-5 pb-0">
-                      {{ dateFormatter(selected_event.starts_at) }}
-                      {{ selected_event.eventname }}</v-card-subtitle
-                    >
-                    <v-card-title class="pt-0 mb-2"
-                      >{{ group?.title }}
-                    </v-card-title>
-                    <v-card-subtitle>
-                      {{ group?.groupname }}
-                    </v-card-subtitle>
-                    <v-card-subtitle class="py-2">
-                      <span class="text-h5"
-                        ><v-icon>mdi-clock-time-nine</v-icon>
-                        {{ timeFormatter(selected_event.starts_at) }}
-                      </span>
-                      -
-                      {{ timeFormatter(selected_event.ends_at) }}
-                    </v-card-subtitle>
-
-                    <v-card-subtitle
-                      v-if="$quaintUserRole('school', $auth.user)"
-                      ><span class="text-h5"
-                        ><v-icon>mdi-account-supervisor</v-icon>1</span
-                      >人</v-card-subtitle
-                    >
-                    <div v-else>
-                      <v-card-subtitle>
-                        <v-icon>mdi-account-plus</v-icon
-                        >同時に入場する人数(ご家族など)
-                      </v-card-subtitle>
-                      <v-card-actions>
-                        <v-slider
-                          v-model="ticket_person"
-                          :tick-labels="person_labels"
-                          min="1"
-                          max="3"
-                        >
-                          <template #thumb-label="props">
-                            <v-icon dark>
-                              {{ person_icons[props.value - 1] }}
-                            </v-icon>
-                          </template>
-                        </v-slider>
-                      </v-card-actions>
-                    </div>
-                    <v-card-actions class="px-1">
-                      <v-spacer></v-spacer>
-
-                      <v-btn color="red" text @click.stop="dialog = false">
-                        いいえ
-                      </v-btn>
-                      <v-btn
-                        color="primary"
-                        @click="CreateTicket(selected_event, ticket_person)"
+                <v-col cols="12">
+                  <!--表示する公演が無い時，以下のメッセージを表示-->
+                  <v-col
+                    v-if="suitableEvents().length === out_time_events.length"
+                    cols="12"
+                  >
+                    <v-card class="pa-2">
+                      <span class="grey--text text-h5"
+                        >現在選択できる公演はありません。</span
                       >
-                        はい
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                    </v-card>
+                  </v-col>
 
-                <!--suitableEventsの長さが0の（表示する公演が無い）時，以下のメッセージを表示-->
-                <v-col v-if="suitableEvents().length === 0" cols="12">
-                  <v-card class="pa-2">
-                    <span class="grey--text text-h5"
-                      >現在選択できる公演はありません。</span
-                    >
-                  </v-card>
+                  <!--配布時間外のチケットがある場合はいくつあるかをインフォーム-->
+                  <div v-if="out_time_events.length !== 0">
+                    <EventsTimeOutEventInform
+                      :number="out_time_events.length"
+                    />
+                  </div>
+
+                  <v-row justify="center">
+                    <div v-if="suitableEvents().length > 0">
+                      <EventsShowAllEventsButton
+                        :group="group"
+                        :events="suitableEvents()"
+                        :list_stock="list_stock"
+                        :list_taken_tickets="list_taken_tickets"
+                      />
+                    </div>
+                  </v-row>
                 </v-col>
               </v-card>
               <v-card v-else class="pa-2">
@@ -318,46 +222,6 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-snackbar v-model="success_alert" color="success" elevation="2">
-            {{ success_message }}
-            <a
-              v-show="success_snackbar_link"
-              :href="success_snackbar_link"
-              class="link-snackbar"
-            >
-              取得した整理券を表示
-            </a>
-            <template #action="{ attrs }">
-              <v-btn
-                color="white"
-                icon
-                v-bind="attrs"
-                @click="success_alert = false"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </template>
-          </v-snackbar>
-          <v-snackbar v-model="error_alert" color="red" elevation="2">
-            {{ error_message }}
-            <a
-              v-show="error_snackbar_link"
-              :href="error_snackbar_link"
-              class="link-snackbar"
-            >
-              ログイン
-            </a>
-            <template #action="{ attrs }">
-              <v-btn
-                color="white"
-                icon
-                v-bind="attrs"
-                @click="error_alert = false"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </template>
-          </v-snackbar>
         </client-only>
       </v-container>
     </div>
@@ -371,7 +235,7 @@
 import { Event, Group, GroupLink } from 'types/quaint'
 import Vue from 'vue'
 type Data = {
-  userGroups: {
+  user_groups: {
     admin: string
     entry: string
     owner: string
@@ -382,73 +246,33 @@ type Data = {
   }
   group: Group | undefined
   events: Event[]
+  out_time_events: Event[] // ユーザー属性に適したイベントのうち配布時間外のイベントを格納する
   links: GroupLink[]
-  filteredEvents: Event[] //  ユーザ属性（e,g.students, parents）に合致する整理券のみが格納される配列
   selected_event: Event | null
   editable: boolean
-  success_alert: boolean
-  error_alert: boolean
-  success_message: string
-  error_message: string
   dialog: boolean
-  success_snackbar_link: string | undefined
-  error_snackbar_link: string | undefined
 
   ticket_person: number
   person_labels: any[]
   person_icons: any[]
   nowloading: boolean
   is_bookmarked: boolean
-  listStock: number[]
-  listTakenTickets: number[]
+  list_stock: number[]
+  list_taken_tickets: number[]
   view_count: number | string
 }
 export default Vue.extend({
   name: 'IndivisualGroupPage',
   auth: false,
+
   async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
-    const events = await $axios.$get('/groups/' + params.groupId + '/events')
-    events.sort((i: Event) => {
-      return i.target === 'paper' ? 1 : -1
-    })
-    events.sort((x: Event, y: Event) => {
-      return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
-    })
-    // 下はisAvailableと同じ処理
-    events.sort((i: Event) => {
-      return new Date() > new Date(i.sell_starts) &&
-        new Date(i.sell_ends) > new Date()
-        ? -1
-        : 1
-    })
-
-    // nuxt generate時はpayloadを代入
     const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
-
-    // 各ticketsを取得
-    if (events.length !== 0) {
-      const getTicketsInfo = []
-      for (let i = 0; i < events.length; i++) {
-        getTicketsInfo.push(
-          $axios.$get(`/groups/${group.id}/events/${events[i].id}/tickets`)
-        )
-      }
-      const listStock: number[] = []
-      const listTakenTickets: number[] = []
-      Promise.all(getTicketsInfo).then((ticketsInfo) => {
-        for (let i = 0; i < ticketsInfo.length; i++) {
-          listStock.push(ticketsInfo[i].stock)
-          listTakenTickets.push(ticketsInfo[i].taken_tickets)
-        }
-      })
-      return { group, events, listStock, listTakenTickets }
-    } else {
-      return { group, events }
-    }
+    return { group }
   },
+
   data(): Data {
     return {
-      userGroups: {
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         entry: process.env.AZURE_AD_GROUPS_QUAINT_ENTRY as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
@@ -459,8 +283,8 @@ export default Vue.extend({
       },
       group: undefined,
       events: [],
+      out_time_events: [],
       links: [],
-      filteredEvents: [],
       selected_event: null,
       editable: false, // 権限を持つユーザーがアクセスするとtrueになりページを編集できる
 
@@ -471,20 +295,15 @@ export default Vue.extend({
         'mdi-account-multiple',
         'mdi-account-group',
       ],
-      success_alert: false,
-      error_alert: false,
-      success_message: '',
-      error_message: '',
       dialog: false,
-      success_snackbar_link: undefined,
-      error_snackbar_link: undefined,
       nowloading: true,
       is_bookmarked: false,
-      listStock: [],
-      listTakenTickets: [],
+      list_stock: [],
+      list_taken_tickets: [],
       view_count: '...',
     }
   },
+
   head() {
     return {
       title: this.group?.groupname + ' 「' + this.group?.title + '」',
@@ -517,13 +336,17 @@ export default Vue.extend({
       ],
     }
   },
-  created() {
+
+  async created() {
+    // チケット情報関連の総取得
+    await this.getAllEventsData()
+
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
     // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
     if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {
-      if (this.$auth.user?.groups.includes(this.userGroups.admin)) {
+      if (this.$auth.user?.groups.includes(this.user_groups.admin)) {
         this.editable = true
-      } else if (this.$auth.user?.groups.includes(this.userGroups.owner)) {
+      } else if (this.$auth.user?.groups.includes(this.user_groups.owner)) {
         this.$axios.$get('/users/me/owner_of').then((res: string[]) => {
           if (res.includes(this.group?.id as string)) {
             this.editable = true
@@ -531,13 +354,6 @@ export default Vue.extend({
         })
       }
     }
-    this.$axios
-      .$get('/groups/' + this.$route.params.groupId + '/links')
-      .then((res) => {
-        for (let i = 0; i < res.length; i++) {
-          this.links.push(res[i])
-        }
-      })
     this.$axios
       .$get(
         '/ga/screenpageview?start_date=7daysAgo&end_date=today&page_path=' +
@@ -550,11 +366,15 @@ export default Vue.extend({
         this.view_count = 'エラー'
       })
 
-    //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfilteredEventsに格納される
-    //  '&& this.isToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
-    this.filteredEvents = this.events.filter((val: Event) => {
-      return this.$quaintUserRole(val.target, this.$auth.user)
-    })
+    // 配布時間外のチケットをout_time_eventsに格納
+    for (const event of this.suitableEvents()) {
+      if (!this.isAvailable(event)) {
+        this.out_time_events.push(event)
+      }
+    }
+
+    // ロードページの終了
+    this.nowloading = false
   },
 
   mounted() {
@@ -568,7 +388,6 @@ export default Vue.extend({
         break
       }
     }
-    this.nowloading = false
   },
 
   methods: {
@@ -580,7 +399,7 @@ export default Vue.extend({
       localStorage.removeItem('seiryofes.groups.favorite.' + id)
       this.is_bookmarked = false
     },
-    IsNotClassroom(group: Group) {
+    isNotClassroom(group: Group) {
       for (let i = 0; i < group.tags.length; i++) {
         if (
           group.tags[i].tagname === 'Hebe' ||
@@ -595,30 +414,15 @@ export default Vue.extend({
 
     //  未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod
     suitableEvents() {
+      //  全ての公演（events）から，ログイン中のユーザ属性（e.g.students,parents）に合致する公演のみがfiltered_eventsに格納される
+      //  '&& this.IsToday(val.sell_starts, val.sell_ends, val.starts_at)'を付け加えれば，当日の整理券のみが表示されるようになる
+      const filtered_events: Event[] = this.events.filter((val: Event) => {
+        return this.$quaintUserRole(val.target, this.$auth.user)
+      })
       if (!this.$auth.loggedIn) {
         return this.events
       } else {
-        return this.filteredEvents
-      }
-    },
-
-    // 配布日or公演日が今日かどうか判断するmethod
-    // 使い方：isToday(event.sell_starts, event.sell_ends, event.starts_at)"
-    isToday(
-      inputSellStarts: string,
-      inputSellEnds: string,
-      inputStarts: string
-    ) {
-      const today = new Date().toDateString()
-      const sellStartsDate = new Date(inputSellStarts).toDateString()
-      const sellEndsDate = new Date(inputSellEnds).toDateString()
-      const startDate = new Date(inputStarts).toDateString()
-      if (startDate === today) {
-        return true
-      } else if (sellStartsDate < today && today < sellEndsDate) {
-        return true
-      } else {
-        return false
+        return filtered_events
       }
     },
 
@@ -633,19 +437,8 @@ export default Vue.extend({
         return false
       }
     },
-    dateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
-      return d.getMonth() + 1 + '/' + d.getDate()
-    },
-    timeFormatter(inputDate: string) {
-      const d = new Date(inputDate)
-      return (
-        d.getHours().toString().padStart(2, '0') +
-        ':' +
-        d.getMinutes().toString().padStart(2, '0')
-      )
-    },
-    HashColor(text: string) {
+
+    hashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
       const colors = [
         'blue-grey',
@@ -668,65 +461,71 @@ export default Vue.extend({
       index = index % colors.length
       return colors[index]
     },
-    async CreateTicket(event: Event, person: number) {
-      if (!this.$auth.loggedIn) {
-        this.error_message = '整理券の取得には'
-        this.error_snackbar_link = '/login'
-        this.error_alert = true
-        return 1
-      }
-      this.dialog = false
-      await this.$axios
-        .post(
-          '/groups/' +
-            event.group_id +
-            '/events/' +
-            event.id +
-            '/tickets?person=' +
-            person
-        )
-        .then(() => {
-          this.success_message = '整理券を取得できました！'
-          this.success_snackbar_link = '/tickets'
-          this.success_alert = true
-        })
-        .catch((e) => {
-          if (e.response) {
-            this.error_message = e.response.data.detail
-          } else {
-            this.error_message =
-              '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️'
-          }
-          this.error_snackbar_link = undefined
-          this.error_alert = true
-        })
+
+    // チケット情報の取得をまとめたもの
+    async getAllEventsData() {
+      // イベント情報の取得
+      this.events = await this.getEvents()
+      // 各チケットの取得
+      const res = this.getTickets(this.events)
+      this.list_stock = res.list_stock
+      this.list_taken_tickets = res.list_taken_tickets
     },
-    selectEvent(event: Event) {
-      if (
-        new Date() < new Date(event.sell_starts) ||
-        new Date(event.sell_ends) < new Date()
-      ) {
-        this.error_message = '配布時間外です'
-        this.error_snackbar_link = undefined
-        this.error_alert = true
-      } else if (!this.$auth.loggedIn) {
-        this.error_message = '整理券の取得には'
-        this.error_snackbar_link = '/login'
-        this.error_alert = true
+
+    // Eventsを取得
+    async getEvents(): Promise<Event[]> {
+      const res = await this.$axios
+        .$get('/groups/' + this.$route.params.groupId + '/events')
+        .then(
+          (result) => {
+            result.sort((x: Event, y: Event) => {
+              return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
+            })
+            return result
+          },
+          () => {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '情報の取得に失敗しました。再読み込みしてください。',
+            })
+            return undefined
+          }
+        )
+
+      return res
+    },
+
+    // 各チケットの取得
+    // list_stockの取得
+    // list_taken_ticketsの取得
+    getTickets(events: Event[]) {
+      if (events.length !== 0) {
+        const get_tickets_info = []
+        for (let i = 0; i < events.length; i++) {
+          get_tickets_info.push(
+            this.$axios.$get(
+              `/groups/${this.$route.params.groupId}/events/${events[i].id}/tickets`
+            )
+          )
+        }
+        const list_stock: number[] = []
+        const list_taken_tickets: number[] = []
+        Promise.all(get_tickets_info)
+          .then((tickets_info) => {
+            for (let i = 0; i < tickets_info.length; i++) {
+              list_stock.push(tickets_info[i].stock)
+              list_taken_tickets.push(tickets_info[i].taken_tickets)
+            }
+          })
+          .catch(() => {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '情報の取得に失敗しました。再読み込みしてください。',
+            })
+          })
+        return { list_stock, list_taken_tickets }
       } else {
-        this.selected_event = event
-        this.dialog = true
-        this.error_alert = false
+        return { list_stock: [], list_taken_tickets: [] }
       }
     },
   },
 })
 </script>
-<style>
-a.link-snackbar {
-  color: white;
-  font-weight: bold;
-  text-decoration: underline;
-  text-decoration-color: white;
-}
-</style>

@@ -8,8 +8,8 @@
       <div v-if="$route.path !== '/board'" class="hamburger-box">
         <div
           class="hamburgermenu"
-          :class="{ active: drawerMenu }"
-          @click="drawerMenu = !drawerMenu"
+          :class="{ active: drawer_menu }"
+          @click="drawer_menu = !drawer_menu"
         >
           <div class="hamburger-btn">
             <span></span><span></span><span></span>
@@ -18,7 +18,7 @@
       </div>
 
       <v-navigation-drawer
-        v-model="drawerMenu"
+        v-model="drawer_menu"
         class="drawer-menu"
         temporary
         fixed
@@ -34,43 +34,43 @@
               <v-card-text class="px-2 py-1">
                 <v-chip-group column>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.admin)"
+                    v-show="$auth.user?.groups?.includes(user_groups.admin)"
                     outlined
                   >
                     👑Admin
                   </v-chip>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.owner)"
+                    v-show="$auth.user?.groups?.includes(user_groups.owner)"
                     outlined
                   >
                     団体代表者
                   </v-chip>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.parents)"
+                    v-show="$auth.user?.groups?.includes(user_groups.parents)"
                     outlined
                   >
                     保護者用アカウント
                   </v-chip>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.students)"
+                    v-show="$auth.user?.groups?.includes(user_groups.students)"
                     outlined
                   >
                     生徒用アカウント
                   </v-chip>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.teachers)"
+                    v-show="$auth.user?.groups?.includes(user_groups.teachers)"
                     outlined
                   >
                     先生用アカウント
                   </v-chip>
                   <v-chip
-                    v-show="$auth.user?.groups?.includes(userGroups.chief)"
+                    v-show="$auth.user?.groups?.includes(user_groups.chief)"
                     outlined
                   >
                     チーフ会
                   </v-chip>
                   <!--(
-                  userGroups.entry)で同様の処理が可能？
+                  user_groups.entry)で同様の処理が可能？
                 <v-chip
                   v-show="$auth.user?.jobTitle?.includes('Visited')"
                   outlined
@@ -83,7 +83,7 @@
                   <!--ADの場合ユーザーオブジェクトIDはoidに入ってる-->
                 </p>
                 <p
-                  v-show="$auth.user?.groups?.includes(userGroups.admin)"
+                  v-show="$auth.user?.groups?.includes(user_groups.admin)"
                   class="ma-0 pa-0 text-caption grey--text"
                 >
                   <a @click="revealToken()">APIトークンを表示</a>
@@ -91,7 +91,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn
-                  v-show="$auth.user?.groups?.includes(userGroups.admin)"
+                  v-show="$auth.user?.groups?.includes(user_groups.admin)"
                   outlined
                   color="primary"
                   to="/admin"
@@ -187,6 +187,8 @@
           <v-icon>mdi-ticket</v-icon>
         </v-btn>
       </v-bottom-navigation>
+
+      <LayoutSnackBar />
     </client-only>
   </v-app>
 </template>
@@ -198,8 +200,8 @@ export default Vue.extend({
   name: 'DefaultLayout',
   data() {
     return {
-      drawerMenu: false,
-      userGroups: {
+      drawer_menu: false,
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         entry: process.env.AZURE_AD_GROUPS_QUAINT_ENTRY as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
@@ -225,8 +227,8 @@ export default Vue.extend({
   },
   mounted() {
     if (this.$auth.loggedIn && this.$auth.user?.sub === undefined) {
-      const base64Url = (this.$auth.strategy as any).token.get().split('.')[1] // https://auth.nuxtjs.org/api/auth/#:~:text=Token%20and%20Refresh%20Token%20are%20available%20on%20%24auth.strategy.token
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const base64_url = (this.$auth.strategy as any).token.get().split('.')[1] // https://auth.nuxtjs.org/api/auth/#:~:text=Token%20and%20Refresh%20Token%20are%20available%20on%20%24auth.strategy.token
+      const base64 = base64_url.replace(/-/g, '+').replace(/_/g, '/')
       this.$auth.setUser(JSON.parse(decodeURIComponent(window.atob(base64))))
     }
   },
