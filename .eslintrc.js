@@ -33,4 +33,13 @@ module.exports = {
     'vue/prop-name-casing': ['error', 'snake_case'],
     'import/order': 'off',
   },
+
+  overrides: [
+    {
+      files: ['tests/**/*'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 }
