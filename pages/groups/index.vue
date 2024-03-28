@@ -272,6 +272,7 @@ export default Vue.extend({
   },
 
   methods: {
+    // pushQuery: クエリパラメータの制御を行うmethod
     // それぞれ、Qは検索バーの内容、Tはタグ、Bはブックマーク、Sはソート(並び替え)、Rは昇順/降順の切り替え(ReverseのR)
     pushQuery(
       param_q: any,
@@ -285,11 +286,13 @@ export default Vue.extend({
       param_b = param_b === null ? this.$route.query.b : param_b
       param_s = param_s === null ? this.$route.query.s : param_s
       param_r = param_r === null ? this.$route.query.r : param_r
+      // nullは「現在のクエリを維持」と同義
       this.$router.push({
         query: { q: param_q, t: param_t, b: param_b, s: param_s, r: param_r },
-      }) // nullは「現在のクエリを維持」と同義
+      })
     },
 
+    // sortGroups: 団体一覧の並び替えを行うmethod
     sortGroups(sort: 'id' | 'groupname' | 'title') {
       if (sort === 'groupname') {
         this.sort_displayname = '団体名順'
@@ -307,6 +310,8 @@ export default Vue.extend({
       const sort_query = sort === 'id' ? undefined : sort
       this.pushQuery(null, null, null, sort_query, null)
     },
+
+    // reverseGroups: 昇順/降順を入れ替えるmethod
     reverseGroups() {
       this.sortGroups(
         this.$route.query.s === 'groupname' || this.$route.query.s === 'title'
@@ -321,6 +326,7 @@ export default Vue.extend({
       }
     },
 
+    // searchGroups: 検索の際のクエリの処理と、検索結果件数の計算を行うmethod
     searchGroups() {
       if (this.search_query === '') {
         this.selectedTag = this.query_cache
@@ -358,6 +364,8 @@ export default Vue.extend({
       }
     },
 
+    // filterGroups: 検索の際に該当する団体だけを表示させるmethod
+    // return trueで表示
     filterGroups(group: Group) {
       if (
         this.display_bookmarks === true &&
@@ -392,11 +400,13 @@ export default Vue.extend({
       }
     }, // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
 
+    // filterBookmarks: 「ブックマークだけ表示」のmethod
     filterBookmarks(id: string) {
       // お気に入りならtrue
       return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
     },
 
+    // hashColor: 団体のサムネがない時に単色を表示させるmethod
     hashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
       const colors = [
