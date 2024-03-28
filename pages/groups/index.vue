@@ -179,6 +179,7 @@ export default Vue.extend({
   auth: false,
   async asyncData({ $axios, payload }): Promise<Partial<Data>> {
     if (payload !== undefined) {
+      // nuxt generate時の操作という意味
       return { groups: payload.groups, tags: payload.tags }
     }
     const task = [$axios.$get('/groups'), $axios.$get('/tags')]
@@ -218,10 +219,10 @@ export default Vue.extend({
     }
   },
   created() {
-    // クエリパラメータを見て検索バー内の文字列を再現など
+    // クエリパラメータを見て検索バー内の文字列を再現する
     if (typeof this.$route.query.q === 'string') {
       this.search_query = this.$route.query.q
-      // 検索中はタグ選択ができないため、created時もtを削除
+      // 検索中はタグ選択ができない仕様のため、tを削除
       if (this.$route.query.t !== undefined) {
         this.pushQuery(null, undefined, null, null, null)
       }
@@ -248,6 +249,7 @@ export default Vue.extend({
     if (this.$route.query.b === 'true') this.display_bookmarks = true
 
     const query_t = this.$route.query.t // query_tは見やすくするためだけに定義
+
     // クエリパラメータを見てselectedTagを再現
     if (query_t === undefined) {
       this.selectedTag = undefined
@@ -261,6 +263,8 @@ export default Vue.extend({
     }
   },
   mounted() {
+    // localStorageの内容をstorage_bookmarks配列に移して扱いやすく
+    // localStorageはmountedじゃないとアクセスできない
     for (let i = 0; i < localStorage.length; i++) {
       if (localStorage.key(i)?.includes('seiryofes.groups.favorite')) {
         this.storage_bookmarks.push(localStorage.key(i))

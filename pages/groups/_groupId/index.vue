@@ -338,7 +338,7 @@ export default Vue.extend({
   },
 
   async created() {
-    // チケット情報関連の総取得
+    // まず、チケット情報関連を総取得する
     await this.getAllEventsData()
 
     // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
@@ -354,6 +354,8 @@ export default Vue.extend({
         })
       }
     }
+
+    // 「閲覧数」にまつわる処理
     this.$axios
       .$get(
         '/ga/screenpageview?start_date=7daysAgo&end_date=today&page_path=' +
@@ -373,11 +375,13 @@ export default Vue.extend({
       }
     }
 
-    // ロードページの終了
+    // ロードの終了
     this.nowloading = false
   },
 
   mounted() {
+    // ブックマークされているかチェック
+    // localStorageはmountedじゃないとアクセスできない
     for (let i = 0; i < localStorage.length; i++) {
       if (
         'seiryofes.groups.favorite.' + this.group?.id ===
