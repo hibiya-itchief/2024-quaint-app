@@ -53,6 +53,32 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-snackbar v-model="success_text_alert" color="green" elevation="2">
+      {{ $store.state.success_message }}
+      <template #action="{ attrs }">
+        <v-btn
+          color="white"
+          icon
+          v-bind="attrs"
+          @click="$store.commit('CloseSuccessTextSnackbar')"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="error_text_alert" color="red" elevation="2">
+      {{ $store.state.error_message }}
+      <template #action="{ attrs }">
+        <v-btn
+          color="white"
+          icon
+          v-bind="attrs"
+          @click="$store.commit('CloseErrorTextSnackbar')"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -75,6 +101,18 @@ export default Vue.extend({
     internet_error_alert: {
       get() {
         return this.$store.state.internet_error_alert
+      },
+    },
+
+    success_text_alert: {
+      get() {
+        return this.$store.state.success_text_alert
+      },
+    },
+
+    error_text_alert: {
+      get() {
+        return this.$store.state.error_text_alert
       },
     },
   },

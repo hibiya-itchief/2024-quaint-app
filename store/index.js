@@ -2,6 +2,8 @@ export const state = () => ({
   success_alert: false, // 成功のSnackbarか
   error_alert: false, // 失敗のSnackbarか
   internet_error_alert: false, // APIを使用した情報取得に失敗したとき
+  success_text_alert: false, // ハイパーリンクを伴わない成功時のSnackbar
+  error_text_alert: false, // ハイパーリンクを伴わない失敗時のSnackbar
   success_message: '', // 成功時のSnackbarに表示するメッセージ
   error_message: '', // 失敗時のSnackbarに表示するメッセージ
   internet_error_message: '', // API使用時の取得エラー時のメッセージ
@@ -48,5 +50,25 @@ export const mutations = {
   CloseInternetErrorSnackbar(state) {
     state.internet_error_alert = false
     state.internet_error_message = ''
+  },
+
+  ShowSuccessTextSnackbar(state, payload) {
+    state.success_text_alert = true
+    state.success_message = payload.message
+  },
+
+  CloseSuccessTextSnackbar(state) {
+    state.success_text_alert = false
+    state.success_message = ''
+  },
+
+  ShowErrorTextSnackbar(state, payload) {
+    state.error_text_alert = true
+    state.error_message = payload.message
+  },
+
+  CloseErrorTextSnackbar(state) {
+    state.error_text_alert = false
+    state.error_message = ''
   },
 }
