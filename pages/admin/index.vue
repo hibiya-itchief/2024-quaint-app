@@ -46,49 +46,22 @@
           quaintのユーザーを管理しているAzure
           B2Cのディレクトリ。一般客が自分のメールアドレスでサインアップするアカウントを管理している。
         </p>
-        <v-divider></v-divider>
-        <v-card>
-          <v-card-title>公演の一括追加</v-card-title>
-          <v-card-text class="mx-0 px-0 py-2">
-            <v-file-input
-              v-model="events_data_csv_input"
-              label="csvファイルをアップロード"
-              filled
-              prepend-icon="mdi-image"
-            ></v-file-input>
-          </v-card-text>
-          <v-card-actions class="ma-0 px-0 py-0">
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="uploadEventsDataCsv()"> 適用 </v-btn>
-          </v-card-actions>
-        </v-card>
+        <NuxtLink to="/admin/tools">設定ページ</NuxtLink>
       </v-col>
     </v-row>
-    <!--接続確認-->
-    <v-btn @click="check()">ボタン</v-btn>
   </v-app>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 
-type Data = {
-  api_url: string | undefined
-  user_groups: any
-  isAdmin: boolean
-  events_data_csv_form: boolean
-  events_data_csv_input: any
-}
-
 export default Vue.extend({
-  data(): Data {
+  data() {
     return {
       api_url: process.env.BASEURL,
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
       },
       isAdmin: false,
-      events_data_csv_form: false,
-      events_data_csv_input: null,
     }
   },
   created() {
@@ -103,32 +76,6 @@ export default Vue.extend({
   methods: {
     async updateFrontend() {
       await this.$axios.$post('/admin/update_frontend')
-    },
-
-    async uploadEventsDataCsv() {
-      const data = new FormData()
-      data.append('file', this.events_data_csv_input)
-
-      await this.$axios
-        .$post('/api/support/events', data, {
-          headers: { 'content-type': 'multipart/form-data' },
-        })
-        .then(() => {
-          this.$store.commit('ShowSuccessTextSnackbar', {
-            message: '適用に成功しました！',
-          })
-        })
-        .catch((e) => {
-          const error_message = e.response.data.detail
-          this.$store.commit('ShowErrorTextSnackbar', {
-            message: error_message,
-          })
-        })
-    },
-
-    // Docker使用時の接続確認
-    check() {
-      this.$axios.$get('/api/tags')
     },
   },
 })
