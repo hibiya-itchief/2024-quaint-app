@@ -86,7 +86,7 @@
             <br />
             <br />
             <h3 class="info-subtitle">
-              詳しくは<NuxtLink to="/schedule">スケジュール</NuxtLink
+              詳しくは<NuxtLink to="/info/schedule">スケジュール</NuxtLink
               >をご覧ください。
             </h3>
           </v-col>
@@ -209,7 +209,7 @@ export default Vue.extend({
         },
         { icon: 'mdi-train', text: 'アクセス', link: '/info/access' },
         { icon: 'mdi-map', text: '校内マップ', link: '/info/map' },
-        { icon: 'mdi-clock', text: 'スケジュール', link: '/schedule' },
+        { icon: 'mdi-clock', text: 'スケジュール', link: '/info/schedule' },
         {
           icon: 'mdi-tooltip-question-outline',
           text: 'ヘルプ',

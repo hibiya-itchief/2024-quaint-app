@@ -40,7 +40,7 @@
         <v-sheet color="white" elevation="4" class="py-4 px-2">
           <h2 align="center" class="text-h5 ma-3">一般向け整理券配布方法</h2>
           <p align="center" class="mb-5">
-            <NuxtLink to="/schedule">配布スケジュール</NuxtLink
+            <NuxtLink to="/info/schedule">配布スケジュール</NuxtLink
             >やパンフレットにも掲載されています。<br />
           </p>
           <p align="center" class="">3年生クラス劇の配布&emsp;＠サブアリーナ</p>

@@ -140,7 +140,7 @@
                 </v-card-title>
                 <v-card-subtitle
                   >現地で見たい公演の整理券を取得できます。詳しい時間帯は<NuxtLink
-                    to="/schedule"
+                    to="/info/schedule"
                     >配布スケジュール</NuxtLink
                   >
                   やパンフレットをご覧ください。</v-card-subtitle
@@ -215,7 +215,7 @@
                 </v-card-title>
                 <v-card-subtitle
                   >この団体では整理券が取得できません。<br />
-                  詳しい時間帯は<NuxtLink to="/schedule"
+                  詳しい時間帯は<NuxtLink to="/info/schedule"
                     >部活動のタイムテーブル</NuxtLink
                   >やパンフレットをご覧ください。</v-card-subtitle
                 >

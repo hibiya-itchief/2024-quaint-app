@@ -147,7 +147,7 @@
                 IT委員が個別で対応いたしますので、お手数ですが2F保健室横のIT質問ブースまでお越しください。<br />
                 第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
                 <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
-                <NuxtLink to="/schedule">配布スケジュール</NuxtLink><br />
+                <NuxtLink to="/info/schedule">配布スケジュール</NuxtLink><br />
               </p>
               <v-divider />
             </div>
@@ -289,7 +289,7 @@
                 そのような場合は、2F保健室横のIT質問ブースまでお越しください。<br />
                 第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
                 <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
-                <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
+                <NuxtLink to="/info/schedule">配布スケジュール</NuxtLink>
               </p>
               <v-divider />
             </div>
@@ -300,7 +300,7 @@
             IT委員に相談したいことがある場合は2F保健室横のIT質問ブースまでお越しください。<br />
             第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
             <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
-            <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
+            <NuxtLink to="/info/schedule">配布スケジュール</NuxtLink>
           </h3>
         </v-col>
       </v-row>
