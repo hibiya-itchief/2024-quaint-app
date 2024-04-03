@@ -201,7 +201,7 @@ export default Vue.extend({
       show_video: true,
       prev_route: null,
       pages: [
-        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/about' },
+        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/info/about' },
         {
           icon: 'mdi-ticket-confirmation',
           text: '整理券制度',
