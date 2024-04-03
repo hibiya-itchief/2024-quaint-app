@@ -2,7 +2,7 @@
 
 ## Release 0.5.4 (2023/09/12)
 
-- `/system` 掲載
+- `/info/system` 掲載
   `/info/schedule` 掲載
   各種ページ 上記ページへのリンクを追加 #437
 - `/groups/_groupId/data`等 オンライン整理券と紙整理券の表示順を固定など #446

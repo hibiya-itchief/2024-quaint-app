@@ -205,7 +205,7 @@ export default Vue.extend({
         {
           icon: 'mdi-ticket-confirmation',
           text: '整理券制度',
-          link: '/system',
+          link: '/info/system',
         },
         { icon: 'mdi-train', text: 'アクセス', link: '/info/access' },
         { icon: 'mdi-map', text: '校内マップ', link: '/info/map' },

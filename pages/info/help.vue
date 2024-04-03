@@ -37,7 +37,7 @@
                 <span style="font-weight: bold; color: var(--theme-color)"
                   >今年度はオンライン整理券をご利用いただけません</span
                 >。つきましては、当サイトはログインをせずにご利用ください。観劇の際には体育棟にて配布している紙の整理券をご利用ください。<br />
-                詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
+                詳しくは<NuxtLink to="/info/system">整理券制度</NuxtLink
                 >のページをご覧ください。
               </p>
               <v-divider />
@@ -76,14 +76,14 @@
                 配布されているアカウントでログインしてください。 <br />
                 下のバーの｢探す｣ページの中から観劇したい劇をタップし、表示されている公演を選択すると確認の画面が表示されます。よく確認してから｢はい｣を押してください。<br />
                 その後｢整理券｣ページに該当の整理券が表示されていれば取得できています。整理券取得後は必ずご確認ください。<br />
-                また、<NuxtLink to="/system">整理券制度</NuxtLink
+                また、<NuxtLink to="/info/system">整理券制度</NuxtLink
                 >のページもご覧ください。<br />
                 <br />
                 【一般の方】<br />
                 <span style="font-weight: bold; color: var(--theme-color)"
                   >今年度はオンライン整理券をご利用いただけません</span
                 >。観劇の際には体育棟にて配布している紙の整理券をご利用ください。<br />
-                詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
+                詳しくは<NuxtLink to="/info/system">整理券制度</NuxtLink
                 >のページをご覧ください。
               </p>
               <v-divider />
@@ -188,7 +188,7 @@
                 整理券は公演ごとに配布時間が決まっています。配布時間外に整理券を取ることはできません。<br />
                 また、既に取得している整理券と同じ時間の整理券を取る事はできません。<br />
                 <br />
-                詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
+                詳しくは<NuxtLink to="/info/system">整理券制度</NuxtLink
                 >のページをご覧ください
               </p>
               <v-divider />
@@ -270,7 +270,7 @@
                 【保護者の方へ】<br />
                 配布している2つのアカウントのうち一方のアカウントで取得した整理券は、もう一方のアカウントには反映されません。<br />
                 両方のアカウントにログインしてお確かめください。<br />
-                詳しくは<NuxtLink to="/system">整理券制度</NuxtLink
+                詳しくは<NuxtLink to="/info/system">整理券制度</NuxtLink
                 >のページをご覧ください。
               </p>
               <v-divider />
