@@ -20,7 +20,7 @@
       <v-btn
         nuxt-link
         outlined
-        to="/help"
+        to="/info/help"
         color="theme_color"
         style="font-weight: bold"
         >ヘルプページ</v-btn
