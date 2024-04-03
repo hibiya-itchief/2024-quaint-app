@@ -146,7 +146,7 @@
               <p v-show="q1" class="pl-5 pt-2 fade-in">
                 IT委員が個別で対応いたしますので、お手数ですが2F保健室横のIT質問ブースまでお越しください。<br />
                 第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
-                <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
+                <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
                 <NuxtLink to="/schedule">配布スケジュール</NuxtLink><br />
               </p>
               <v-divider />
@@ -247,7 +247,7 @@
               <p v-show="q6" class="pl-5 pt-2 fade-in">
                 お近くの日比谷生にお声がけください。<br />
                 <br />
-                また、<NuxtLink to="/map">校内マップ</NuxtLink
+                また、<NuxtLink to="/info/map">校内マップ</NuxtLink
                 >のページもご覧ください。
               </p>
               <v-divider />
@@ -288,7 +288,7 @@
               <p v-show="q8" class="pl-5 pt-2 fade-in">
                 そのような場合は、2F保健室横のIT質問ブースまでお越しください。<br />
                 第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
-                <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
+                <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
                 <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
               </p>
               <v-divider />
@@ -299,7 +299,7 @@
             オンライン整理券システム・当サイトに関して、<br />
             IT委員に相談したいことがある場合は2F保健室横のIT質問ブースまでお越しください。<br />
             第1公演の整理券配布開始の10分前から第5公演終了の10分後まで受け付けております。<br />
-            <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
+            <!--<NuxtLink to="/info/map">校内マップ</NuxtLink><br />-->
             <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
           </h3>
         </v-col>

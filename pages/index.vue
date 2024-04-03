@@ -208,7 +208,7 @@ export default Vue.extend({
           link: '/system',
         },
         { icon: 'mdi-train', text: 'アクセス', link: '/access' },
-        { icon: 'mdi-map', text: '校内マップ', link: '/map' },
+        { icon: 'mdi-map', text: '校内マップ', link: '/info/map' },
         { icon: 'mdi-clock', text: 'スケジュール', link: '/schedule' },
         {
           icon: 'mdi-tooltip-question-outline',

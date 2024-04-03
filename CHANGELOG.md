@@ -13,7 +13,7 @@
 
 - `/groups/_groupId` 全ての人に`/data`が表示されている不具合を修正 #431
 - `/groups/_groupId` 公演の表示順を固定 #433
-- `/map` 校舎棟のみ掲載 #438
+- `/info/map` 校舎棟のみ掲載 #438
 - `/groups/_groupId` 縦長の画像でも全体を表示するように #439
 - `/groups/_groupId/edit` Hebe 等では公演を編集できないように #440
 
