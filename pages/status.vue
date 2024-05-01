@@ -50,7 +50,7 @@
                         >
                           <StatusCard
                             :group="group"
-                            :all-events="events[group.id]"
+                            :all_events="events[group.id]"
                           />
                         </div>
                       </v-tab-item>
@@ -88,7 +88,7 @@
                         >
                           <StatusCard
                             :group="group"
-                            :all-events="events[group.id]"
+                            :all_events="events[group.id]"
                           />
                         </div>
                       </v-tab-item>
