@@ -1,25 +1,51 @@
 <template>
   <div>
-    <v-card :to="'/groups/' + group.id">
-      <v-row>
-        <v-col cols="3">
-          <v-card-title>{{ group.groupname }}</v-card-title>
-        </v-col>
-        <v-col cols="8">
-          <div v-if="events.length >= 2">
-            <div v-for="i in [0, 1]" :key="i">
-              <StatusEventCard :group="group" :event="events[i]" />
+    <div v-if="!$vuetify.breakpoint.xs">
+      <v-card :to="'/groups/' + group.id">
+        <v-row>
+          <v-col cols="3">
+            <v-card-title>{{ group.groupname }}</v-card-title>
+          </v-col>
+          <v-col cols="8">
+            <div v-if="events.length >= 2">
+              <div v-for="i in [0, 1]" :key="i">
+                <StatusEventCard :group="group" :event="events[i]" />
+              </div>
             </div>
-          </div>
-          <div v-else-if="events.length == 1">
-            <StatusEventCard :group="group" :event="events[0]" />
-          </div>
-          <div v-else>
-            <v-card-subtitle>公演なし</v-card-subtitle>
-          </div>
-        </v-col>
-      </v-row>
-    </v-card>
+            <div v-else-if="events.length == 1">
+              <StatusEventCard :group="group" :event="events[0]" />
+            </div>
+            <div v-else>
+              <v-card-subtitle>公演なし</v-card-subtitle>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
+    <div v-else>
+      <v-card :to="'/groups/' + group.id">
+        <v-row>
+          <v-col cols="12">
+            <v-card-title>{{ group.groupname }}</v-card-title>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="11">
+            <div v-if="events.length >= 2">
+              <div v-for="i in [0, 1]" :key="i">
+                <StatusEventCard :group="group" :event="events[i]" />
+              </div>
+            </div>
+            <div v-else-if="events.length == 1">
+              <StatusEventCard :group="group" :event="events[0]" />
+            </div>
+            <div v-else>
+              <v-card-subtitle>公演なし</v-card-subtitle>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
   </div>
 </template>
 
