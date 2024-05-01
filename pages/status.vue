@@ -125,6 +125,8 @@ type Data = {
 }
 
 export default Vue.extend({
+  name: 'TicketsStatusPage',
+  auth: false,
   data(): Data {
     return {
       tags: [],
