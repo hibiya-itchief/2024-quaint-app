@@ -20,7 +20,7 @@
                   <!--階別表示-->
                   <v-tab-item :value="'mode-1'">
                     <v-tabs
-                      v-model="tab"
+                      v-model="tab1"
                       center-active
                       dark
                       centered
@@ -38,7 +38,7 @@
                       <v-tab href="#tab-0">その他</v-tab>
                     </v-tabs>
 
-                    <v-tabs-items v-model="tab">
+                    <v-tabs-items v-model="tab1">
                       <v-tab-item
                         v-for="i in [0, 1, 2, 3, 4]"
                         :key="i"
@@ -59,7 +59,7 @@
                   <!--学年別表示-->
                   <v-tab-item :value="'mode-2'">
                     <v-tabs
-                      v-model="tab"
+                      v-model="tab2"
                       center-active
                       dark
                       centered
@@ -76,7 +76,7 @@
                       <v-tab href="#tab-0">その他</v-tab>
                     </v-tabs>
 
-                    <v-tabs-items v-model="tab">
+                    <v-tabs-items v-model="tab2">
                       <v-tab-item
                         v-for="i in [0, 1, 2, 3]"
                         :key="i"
@@ -118,7 +118,8 @@ type Data = {
   floor_filtered_groups: [Group[], Group[], Group[], Group[], Group[]]
   grade_filtered_groups: [Group[], Group[], Group[], Group[]]
 
-  tab: boolean | null
+  tab1: boolean | null
+  tab2: boolean | null
   mode: boolean | null
   now_loading: boolean
 }
@@ -131,7 +132,8 @@ export default Vue.extend({
       events: { '': [] },
       floor_filtered_groups: [[], [], [], [], []],
       grade_filtered_groups: [[], [], [], []],
-      tab: null,
+      tab1: null,
+      tab2: null,
       mode: null,
       now_loading: true,
     }
