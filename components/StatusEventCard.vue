@@ -87,13 +87,13 @@ export default Vue.extend({
   },
 
   methods: {
-    DateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    DateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return d.getMonth() + 1 + '月' + d.getDate() + '日 '
     },
 
-    TimeFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    TimeFormatter(input_date: string) {
+      const d = new Date(input_date)
       return (
         d.getHours().toString().padStart(2, '0') +
         ':' +

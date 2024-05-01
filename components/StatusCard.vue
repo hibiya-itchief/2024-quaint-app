@@ -64,7 +64,7 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    allEvents: {
+    all_events: {
       type: Array,
       required: true,
     },
@@ -79,7 +79,7 @@ export default Vue.extend({
 
   created() {
     // eventsにまだ演劇が終了していないeventを追加していく
-    const res_events = this.allEvents as Event[]
+    const res_events = this.all_events as Event[]
     this.events = res_events.filter(
       (event) => new Date(event.ends_at) > new Date()
     )
