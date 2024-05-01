@@ -17,7 +17,7 @@
         ></v-img>
         <v-img
           v-else
-          :class="HashColor(group.id)"
+          :class="hashColor(group.id)"
           height="120px"
           width="90px"
         ></v-img>
@@ -34,7 +34,7 @@
         ></v-img>
         <v-img
           v-else
-          :class="HashColor(group.id)"
+          :class="hashColor(group.id)"
           height="160px"
           width="120px"
         ></v-img>
@@ -81,7 +81,7 @@
               </v-chip>
             </v-chip-group>
             <v-spacer />
-            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+            <v-icon v-if="filterBookmarks(group.id)" color="theme_color"
               >mdi-bookmark</v-icon
             >
           </v-card-actions>
@@ -101,7 +101,7 @@
               </v-chip>
             </v-chip-group>
             <v-spacer />
-            <v-icon v-if="FilterBookmarks(group.id)" color="theme_color"
+            <v-icon v-if="filterBookmarks(group.id)" color="theme_color"
               >mdi-bookmark</v-icon
             >
           </v-card-actions>
@@ -120,7 +120,7 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    storageBookmarks: {
+    storage_bookmarks: {
       type: Array,
       required: true,
     },
@@ -128,12 +128,12 @@ export default Vue.extend({
 
   methods: {
     // tag全体（{id:hogehoge, tagname:honyohonyo}の形）を用いると，tagが一致している判定がうまく行えなかったので，idを用いてtagの一致を判定している
-    FilterBookmarks(id: string) {
+    filterBookmarks(id: string) {
       // お気に入りならtrue
-      return this.storageBookmarks.includes('seiryofes.groups.favorite.' + id)
+      return this.storage_bookmarks.includes('seiryofes.groups.favorite.' + id)
     },
 
-    HashColor(text: string) {
+    hashColor(text: string) {
       // group.idを色数で割った余りでデフォルトの色を決定
       const colors = [
         'blue-grey',

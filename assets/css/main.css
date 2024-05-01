@@ -159,6 +159,13 @@
   transform: scale(1.08, 1.08);
 }
 
+a.link-snackbar {
+  color: white !important;
+  font-weight: bold !important;
+  text-decoration: underline !important;
+  text-decoration-color: white !important;
+}
+
 @keyframes fade-in-name {
   from {
     opacity: 0;

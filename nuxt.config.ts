@@ -5,9 +5,9 @@ import colors from 'vuetify/es5/util/colors'
 import { Group, Tag } from './types/quaint'
 
 const environment = process.env.QUAINT_ENV || 'development'
-const envSet = require(`./env.${environment}.js`)
+const env_set = require(`./env.${environment}.js`)
 
-const nuxtConfig: NuxtConfig = {
+const nuxt_config: NuxtConfig = {
   ssr: true,
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -77,7 +77,7 @@ const nuxtConfig: NuxtConfig = {
   },
 
   // cross-env
-  env: envSet,
+  env: env_set,
 
   router: {
     base: '/',
@@ -119,7 +119,7 @@ const nuxtConfig: NuxtConfig = {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: envSet.BASEURL,
+    baseURL: env_set.BASEURL,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -150,12 +150,12 @@ const nuxtConfig: NuxtConfig = {
     strategies: {
       b2c: {
         scheme: 'oauth2',
-        clientId: envSet.AZURE_B2C_CLIENTID,
+        clientId: env_set.AZURE_B2C_CLIENTID,
         endpoints: {
-          authorization: envSet.AZURE_B2C_ENDPOINT_AUTHORIZATION,
-          token: envSet.AZURE_B2C_ENDPOINT_TOKEN,
+          authorization: env_set.AZURE_B2C_ENDPOINT_AUTHORIZATION,
+          token: env_set.AZURE_B2C_ENDPOINT_TOKEN,
           userInfo: undefined,
-          logout: envSet.AZURE_B2C_ENDPOINT_LOGOUT,
+          logout: env_set.AZURE_B2C_ENDPOINT_LOGOUT,
         },
         // ライブラリはthis.option.tokenで読んでるからここは絶対に"token"
         token: {
@@ -177,9 +177,9 @@ const nuxtConfig: NuxtConfig = {
       },
       ad: {
         scheme: 'openIDConnect',
-        clientId: envSet.AZURE_AD_CLIENTID, // seiryofes.onmicrosoft.com
+        clientId: env_set.AZURE_AD_CLIENTID, // seiryofes.onmicrosoft.com
         endpoints: {
-          configuration: envSet.AZURE_AD_OPENIDCONFIGURATION,
+          configuration: env_set.AZURE_AD_OPENIDCONFIGURATION,
         },
         token: {
           property: 'id_token',
@@ -233,9 +233,9 @@ const nuxtConfig: NuxtConfig = {
     async routes() {
       // emvSet.BASEURLの末尾にスラッシュがある場合は削除する
       const baseurl_without_slash =
-        envSet.BASEURL.slice(-1) === '/'
-          ? envSet.BASEURL.slice(0, -1)
-          : envSet.BASEURL
+        env_set.BASEURL.slice(-1) === '/'
+          ? env_set.BASEURL.slice(0, -1)
+          : env_set.BASEURL
       const groups: Group[] = (await (
         await fetch(baseurl_without_slash + '/groups', {
           method: 'GET',
@@ -251,19 +251,19 @@ const nuxtConfig: NuxtConfig = {
         })
       ).json()) as Tag[]
 
-      const groupRoutes = groups.map((group) => {
+      const group_routes = groups.map((group) => {
         return {
           route: `/groups/${group.id}`,
           payload: group,
         }
       })
-      const groupEditRoutes = groups.map((group) => {
+      const group_edit_routes = groups.map((group) => {
         return {
           route: `/groups/${group.id}/edit`,
           payload: { group, tags },
         }
       })
-      const groupDataRoutes = groups.map((group) => {
+      const group_data_routes = groups.map((group) => {
         return {
           route: `/groups/${group.id}/data`,
           payload: { group },
@@ -274,9 +274,9 @@ const nuxtConfig: NuxtConfig = {
           route: '/groups',
           payload: { groups, tags },
         },
-        ...groupRoutes,
-        ...groupEditRoutes,
-        ...groupDataRoutes,
+        ...group_routes,
+        ...group_edit_routes,
+        ...group_data_routes,
       ]
     },
   },
@@ -286,4 +286,4 @@ const nuxtConfig: NuxtConfig = {
     height: '5px',
   },
 }
-export default nuxtConfig
+export default nuxt_config

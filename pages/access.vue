@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">アクセス</h1>
       <v-row>
         <v-col cols="12" sm="6" md="6">

@@ -127,8 +127,8 @@
                   <v-btn
                     color="primary"
                     @click="
-                      groupEdit.title = change_title_input
-                      UpdateGroup()
+                      group_edit.title = change_title_input
+                      updateGroup()
                     "
                   >
                     適用
@@ -181,8 +181,8 @@
                   <v-btn
                     color="primary"
                     @click="
-                      groupEdit.description = change_description_input
-                      UpdateGroup()
+                      group_edit.description = change_description_input
+                      updateGroup()
                     "
                   >
                     適用
@@ -234,8 +234,8 @@
                     color="primary"
                     outlined
                     @click="
-                      groupEdit.twitter_url = null
-                      UpdateGroup()
+                      group_edit.twitter_url = null
+                      updateGroup()
                     "
                   >
                     URLを削除
@@ -243,9 +243,9 @@
                   <v-btn
                     color="primary"
                     @click="
-                      groupEdit.twitter_url =
+                      group_edit.twitter_url =
                         'https://twitter.com/' + change_twitter_url_input
-                      UpdateGroup()
+                      updateGroup()
                     "
                   >
                     適用
@@ -301,8 +301,8 @@
                     color="primary"
                     outlined
                     @click="
-                      groupEdit.instagram_url = null
-                      UpdateGroup()
+                      group_edit.instagram_url = null
+                      updateGroup()
                     "
                   >
                     URLを削除
@@ -310,9 +310,9 @@
                   <v-btn
                     color="primary"
                     @click="
-                      groupEdit.instagram_url =
+                      group_edit.instagram_url =
                         'https://instagram.com/' + change_instagram_url_input
-                      UpdateGroup()
+                      updateGroup()
                     "
                   >
                     適用
@@ -356,7 +356,7 @@
                     <span>{{ url.linktext }}</span>
                   </v-list-item-content>
                   <v-list-item-action>
-                    <v-icon v-show="change_url_form" @click="DeleteLink(url)"
+                    <v-icon v-show="change_url_form" @click="deleteLink(url)"
                       >mdi-close-circle</v-icon
                     >
                   </v-list-item-action>
@@ -376,7 +376,7 @@
                 </v-card-text>
                 <v-card-actions class="ma-0 px-0 py-0">
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="AddLink()"> 追加 </v-btn>
+                  <v-btn color="primary" @click="addLink()"> 追加 </v-btn>
                 </v-card-actions>
               </div>
             </v-card>
@@ -438,13 +438,123 @@
                     color="primary"
                     outlined
                     @click="
-                      groupEdit.public_thumbnail_image_url = null
-                      UpdateGroup()
+                      group_edit.public_thumbnail_image_url = null
+                      updateGroup()
                     "
                   >
                     画像を削除
                   </v-btn>
-                  <v-btn color="primary" @click="ChangeThumbnailImage()">
+                  <v-btn color="primary" @click="changeThumbnailImage()">
+                    適用
+                  </v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
+
+            <!--何階かの情報の編集-->
+            <v-card class="mx-1 my-1 px-2 py-2" elevation="1">
+              <v-card-title class="ma-0 pa-0">
+                <p
+                  class="mx-0 my-1 pa-0 grey--text text--darken-2 text-subtitle-2"
+                >
+                  <v-icon color="light-blue" class="mr-2">mdi-stairs</v-icon>
+                  階
+                </p>
+                <v-spacer></v-spacer>
+                <a
+                  v-show="!change_floor_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_floor_form = !change_floor_form"
+                  >編集</a
+                >
+                <a
+                  v-show="change_floor_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_floor_form = !change_floor_form"
+                  >キャンセル</a
+                >
+              </v-card-title>
+              <v-card-text class="ma-0 pa-0">
+                <span class="mx-0 my-2 pa-0 text-body-1">{{
+                  group?.floor
+                }}</span>
+              </v-card-text>
+              <div v-show="change_floor_form">
+                <v-card-text class="mx-0 px-0 py-2">
+                  <v-text-field
+                    v-model="change_floor_input"
+                    label="階"
+                    counter
+                    maxlength="1"
+                    filled
+                    class="ma-0 pt-1 pb-0"
+                  >
+                  </v-text-field>
+                </v-card-text>
+                <v-card-actions class="ma-0 px-0 py-0">
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    @click="
+                      group_edit.floor = change_floor_input
+                      updateGroup()
+                    "
+                  >
+                    適用
+                  </v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
+
+            <!--場所の編集-->
+            <v-card class="mx-1 my-1 px-2 py-2" elevation="1">
+              <v-card-title class="ma-0 pa-0">
+                <p
+                  class="mx-0 my-1 pa-0 grey--text text--darken-2 text-subtitle-2"
+                >
+                  <v-icon color="light-blue" class="mr-2">mdi-map</v-icon>
+                  場所
+                </p>
+                <v-spacer></v-spacer>
+                <a
+                  v-show="!change_place_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_place_form = !change_place_form"
+                  >編集</a
+                >
+                <a
+                  v-show="change_place_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_place_form = !change_place_form"
+                  >キャンセル</a
+                >
+              </v-card-title>
+              <v-card-text class="ma-0 pa-0">
+                <span class="mx-0 my-2 pa-0 text-body-1">{{
+                  group?.place
+                }}</span>
+              </v-card-text>
+              <div v-show="change_place_form">
+                <v-card-text class="mx-0 px-0 py-2">
+                  <v-text-field
+                    v-model="change_place_input"
+                    label="場所"
+                    counter
+                    maxlength="50"
+                    filled
+                    class="ma-0 pt-1 pb-0"
+                  >
+                  </v-text-field>
+                </v-card-text>
+                <v-card-actions class="ma-0 px-0 py-0">
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    @click="
+                      group_edit.place = change_place_input
+                      updateGroup()
+                    "
+                  >
                     適用
                   </v-btn>
                 </v-card-actions>
@@ -452,7 +562,7 @@
             </v-card>
 
             <v-card
-              v-show="$auth.user?.groups?.includes(userGroups.admin)"
+              v-show="$auth.user?.groups?.includes(user_groups.admin)"
               class="mx-1 my-1 px-2 py-2"
               elevation="1"
             >
@@ -500,7 +610,7 @@
                       v-for="tag in group?.tags"
                       :key="tag.id"
                       close
-                      @click:close="DeleteTag(tag)"
+                      @click:close="deleteTag(tag)"
                     >
                       {{ tag.tagname }}
                     </v-chip>
@@ -516,13 +626,13 @@
                     return-object
                   >
                   </v-select>
-                  <v-btn color="primary" @click="AddTag()"> 追加 </v-btn>
+                  <v-btn color="primary" @click="addTag()"> 追加 </v-btn>
                 </v-card-actions>
               </div>
             </v-card>
 
             <v-card
-              v-if="!IsNotClassroom(group)"
+              v-if="!isNotClassroom(group)"
               class="mx-1 my-1 px-2 py-2"
               elevation="1"
             >
@@ -575,7 +685,7 @@
                           >
                           <v-btn
                             color="primary"
-                            @click="DeleteEvent(selected_event)"
+                            @click="deleteEvent(selected_event)"
                             >削除</v-btn
                           >
                         </v-card-actions>
@@ -583,19 +693,19 @@
                     </v-dialog>
                     <v-icon
                       v-show="change_events_form"
-                      @click="SelectDeleteEvent(event)"
+                      @click="selectDeleteEvent(event)"
                       >mdi-close-circle</v-icon
                     >
                   </v-card-title>
                   <v-card-text class="pb-2 px-1">
                     <p class="ma-0 pa-0">座席：{{ event.ticket_stock }}</p>
                     <p class="ma-0 pa-0">
-                      配布時間：{{ DateFormatter(event.sell_starts) }} ~
-                      {{ DateFormatter(event.sell_ends) }}
+                      配布時間：{{ dateFormatter(event.sell_starts) }} ~
+                      {{ dateFormatter(event.sell_ends) }}
                     </p>
                     <p class="ma-0 pa-0">
-                      公演時間：{{ DateFormatter(event.starts_at) }} ~
-                      {{ DateFormatter(event.ends_at) }}
+                      公演時間：{{ dateFormatter(event.starts_at) }} ~
+                      {{ dateFormatter(event.ends_at) }}
                     </p>
                   </v-card-text>
                 </v-card>
@@ -648,7 +758,7 @@
                 </v-card-text>
                 <v-card-actions class="ma-0 px-0 py-0">
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="CreateEvent()"> 追加 </v-btn>
+                  <v-btn color="primary" @click="createEvent()"> 追加 </v-btn>
                 </v-card-actions>
               </div>
             </v-card>
@@ -663,12 +773,12 @@
                     @click="delete_group_dialog = false"
                     >キャンセル</v-btn
                   >
-                  <v-btn color="red" @click="DeleteGroup()">削除</v-btn>
+                  <v-btn color="red" @click="deleteGroup()">削除</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
             <v-btn
-              v-show="$auth.user?.groups?.includes(userGroups.admin)"
+              v-show="$auth.user?.groups?.includes(user_groups.admin)"
               color="red"
               outlined
               class="ma-4 font-weight-bold"
@@ -722,9 +832,9 @@ type Data = {
   events: Event[]
   links: GroupLink[]
 
-  groupEdit: GroupEdit
+  group_edit: GroupEdit
 
-  userGroups: { admin: string; owner: string }
+  user_groups: { admin: string; owner: string }
   hostname: string
 
   success_alert: boolean
@@ -746,6 +856,10 @@ type Data = {
   change_url_name_input: string
   change_thumbnail_image_form: boolean
   change_thumbnail_image_input: any
+  change_floor_form: boolean
+  change_floor_input: number
+  change_place_form: boolean
+  change_place_input: string
   change_tags_form: boolean
   tag_selector: Tag
   change_events_form: boolean
@@ -785,12 +899,12 @@ export default Vue.extend({
       events = res[2]
       links = res[3]
     }
-    const { id, enable_vote, groupname, ...groupEdit } = group as Group
+    const group_edit = { ...(group as Group) }
     return {
       tags,
       group,
       events,
-      groupEdit,
+      group_edit,
       links,
       tag_selector: tags[0],
     }
@@ -803,8 +917,11 @@ export default Vue.extend({
       events: [],
       links: [],
       tag_selector: { id: '', tagname: '' },
-      groupEdit: {},
-      userGroups: {
+      group_edit: {
+        floor: null,
+        place: null,
+      },
+      user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
       },
@@ -829,6 +946,10 @@ export default Vue.extend({
       change_url_name_input: '',
       change_thumbnail_image_form: false,
       change_thumbnail_image_input: null,
+      change_floor_form: false,
+      change_floor_input: 0,
+      change_place_form: false,
+      change_place_input: '',
       change_tags_form: false,
       change_events_form: false,
       add_eventname: '例)第1公演',
@@ -868,10 +989,10 @@ export default Vue.extend({
 
     this.hostname = location.host // data()のreturn()内で使うとエラーになるのでここで代入
     if (
-      !(this.$auth.user?.groups as string[]).includes(this.userGroups.admin)
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
     ) {
       if (
-        (this.$auth.user?.groups as string[]).includes(this.userGroups.owner)
+        (this.$auth.user?.groups as string[]).includes(this.user_groups.owner)
       ) {
         if (
           !(
@@ -892,7 +1013,7 @@ export default Vue.extend({
   },
 
   methods: {
-    IsNotClassroom(group: Group) {
+    isNotClassroom(group: Group) {
       for (let i = 0; i < group.tags.length; i++) {
         if (
           group.tags[i].tagname === 'Hebe' ||
@@ -904,8 +1025,8 @@ export default Vue.extend({
       }
       return false
     },
-    DateFormatter(inputDate: string) {
-      const d = new Date(inputDate)
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
       return (
         d.getMonth() +
         1 +
@@ -917,9 +1038,9 @@ export default Vue.extend({
         d.getMinutes().toString().padStart(2, '0')
       )
     },
-    UpdateGroup() {
+    updateGroup() {
       this.$axios
-        .$put('/groups/' + this.group?.id, this.groupEdit)
+        .$put('/groups/' + this.group?.id, this.group_edit)
         .then((res) => {
           this.group = res
           this.success_message = '団体情報が更新されました'
@@ -938,7 +1059,7 @@ export default Vue.extend({
           this.error_alert = true
         })
     },
-    ChangeThumbnailImage() {
+    changeThumbnailImage() {
       if (this.change_thumbnail_image_input === null) {
         this.error_message = '画像が選択されていません'
         this.error_alert = true
@@ -970,7 +1091,7 @@ export default Vue.extend({
           this.$nuxt.refresh()
         })
     },
-    AddLink() {
+    addLink() {
       if (this.change_url_name_input === '' || this.change_url_input === '') {
         this.error_message = 'リンクが入力されていません'
         this.error_alert = true
@@ -1000,7 +1121,7 @@ export default Vue.extend({
           this.$nuxt.refresh()
         })
     },
-    DeleteLink(link: GroupLink) {
+    deleteLink(link: GroupLink) {
       this.$axios
         .delete('/groups/' + this.group?.id + '/links/' + link.id)
         .then(() => {
@@ -1022,7 +1143,7 @@ export default Vue.extend({
           this.$nuxt.refresh()
         })
     },
-    DeleteTag(tag: Tag) {
+    deleteTag(tag: Tag) {
       this.$axios
         .delete('/groups/' + this.group?.id + '/tags/' + tag.id)
         .then(() => {
@@ -1043,7 +1164,7 @@ export default Vue.extend({
           this.error_alert = true
         })
     },
-    AddTag() {
+    addTag() {
       if (this.tag_selector != null) {
         this.$axios
           .put('/groups/' + this.group?.id + '/tags', {
@@ -1068,11 +1189,11 @@ export default Vue.extend({
           })
       }
     },
-    SelectDeleteEvent(event: Event) {
+    selectDeleteEvent(event: Event) {
       this.selected_event = event
       this.delete_event_dialog = true
     },
-    DeleteEvent(event: Event) {
+    deleteEvent(event: Event) {
       this.$axios
         .delete('/groups/' + this.group?.id + '/events/' + event.id)
         .then(() => {
@@ -1094,7 +1215,7 @@ export default Vue.extend({
           this.$nuxt.refresh()
         })
     },
-    CreateEvent() {
+    createEvent() {
       if (Number.isInteger(Number(this.add_event_ticket_stock))) {
         this.$axios
           .post('/groups/' + this.group?.id + '/events', {
@@ -1130,7 +1251,7 @@ export default Vue.extend({
         this.error_alert = true
       }
     },
-    DeleteGroup() {
+    deleteGroup() {
       this.$axios
         .delete('/groups/' + this.group?.id)
         .then(() => {

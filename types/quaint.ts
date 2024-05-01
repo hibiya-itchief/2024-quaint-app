@@ -15,6 +15,9 @@ export type Group = {
   public_page_content_url: string | null
   private_page_content_url: string | null
 
+  floor: number | null // 何階か
+  place: string | null // どこでやるか
+
   tags: Tag[]
   floor: number | null
   place: string | null
@@ -34,8 +37,9 @@ export type GroupEdit = {
   public_thumbnail_image_url?: string | null
   public_page_content_url?: string | null
   private_page_content_url?: string | null
-  floor?: number | null
-  place?: string | null
+  
+  floor: number | null // 何階か
+  place: string | null // 場所
 }
 export type Event = {
   id: string

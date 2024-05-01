@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-container>
+      <ToolsBackButton />
       <h1 id="title">星陵祭とは</h1>
       <p>
         日比谷高校の文化祭は「星陵祭」と呼ばれており、全クラスが劇を行います。<br />
