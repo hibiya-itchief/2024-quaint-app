@@ -3,7 +3,6 @@
     <v-container>
       <!--データ読み込みが終わっているか-->
       <div v-if="!nowloading">
-        <h1 class="pages-title" style="color: black">配布状況一覧</h1>
         <v-row>
           <v-col>
             <v-card
@@ -11,6 +10,22 @@
               cols="10"
               style="background-color: var(--theme-color)"
             >
+              <v-row justify="center">
+                <v-col cols="2">
+                  <v-btn
+                    class="ma-2"
+                    color="theme_color"
+                    dark
+                    depressed
+                    @click="getInfo()"
+                    ><v-icon class="mr-1">mdi-reload</v-icon></v-btn
+                  >
+                </v-col>
+                <v-col cols="10">
+                  <v-card-title class="card-title">配布状況一覧</v-card-title>
+                </v-col>
+              </v-row>
+
               <!--学年で分けるか、階で分けるかのタブ-->
               <v-tabs
                 v-model="mode"
@@ -19,8 +34,10 @@
                 centered
                 background-color="theme_color"
               >
-                <v-tab href="#mode-1">階別</v-tab>
-                <v-tab href="#mode-2">学年別</v-tab>
+                <v-row justify="center">
+                  <v-tab href="#mode-1">階別</v-tab>
+                  <v-tab href="#mode-2">学年別</v-tab>
+                </v-row>
 
                 <v-tabs-items v-model="mode">
                   <!--階別表示-->
@@ -70,8 +87,8 @@
                       dark
                       centered
                       background-color="theme_color"
-                      next-icon="mdi-arrow-right-bold-box-outline"
-                      prev-icon="mdi-arrow-left-bold-box-outline"
+                      next-icon="mdi-chevron-right"
+                      prev-icon="mdi-chevron-left"
                       show-arrows
                     >
                       <v-tabs-slider></v-tabs-slider>
@@ -147,49 +164,73 @@ export default Vue.extend({
     }
   },
 
-  async created() {
-    // URLを本番用に置き換える
-    this.groups = await this.$axios.$get('/groups')
-    this.tags = await this.$axios.$get('/tags')
+  created() {
+    this.getInfo()
+  },
 
-    // eventsを作成(key:group name, object:event)
-    for (const group of this.groups as Group[]) {
+  methods: {
+    async getInfo() {
+      this.nowloading = true
+
+      // 配列に保存されている情報を全て空で上書き
+      this.tags = []
+      this.groups = []
+      this.events = { '': [] }
+      this.floor_filtered_groups = [[], [], [], [], []]
+      this.grade_filtered_groups = [[], [], [], []]
+
       // URLを本番用に置き換える
-      this.events[group.id] = await this.$axios.$get(
-        '/groups/' + group.id + '/events'
-      )
-    }
+      this.groups = await this.$axios.$get('/groups')
+      this.tags = await this.$axios.$get('/tags')
 
-    // 階、学年ごとに分けた配列を作成
-    for (const group of this.groups) {
-      if (
-        group.floor === 1 ||
-        group.floor === 2 ||
-        group.floor === 3 ||
-        group.floor === 4
-      ) {
-        this.floor_filtered_groups[group.floor].push(group)
-      } else {
-        this.floor_filtered_groups[0].push(group)
+      // eventsを作成(key:group name, object:event)
+      for (const group of this.groups as Group[]) {
+        // URLを本番用に置き換える
+        this.events[group.id] = await this.$axios.$get(
+          '/groups/' + group.id + '/events'
+        )
       }
 
-      switch (group.id.slice(0, 1)) {
-        case '1':
-          this.grade_filtered_groups[1].push(group)
-          break
-        case '2':
-          this.grade_filtered_groups[2].push(group)
-          break
-        case '3':
-          this.grade_filtered_groups[3].push(group)
-          break
-        default:
-          this.grade_filtered_groups[0].push(group)
-          break
-      }
-    }
+      // 階、学年ごとに分けた配列を作成
+      for (const group of this.groups) {
+        if (
+          group.floor === 1 ||
+          group.floor === 2 ||
+          group.floor === 3 ||
+          group.floor === 4
+        ) {
+          this.floor_filtered_groups[group.floor].push(group)
+        } else {
+          this.floor_filtered_groups[0].push(group)
+        }
 
-    this.nowloading = false
+        switch (group.id.slice(0, 1)) {
+          case '1':
+            this.grade_filtered_groups[1].push(group)
+            break
+          case '2':
+            this.grade_filtered_groups[2].push(group)
+            break
+          case '3':
+            this.grade_filtered_groups[3].push(group)
+            break
+          default:
+            this.grade_filtered_groups[0].push(group)
+            break
+        }
+      }
+
+      this.nowloading = false
+    },
   },
 })
 </script>
+
+<style>
+.card-title {
+  font-family: serif;
+  font-weight: bold;
+  font-size: x-large;
+  color: #fff;
+}
+</style>
