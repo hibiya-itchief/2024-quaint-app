@@ -159,8 +159,8 @@ export default Vue.extend({
       second_day_events: [],
       other_day_events: [],
       date: {
-        '1': '9/16',
-        '2': '9/17',
+        '1': '9/14',
+        '2': '9/15',
       },
     }
   },
