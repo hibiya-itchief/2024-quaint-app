@@ -186,6 +186,11 @@
           <span>整理券</span>
           <v-icon>mdi-ticket</v-icon>
         </v-btn>
+
+        <v-btn to="/status">
+          <span>配布状況</span>
+          <v-icon>mdi-list-status</v-icon>
+        </v-btn>
       </v-bottom-navigation>
 
       <LayoutSnackBar />

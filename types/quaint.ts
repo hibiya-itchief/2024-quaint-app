@@ -17,7 +17,6 @@ export type Group = {
 
   floor: number | null // 何階か
   place: string | null // どこでやるか
-
   tags: Tag[]
 }
 export type GroupLink = {
@@ -35,6 +34,7 @@ export type GroupEdit = {
   public_thumbnail_image_url?: string | null
   public_page_content_url?: string | null
   private_page_content_url?: string | null
+
   floor: number | null // 何階か
   place: string | null // 場所
 }
@@ -50,6 +50,7 @@ export type Event = {
   ticket_stock: number
   lottery: boolean
 }
+
 export type Ticket = {
   group_id: string
   event_id: string
