@@ -1,11 +1,17 @@
 <template>
   <v-app>
     <v-container>
-      <div v-if="!now_loading">
+      <!--データ読み込みが終わっているか-->
+      <div v-if="!nowloading">
         <h1 class="pages-title" style="color: black">配布状況一覧</h1>
         <v-row>
           <v-col>
-            <v-card class="justify-center" cols="10">
+            <v-card
+              class="justify-center"
+              cols="10"
+              style="background-color: var(--theme-color)"
+            >
+              <!--学年で分けるか、階で分けるかのタブ-->
               <v-tabs
                 v-model="mode"
                 center-active
@@ -121,7 +127,7 @@ type Data = {
   tab1: boolean | null
   tab2: boolean | null
   mode: boolean | null
-  now_loading: boolean
+  nowloading: boolean
 }
 
 export default Vue.extend({
@@ -137,7 +143,7 @@ export default Vue.extend({
       tab1: null,
       tab2: null,
       mode: null,
-      now_loading: true,
+      nowloading: true,
     }
   },
 
@@ -183,7 +189,7 @@ export default Vue.extend({
       }
     }
 
-    this.now_loading = false
+    this.nowloading = false
   },
 })
 </script>

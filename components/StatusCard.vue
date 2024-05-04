@@ -54,7 +54,6 @@ import { Event } from 'types/quaint'
 import Vue from 'vue'
 
 type Data = {
-  filtered_events: Event[]
   events: Event[]
 }
 
@@ -72,7 +71,6 @@ export default Vue.extend({
 
   data(): Data {
     return {
-      filtered_events: [],
       events: [],
     }
   },
