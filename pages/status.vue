@@ -31,8 +31,8 @@
                       dark
                       centered
                       background-color="theme_color"
-                      next-icon="mdi-arrow-right-bold-box-outline"
-                      prev-icon="mdi-arrow-left-bold-box-outline"
+                      next-icon="mdi-chevron-right"
+                      prev-icon="mdi-chevron-left"
                       show-arrows
                     >
                       <v-tabs-slider></v-tabs-slider>
