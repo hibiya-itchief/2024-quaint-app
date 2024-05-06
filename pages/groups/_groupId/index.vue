@@ -409,16 +409,11 @@ export default Vue.extend({
 
     // isNotClassroom: クラス劇かどうかを判定し、オンライン整理券があるかどうか判定するmethod
     isNotClassroom(group: Group) {
-      for (let i = 0; i < group.tags.length; i++) {
-        if (
-          group.tags[i].tagname === 'Hebe' ||
-          group.tags[i].tagname === '外部団体' ||
-          group.tags[i].tagname === '部活動'
-        ) {
-          return true
-        }
+      if (group.type === 'play' || group.type === 'test') {
+        return false
+      } else {
+        return true
       }
-      return false
     },
 
     // suitableEvents: 未ログイン状態では全ての公演，ログインしている状態ではユーザ属性に合った公演のみが表示されるようにするmethod

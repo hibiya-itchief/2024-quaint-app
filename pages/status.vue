@@ -183,6 +183,11 @@ export default Vue.extend({
       this.groups = await this.$axios.$get('/groups')
       this.tags = await this.$axios.$get('/tags')
 
+      // 劇の団体を抽出
+      this.groups = this.groups.filter(
+        (group) => group.type === 'play' || group.type === 'test'
+      )
+
       // eventsを作成(key:group name, object:event)
       for (const group of this.groups as Group[]) {
         // URLを本番用に置き換える
