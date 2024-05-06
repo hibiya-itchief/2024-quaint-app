@@ -18,6 +18,8 @@ export type Group = {
   floor: number | null // 何階か
   place: string | null // どこでやるか
   tags: Tag[]
+
+  type: string // 団体のタイプ情報
 }
 export type GroupLink = {
   id: string
@@ -37,6 +39,8 @@ export type GroupEdit = {
 
   floor: number | null // 何階か
   place: string | null // 場所
+
+  type: string | null // 団体のタイプ情報
 }
 export type Event = {
   id: string

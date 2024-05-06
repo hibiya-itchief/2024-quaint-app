@@ -632,6 +632,57 @@
             </v-card>
 
             <v-card
+              v-show="$auth.user?.groups?.includes(user_groups.admin)"
+              class="mx-1 my-1 px-2 py-2"
+              elevation="1"
+            >
+              <v-card-title class="ma-0 pa-0">
+                <p
+                  class="mx-0 my-1 pa-0 grey--text text--darken-2 text-subtitle-2"
+                >
+                  <v-icon color="light-blue" class="mr-2"
+                    >mdi-wrench-cog-outline</v-icon
+                  >
+                  タイプ
+                </p>
+                <v-spacer></v-spacer>
+                <a
+                  v-show="!change_type_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_type_form = !change_type_form"
+                  >編集</a
+                >
+                <a
+                  v-show="change_type_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_type_form = !change_type_form"
+                  >キャンセル</a
+                >
+              </v-card-title>
+              <v-card-text class="ma-0 pa-0">
+                <p class="ma-0 pa-0 text-caption grey--text text--darken-3">
+                  団体のタイプを変更します。
+                </p>
+                <p>現在この団体は{{ group.type }}に設定されています。</p>
+              </v-card-text>
+              <div v-show="change_type_form">
+                <v-card-text class="mx-0 px-0 py-2"> </v-card-text>
+                <v-card-actions class="ma-0 px-0 py-0">
+                  <v-select
+                    v-model="group_edit.type"
+                    :items="types"
+                    item-text="typename"
+                    label="タイプを変更"
+                    filled
+                    return-object
+                  >
+                  </v-select>
+                  <v-btn color="primary" @click="updateGroup()"> 変更 </v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
+
+            <v-card
               v-if="!isNotClassroom(group)"
               class="mx-1 my-1 px-2 py-2"
               elevation="1"
@@ -861,7 +912,9 @@ type Data = {
   change_place_form: boolean
   change_place_input: string
   change_tags_form: boolean
+  change_type_form: boolean
   tag_selector: Tag
+  types: string[]
   change_events_form: boolean
   add_eventname: string
   add_event_target_list: { text: string; target: string }[]
@@ -917,9 +970,11 @@ export default Vue.extend({
       events: [],
       links: [],
       tag_selector: { id: '', tagname: '' },
+      types: ['play', 'club', 'hebe', 'test', 'other'],
       group_edit: {
         floor: null,
         place: null,
+        type: null,
       },
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
@@ -951,6 +1006,7 @@ export default Vue.extend({
       change_place_form: false,
       change_place_input: '',
       change_tags_form: false,
+      change_type_form: false,
       change_events_form: false,
       add_eventname: '例)第1公演',
       add_event_target_list: [
@@ -1014,16 +1070,11 @@ export default Vue.extend({
 
   methods: {
     isNotClassroom(group: Group) {
-      for (let i = 0; i < group.tags.length; i++) {
-        if (
-          group.tags[i].tagname === 'Hebe' ||
-          group.tags[i].tagname === '外部団体' ||
-          group.tags[i].tagname === '部活動'
-        ) {
-          return true
-        }
+      if (group.type === 'play' || group.type === 'test') {
+        return false
+      } else {
+        return true
       }
-      return false
     },
     dateFormatter(input_date: string) {
       const d = new Date(input_date)
