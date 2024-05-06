@@ -55,7 +55,7 @@ export default Vue.extend({
       data.append('file', this.events_data_csv_input)
 
       await this.$axios
-        .$post('/api/support/events', data, {
+        .$post('/support/events', data, {
           headers: { 'content-type': 'multipart/form-data' },
         })
         .then((res) => {
