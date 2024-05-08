@@ -1,7 +1,8 @@
 <template>
   <v-app>
-    <v-row>
-      <v-col>
+    <h1>設定ページ</h1>
+    <v-row justify="center">
+      <v-col cols="10">
         <v-card>
           <v-card-title>公演の一括追加</v-card-title>
           <v-card-text class="mx-0 px-0 py-2">
