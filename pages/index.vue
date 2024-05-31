@@ -33,12 +33,68 @@
       </v-col>
 
       <v-col cols="10">
+        <h1 class="info-title" style="margin-bottom: 20px">News</h1>
+        <!--最大10コのnewsを表示する-->
+        <div v-for="i in shown_news" :key="i.id">
+          <div v-if="$vuetify.breakpoint.xs">
+            <v-divider></v-divider>
+            <v-row style="margin-top: 5px; margin-bottom: 5px">
+              <v-col cols="3">
+                {{ dateFormatter(i.timestamp) }}
+
+                {{ timeFormatter(i.timestamp) }}
+              </v-col>
+              <v-col cols="9">
+                <v-row>
+                  <v-col cols="9">
+                    {{ i.title }}
+                  </v-col>
+                  <v-col cols="3">
+                    <v-btn color="theme_color" dark
+                      ><NuxtLink :to="'/news/' + i.id" tag="div" class="c-p"
+                        >詳細</NuxtLink
+                      ></v-btn
+                    >
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+          <div v-else>
+            <v-divider></v-divider>
+            <v-row style="margin-top: 5px; margin-bottom: 5px">
+              <v-col cols="2">
+                {{ dateFormatter(i.timestamp) }}
+
+                {{ timeFormatter(i.timestamp) }}
+              </v-col>
+              <v-col cols="3">{{ i.author }}</v-col>
+              <v-col cols="7">
+                <v-row>
+                  <v-col cols="10">
+                    {{ i.title }}
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn color="theme_color" dark
+                      ><NuxtLink :to="'/news/' + i.id" tag="div" class="c-p"
+                        >詳細</NuxtLink
+                      ></v-btn
+                    >
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+      </v-col>
+
+      <v-col cols="10">
         <h1 class="info-title">開催概要</h1>
         <v-row>
           <v-col cols="12" sm="6" md="6">
             <h2 class="info-subtitle">令和6年度</h2>
             <h2 class="info-subtitle">
-              9月16日(<span style="color: blue">土</span>)ー17日(<span
+              9月14日(<span style="color: blue">土</span>)ー15日(<span
                 style="color: red"
                 >日</span
               >)
@@ -73,13 +129,13 @@
             <br />
           </v-col>
           <v-col cols="12" sm="6" md="6">
-            <h2 class="info-subtitle">9月16日</h2>
+            <h2 class="info-subtitle">9月14日</h2>
             <br />
             <h3 class="info-subtitle">8時30分 受付開始</h3>
             <h3 class="info-subtitle">16時00分 公開終了</h3>
             <br />
             <br />
-            <h2 class="info-subtitle">9月17日</h2>
+            <h2 class="info-subtitle">9月15日</h2>
             <br />
             <h3 class="info-subtitle">8時30分 受付開始</h3>
             <h3 class="info-subtitle">15時20分 公開終了</h3>
@@ -181,10 +237,14 @@
 import Vue from 'vue'
 import { Route } from 'vue-router'
 import CountDown from '~/components/CountDown.vue'
+import { News } from 'types/quaint'
+
 type Data = {
   show_video: boolean
   prev_route: Route | null
   pages: any[]
+  news: News[]
+  shown_news: News[]
 }
 export default Vue.extend({
   name: 'IndexPage',
@@ -216,6 +276,8 @@ export default Vue.extend({
           link: '/help',
         },
       ],
+      news: [],
+      shown_news: [],
     }
   },
   head: {
@@ -267,6 +329,22 @@ export default Vue.extend({
       },
     ],
   },
+
+  async created() {
+    this.news = await this.$axios.$get('/news')
+
+    // newsの並び替え
+    this.news.sort((x: News, y: News) => {
+      // 講演開始が先なら前、後なら後ろ
+      if (new Date(x.timestamp) < new Date(y.timestamp)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+    this.shown_news = this.news.slice(0, 10 - 1)
+  },
+
   mounted() {
     // リファラが「/」なら(リンク直アクセスor他オリジンから)、最初のさいらいビデオを流す
     if (
@@ -278,6 +356,22 @@ export default Vue.extend({
     } else {
       this.show_video = false
     }
+  },
+
+  methods: {
+    dateFormatter(input_date: string) {
+      const d = new Date(input_date)
+      return d.getMonth() + 1 + '/' + d.getDate()
+    },
+
+    timeFormatter(input_date: string) {
+      const d = new Date(input_date)
+      return (
+        d.getHours().toString().padStart(2, '0') +
+        ':' +
+        d.getMinutes().toString().padStart(2, '0')
+      )
+    },
   },
 })
 </script>
@@ -304,6 +398,10 @@ body {
   width: 0;
   height: 0;
   overflow: hidden; /* スプラッシュ背景が消えた時に、videoがはみ出さないようにする */
+}
+
+.c-p {
+  cursor: pointer;
 }
 
 video {

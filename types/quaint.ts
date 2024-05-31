@@ -71,3 +71,11 @@ export type OwnerOf = {
   user_id: string
   note: string
 }
+
+export type News = {
+  title: string
+  author: string
+  detail: string
+  timestamp: string
+  id: string
+}
