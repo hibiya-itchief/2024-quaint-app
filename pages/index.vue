@@ -34,6 +34,12 @@
 
       <v-col cols="10">
         <h1 class="info-title" style="margin-bottom: 20px">News</h1>
+
+        <!--権限がある人がnewsを編集する-->
+        <div v-if="editable_news" style="margin-bottom: 10px">
+          <v-btn depressed outlined small to="/news/">編集</v-btn>
+        </div>
+
         <!--最大10コのnewsを表示する-->
         <div v-if="is_show_all_news">
           <div v-for="i in news" :key="i.id">
@@ -269,12 +275,18 @@ import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
 
 type Data = {
+  user_groups: {
+    admin: string
+    teachers: string
+    chief: string
+  }
   show_video: boolean
   prev_route: Route | null
   pages: any[]
   news: News[]
   shown_news: News[]
   is_show_all_news: boolean
+  editable_news: boolean
 }
 export default Vue.extend({
   name: 'IndexPage',
@@ -288,6 +300,11 @@ export default Vue.extend({
   },
   data(): Data {
     return {
+      user_groups: {
+        admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
+        teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
+        chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+      },
       show_video: true,
       prev_route: null,
       pages: [
@@ -309,6 +326,7 @@ export default Vue.extend({
       news: [],
       shown_news: [],
       is_show_all_news: false,
+      editable_news: false,
     }
   },
   head: {
@@ -374,6 +392,17 @@ export default Vue.extend({
       }
     })
     this.shown_news = this.news.slice(0, 10 - 1)
+
+    // 権限がある人がnewsを編集可能にする
+    if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {
+      if (this.$auth.user?.groups.includes(this.user_groups.admin)) {
+        this.editable_news = true
+      } else if (this.$auth.user?.groups.includes(this.user_groups.chief)) {
+        this.editable_news = true
+      } else if (this.$auth.user?.groups.includes(this.user_groups.teachers)) {
+        this.editable_news = true
+      }
+    }
   },
 
   mounted() {
