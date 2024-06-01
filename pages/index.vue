@@ -35,33 +35,84 @@
       <v-col cols="10">
         <h1 class="info-title" style="margin-bottom: 20px">News</h1>
         <!--最大10コのnewsを表示する-->
-        <div v-for="i in shown_news" :key="i.id">
-          <div v-if="$vuetify.breakpoint.xs">
-            <v-divider></v-divider>
-            <v-row style="margin-top: 5px; margin-bottom: 5px">
-              <v-col cols="4">
-                {{ dateFormatter(i.timestamp) }}
+        <div v-if="is_show_all_news">
+          <div v-for="i in news" :key="i.id">
+            <div v-if="$vuetify.breakpoint.xs">
+              <v-divider></v-divider>
+              <v-row style="margin-top: 5px; margin-bottom: 5px">
+                <v-col cols="4">
+                  {{ dateFormatter(i.timestamp) }}
 
-                {{ timeFormatter(i.timestamp) }}
-              </v-col>
-              <v-col cols="8">
-                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-              </v-col>
-            </v-row>
+                  {{ timeFormatter(i.timestamp) }}
+                </v-col>
+                <v-col cols="8">
+                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                </v-col>
+              </v-row>
+            </div>
+            <div v-else>
+              <v-divider></v-divider>
+              <v-row style="margin-top: 5px; margin-bottom: 5px">
+                <v-col cols="2">
+                  {{ dateFormatter(i.timestamp) }}
+
+                  {{ timeFormatter(i.timestamp) }}
+                </v-col>
+                <v-col cols="3">{{ i.author }}</v-col>
+                <v-col cols="7">
+                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                </v-col>
+              </v-row>
+            </div>
           </div>
-          <div v-else>
-            <v-divider></v-divider>
-            <v-row style="margin-top: 5px; margin-bottom: 5px">
-              <v-col cols="2">
-                {{ dateFormatter(i.timestamp) }}
+        </div>
+        <div v-else>
+          <div v-for="i in shown_news" :key="i.id">
+            <div v-if="$vuetify.breakpoint.xs">
+              <v-divider></v-divider>
+              <v-row style="margin-top: 5px; margin-bottom: 5px">
+                <v-col cols="4">
+                  {{ dateFormatter(i.timestamp) }}
 
-                {{ timeFormatter(i.timestamp) }}
-              </v-col>
-              <v-col cols="3">{{ i.author }}</v-col>
-              <v-col cols="7">
-                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-              </v-col>
-            </v-row>
+                  {{ timeFormatter(i.timestamp) }}
+                </v-col>
+                <v-col cols="8">
+                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                </v-col>
+              </v-row>
+            </div>
+            <div v-else>
+              <v-divider></v-divider>
+              <v-row style="margin-top: 5px; margin-bottom: 5px">
+                <v-col cols="2">
+                  {{ dateFormatter(i.timestamp) }}
+
+                  {{ timeFormatter(i.timestamp) }}
+                </v-col>
+                <v-col cols="3">{{ i.author }}</v-col>
+                <v-col cols="7">
+                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                </v-col>
+              </v-row>
+            </div>
+          </div>
+        </div>
+        <div v-if="news.length > 10">
+          <div style="justify-content: center; text-align: center">
+            <v-btn
+              depressed
+              rounded
+              @click="is_show_all_news = !is_show_all_news"
+            >
+              <div v-if="!is_show_all_news">
+                <v-icon color="theme_color">mdi-arrow-down-thick</v-icon
+                >さらに表示
+              </div>
+              <div v-else>
+                <v-icon color="theme_color">mdi-arrow-up-thick</v-icon>
+                閉じる
+              </div>
+            </v-btn>
           </div>
         </div>
       </v-col>
@@ -223,6 +274,7 @@ type Data = {
   pages: any[]
   news: News[]
   shown_news: News[]
+  is_show_all_news: boolean
 }
 export default Vue.extend({
   name: 'IndexPage',
@@ -256,6 +308,7 @@ export default Vue.extend({
       ],
       news: [],
       shown_news: [],
+      is_show_all_news: false,
     }
   },
   head: {
