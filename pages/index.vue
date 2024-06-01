@@ -39,24 +39,13 @@
           <div v-if="$vuetify.breakpoint.xs">
             <v-divider></v-divider>
             <v-row style="margin-top: 5px; margin-bottom: 5px">
-              <v-col cols="3">
+              <v-col cols="4">
                 {{ dateFormatter(i.timestamp) }}
 
                 {{ timeFormatter(i.timestamp) }}
               </v-col>
-              <v-col cols="9">
-                <v-row>
-                  <v-col cols="9">
-                    {{ i.title }}
-                  </v-col>
-                  <v-col cols="3">
-                    <v-btn color="theme_color" dark
-                      ><NuxtLink :to="'/news/' + i.id" tag="div" class="c-p"
-                        >詳細</NuxtLink
-                      ></v-btn
-                    >
-                  </v-col>
-                </v-row>
+              <v-col cols="8">
+                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
               </v-col>
             </v-row>
           </div>
@@ -70,18 +59,7 @@
               </v-col>
               <v-col cols="3">{{ i.author }}</v-col>
               <v-col cols="7">
-                <v-row>
-                  <v-col cols="10">
-                    {{ i.title }}
-                  </v-col>
-                  <v-col cols="2">
-                    <v-btn color="theme_color" dark
-                      ><NuxtLink :to="'/news/' + i.id" tag="div" class="c-p"
-                        >詳細</NuxtLink
-                      ></v-btn
-                    >
-                  </v-col>
-                </v-row>
+                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
               </v-col>
             </v-row>
           </div>
