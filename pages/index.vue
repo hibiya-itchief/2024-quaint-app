@@ -267,7 +267,6 @@ import { News } from 'types/quaint'
 type Data = {
   user_groups: {
     admin: string
-    teachers: string
     chief: string
   }
   show_video: boolean
