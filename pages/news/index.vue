@@ -139,10 +139,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { News } from 'types/quaint.ts'
+import { News, EditNews } from 'types/quaint.ts'
 
 type Data = {
-  create_news: News
+  create_news: EditNews
   change_news: News | null
   change_selected_title: string | null
   delete_selected_title: string | null
@@ -187,7 +187,7 @@ export default Vue.extend({
   },
 
   methods: {
-    createNews(news: News) {
+    createNews(news: EditNews) {
       this.$axios
         .$post('/news/create', news)
         .then(() => {

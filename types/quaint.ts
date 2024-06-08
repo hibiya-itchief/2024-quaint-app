@@ -79,3 +79,9 @@ export type News = {
   timestamp: string
   id: string
 }
+
+export type EditNews = {
+  title: string
+  author: string
+  detail: string
+}
