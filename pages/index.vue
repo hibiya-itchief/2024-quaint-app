@@ -292,7 +292,6 @@ export default Vue.extend({
     return {
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
-        teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
       },
       show_video: true,
@@ -395,8 +394,6 @@ export default Vue.extend({
       if (this.$auth.user?.groups.includes(this.user_groups.admin)) {
         this.editable_news = true
       } else if (this.$auth.user?.groups.includes(this.user_groups.chief)) {
-        this.editable_news = true
-      } else if (this.$auth.user?.groups.includes(this.user_groups.teachers)) {
         this.editable_news = true
       }
     }
