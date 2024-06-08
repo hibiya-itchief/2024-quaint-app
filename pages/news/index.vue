@@ -139,7 +139,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { News, EditNews } from 'types/quaint.ts'
+import { News, EditNews } from 'types/quaint'
 
 type Data = {
   create_news: EditNews
@@ -165,10 +165,13 @@ export default Vue.extend({
   },
 
   watch: {
-    change_selected_title: function (new_content: string) {
-      this.change_news = this.news.find(
-        (element) => element.title === new_content
+    change_selected_title: function (news_title: string) {
+      const selected_news = this.news.find(
+        (element) => element.title === news_title
       )
+      if (selected_news) {
+        this.change_news = selected_news
+      }
     },
   },
 
@@ -230,26 +233,31 @@ export default Vue.extend({
     },
 
     deleteNews(title: string) {
-      this.$axios
-        .$delete(
-          '/news/' + this.news.find((element) => element.title === title).id
-        )
-        .then(() => {
-          this.$store.commit('ShowInternetSuccessSnackbar', {
-            message: '削除に成功しました。',
+      const selected_news = this.news.find((element) => element.title === title)
+      if (selected_news) {
+        this.$axios
+          .$delete('/news/' + selected_news.id)
+          .then(() => {
+            this.$store.commit('ShowInternetSuccessSnackbar', {
+              message: '削除に成功しました。',
+            })
           })
+          .catch((e) => {
+            if (e.response) {
+              this.$store.commit('ShowInternetErrorSnackbar', {
+                message: e.response.data.detail,
+              })
+            } else {
+              this.$store.commit('ShowInternetErrorSnackbar', {
+                message: '予期しないエラーが出ました。',
+              })
+            }
+          })
+      } else {
+        this.$store.commit('ShowInternetErrorSnackbar', {
+          message: '選択されたタイトルを持つお知らせが存在しません。',
         })
-        .catch((e) => {
-          if (e.response) {
-            this.$store.commit('ShowInternetErrorSnackbar', {
-              message: e.response.data.detail,
-            })
-          } else {
-            this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '予期しないエラーが出ました。',
-            })
-          }
-        })
+      }
     },
   },
 })

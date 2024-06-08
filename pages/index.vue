@@ -40,85 +40,75 @@
           <v-btn depressed outlined small to="/news/">編集</v-btn>
         </div>
 
-        <!--最大10コのnewsを表示する-->
-        <div v-if="is_show_all_news">
-          <div v-for="i in news" :key="i.id">
-            <div v-if="$vuetify.breakpoint.xs">
-              <v-divider></v-divider>
-              <v-row style="margin-top: 5px; margin-bottom: 5px">
-                <v-col cols="4">
-                  {{ dateFormatter(i.timestamp) }}
-
-                  {{ timeFormatter(i.timestamp) }}
-                </v-col>
-                <v-col cols="8">
-                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-                </v-col>
-              </v-row>
-            </div>
-            <div v-else>
-              <v-divider></v-divider>
-              <v-row style="margin-top: 5px; margin-bottom: 5px">
-                <v-col cols="2">
-                  {{ dateFormatter(i.timestamp) }}
-
-                  {{ timeFormatter(i.timestamp) }}
-                </v-col>
-                <v-col cols="3">{{ i.author }}</v-col>
-                <v-col cols="7">
-                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-                </v-col>
-              </v-row>
-            </div>
+        <!--最大5コのnewsを表示する-->
+        <div v-for="i in shown_news[shown_news_group]" :key="i.id">
+          <div v-if="$vuetify.breakpoint.xs">
+            <v-divider></v-divider>
+            <v-row style="margin-top: 5px; margin-bottom: 5px">
+              <v-col cols="4">
+                {{ dateFormatter(i.timestamp) }}/{{
+                  timeFormatter(i.timestamp)
+                }}
+              </v-col>
+              <v-col cols="8">
+                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+              </v-col>
+            </v-row>
+          </div>
+          <div v-else>
+            <v-divider></v-divider>
+            <v-row style="margin-top: 5px; margin-bottom: 5px">
+              <v-col cols="2">
+                {{ dateFormatter(i.timestamp) }}/{{
+                  timeFormatter(i.timestamp)
+                }}
+              </v-col>
+              <v-col cols="3">{{ i.author }}</v-col>
+              <v-col cols="7">
+                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+              </v-col>
+            </v-row>
           </div>
         </div>
-        <div v-else>
-          <div v-for="i in shown_news" :key="i.id">
-            <div v-if="$vuetify.breakpoint.xs">
-              <v-divider></v-divider>
-              <v-row style="margin-top: 5px; margin-bottom: 5px">
-                <v-col cols="4">
-                  {{ dateFormatter(i.timestamp) }}
-
-                  {{ timeFormatter(i.timestamp) }}
-                </v-col>
-                <v-col cols="8">
-                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-                </v-col>
-              </v-row>
-            </div>
-            <div v-else>
-              <v-divider></v-divider>
-              <v-row style="margin-top: 5px; margin-bottom: 5px">
-                <v-col cols="2">
-                  {{ dateFormatter(i.timestamp) }}
-
-                  {{ timeFormatter(i.timestamp) }}
-                </v-col>
-                <v-col cols="3">{{ i.author }}</v-col>
-                <v-col cols="7">
-                  <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-        </div>
-        <div v-if="news.length > 10">
-          <div style="justify-content: center; text-align: center">
-            <v-btn
-              depressed
-              rounded
-              @click="is_show_all_news = !is_show_all_news"
-            >
-              <div v-if="!is_show_all_news">
-                <v-icon color="theme_color">mdi-arrow-down-thick</v-icon
-                >さらに表示
-              </div>
-              <div v-else>
-                <v-icon color="theme_color">mdi-arrow-up-thick</v-icon>
-                閉じる
-              </div>
-            </v-btn>
+        <div v-if="news.length > 5">
+          <div
+            style="
+              justify-content: center;
+              text-align: center;
+              margin-top: 20px;
+            "
+          >
+            <v-row justify="center" algin="center">
+              <v-col>
+                <div v-if="!(shown_news_group === 1)">
+                  <v-btn
+                    depressed
+                    x-small
+                    color="white"
+                    @click="shown_news_group = shown_news_group - 1"
+                  >
+                    <v-icon color="theme_color">mdi-arrow-left</v-icon>
+                  </v-btn>
+                </div>
+              </v-col>
+              <v-col>
+                <h4 style="color: var(--theme-color)">
+                  {{ shown_news_group }}
+                </h4>
+              </v-col>
+              <v-col>
+                <div v-if="!(shown_news_group === Math.ceil(news.length / 5))">
+                  <v-btn
+                    depressed
+                    x-small
+                    color="white"
+                    @click="shown_news_group = shown_news_group + 1"
+                  >
+                    <v-icon color="theme_color">mdi-arrow-right</v-icon>
+                  </v-btn>
+                </div>
+              </v-col>
+            </v-row>
           </div>
         </div>
       </v-col>
@@ -284,8 +274,8 @@ type Data = {
   prev_route: Route | null
   pages: any[]
   news: News[]
-  shown_news: News[]
-  is_show_all_news: boolean
+  shown_news_group: number
+  shown_news: News[][]
   editable_news: boolean
 }
 export default Vue.extend({
@@ -324,8 +314,8 @@ export default Vue.extend({
         },
       ],
       news: [],
-      shown_news: [],
-      is_show_all_news: false,
+      shown_news_group: 1,
+      shown_news: [[]],
       editable_news: false,
     }
   },
@@ -391,7 +381,14 @@ export default Vue.extend({
         return -1
       }
     })
-    this.shown_news = this.news.slice(0, 10 - 1)
+
+    // お知らせを５つずつに区切っていく
+    for (let i = 1; i <= Math.ceil(this.news.length / 5); i++) {
+      this.shown_news[i] = this.news.slice(
+        this.getFirstIndex(i),
+        this.getEndIndex(i)
+      )
+    }
 
     // 権限がある人がnewsを編集可能にする
     if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {
@@ -431,6 +428,26 @@ export default Vue.extend({
         ':' +
         d.getMinutes().toString().padStart(2, '0')
       )
+    },
+
+    // お知らせ機能関連
+    // 第何群なのかを指定された時に、その群の最初のインデックスを返す
+    getFirstIndex(i: number): number {
+      return 5 * i - 5
+    },
+
+    // 第何群なのかを指定された時に、その群の末項のインデックスを返す
+    getEndIndex(i: number): number {
+      return 5 * i
+    },
+
+    // 指定された群が5つの要素を持っているかを判定する
+    isGroupFull(group: number): boolean {
+      if (this.news.length - 5 * group + 1 === 5) {
+        return true
+      } else {
+        return false
+      }
     },
   },
 })
