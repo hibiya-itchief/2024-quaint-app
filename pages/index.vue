@@ -32,7 +32,7 @@
         </v-parallax>
       </v-col>
 
-      <v-col cols="10">
+      <v-col v-if="!(news.length === 0)" cols="10">
         <h1 class="info-title" style="margin-bottom: 20px">News</h1>
 
         <!--権限がある人がnewsを編集する-->
