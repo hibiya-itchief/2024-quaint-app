@@ -147,6 +147,7 @@ type Data = {
   change_selected_title: string | null
   delete_selected_title: string | null
   news: News[]
+  user_groups: { admin: string; chief: string }
 }
 
 export default Vue.extend({
@@ -161,6 +162,10 @@ export default Vue.extend({
       change_selected_title: null,
       delete_selected_title: null,
       news: [],
+      user_groups: {
+        admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
+        chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+      },
     }
   },
 
@@ -176,6 +181,13 @@ export default Vue.extend({
   },
 
   async created() {
+    if (
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin) &&
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.chief)
+    ) {
+      this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
+    }
+
     this.news = await this.$axios.$get('/news/').catch((e) => {
       if (e.response) {
         this.$store.commit('ShowInternetErrorSnackbar', {
