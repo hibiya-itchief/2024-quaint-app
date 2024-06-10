@@ -66,9 +66,9 @@
               label="変更するお知らせのタイトル"
             >
             </v-select>
-            <div v-if="change_news">
+            <div v-if="changed_news">
               <v-text-field
-                v-model="change_news.title"
+                v-model="changed_news.title"
                 label="タイトル"
                 counter
                 maxlength="50"
@@ -77,7 +77,7 @@
               >
               </v-text-field>
               <v-text-field
-                v-model="change_news.author"
+                v-model="changed_news.author"
                 label="作成者・作成団体"
                 counter
                 maxlength="50"
@@ -86,7 +86,7 @@
               >
               </v-text-field>
               <v-text-field
-                v-model="change_news.detail"
+                v-model="changed_news.detail"
                 label="詳細情報"
                 counter
                 maxlength="500"
@@ -96,10 +96,10 @@
               </v-text-field>
             </div>
           </v-card-text>
-          <div v-if="change_news">
+          <div v-if="changed_news">
             <v-card-actions class="ma-0 px-0 py-0">
               <v-spacer></v-spacer>
-              <v-btn color="primary" @click="changeNews(change_news)">
+              <v-btn color="primary" @click="changeNews(changed_news)">
                 変更
               </v-btn>
             </v-card-actions>
@@ -143,7 +143,7 @@ import { News, EditNews } from 'types/quaint'
 
 type Data = {
   create_news: EditNews
-  change_news: News | null
+  changed_news: News | null
   change_selected_title: string | null
   delete_selected_title: string | null
   news: News[]
@@ -158,7 +158,7 @@ export default Vue.extend({
         author: '作者・作成団体',
         detail: '詳細情報',
       },
-      change_news: null,
+      changed_news: null,
       change_selected_title: null,
       delete_selected_title: null,
       news: [],
@@ -175,7 +175,7 @@ export default Vue.extend({
         (element) => element.title === news_title
       )
       if (selected_news) {
-        this.change_news = selected_news
+        this.changed_news = selected_news
       }
     },
   },
