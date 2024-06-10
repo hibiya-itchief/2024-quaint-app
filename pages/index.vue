@@ -91,7 +91,7 @@
               </v-col>
               <v-col>
                 <h4 style="color: var(--theme-color)">
-                  {{ shown_news_group }}
+                  {{ shown_news_group }}/{{ shown_news.length - 1 }}
                 </h4>
               </v-col>
               <v-col>
