@@ -76,7 +76,7 @@
               margin-top: 20px;
             "
           >
-            <v-row justify="center" algin="center">
+            <v-row justify="center">
               <v-col>
                 <div v-if="!(shown_news_group === 1)">
                   <v-btn
@@ -370,7 +370,7 @@ export default Vue.extend({
 
     // newsの並び替え
     this.news.sort((x: News, y: News) => {
-      // 講演開始が先なら前、後なら後ろ
+      // newsの作成時刻が先なら前、後なら後ろ
       if (new Date(x.timestamp) < new Date(y.timestamp)) {
         return 1
       } else {
@@ -433,15 +433,6 @@ export default Vue.extend({
     // 第何群なのかを指定された時に、その群の末項のインデックスを返す
     getEndIndex(i: number): number {
       return 5 * i
-    },
-
-    // 指定された群が5つの要素を持っているかを判定する
-    isGroupFull(group: number): boolean {
-      if (this.news.length - 5 * group + 1 === 5) {
-        return true
-      } else {
-        return false
-      }
     },
   },
 })
