@@ -6,9 +6,8 @@
         <h1 class="info-title" style="margin-bottom: 20px">{{ news.title }}</h1>
         <div v-if="$vuetify.breakpoint.xs">
           <h3>
-            {{ dateFormatter(news.timestamp) }}/{{
-              timeFormatter(news.timestamp)
-            }}
+            {{ dateFormatter(news.timestamp) }}
+            {{ timeFormatter(news.timestamp) }}
           </h3>
           <h3>{{ news.author }}</h3>
         </div>
@@ -16,9 +15,8 @@
           <v-row>
             <v-col cols="4"
               ><h3>
-                {{ dateFormatter(news.timestamp) }}/{{
-                  timeFormatter(news.timestamp)
-                }}
+                {{ dateFormatter(news.timestamp) }}
+                {{ timeFormatter(news.timestamp) }}
               </h3></v-col
             >
             <v-col cols="8">
