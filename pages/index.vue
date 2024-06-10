@@ -46,9 +46,8 @@
             <v-divider></v-divider>
             <v-row style="margin-top: 5px; margin-bottom: 5px">
               <v-col cols="4">
-                {{ dateFormatter(i.timestamp) }}/{{
-                  timeFormatter(i.timestamp)
-                }}
+                {{ dateFormatter(i.timestamp) }}
+                {{ timeFormatter(i.timestamp) }}
               </v-col>
               <v-col cols="8">
                 <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
@@ -59,9 +58,8 @@
             <v-divider></v-divider>
             <v-row style="margin-top: 5px; margin-bottom: 5px">
               <v-col cols="2">
-                {{ dateFormatter(i.timestamp) }}/{{
-                  timeFormatter(i.timestamp)
-                }}
+                {{ dateFormatter(i.timestamp) }}
+                {{ timeFormatter(i.timestamp) }}
               </v-col>
               <v-col cols="3">{{ i.author }}</v-col>
               <v-col cols="7">
