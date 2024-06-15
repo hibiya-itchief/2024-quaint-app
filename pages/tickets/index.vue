@@ -290,7 +290,7 @@
                           @click="selectCancelTicket(ticket_info)"
                         >
                           <v-icon>mdi-close</v-icon>
-                          整理券をキャンセル
+                          取り消し
                         </v-btn>
                       </v-card-actions>
                     </v-expansion-panel-content>

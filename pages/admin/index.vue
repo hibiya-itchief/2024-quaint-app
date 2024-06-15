@@ -46,12 +46,14 @@
           quaintのユーザーを管理しているAzure
           B2Cのディレクトリ。一般客が自分のメールアドレスでサインアップするアカウントを管理している。
         </p>
+        <NuxtLink to="/admin/tools">設定ページ</NuxtLink>
       </v-col>
     </v-row>
   </v-app>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+
 export default Vue.extend({
   data() {
     return {

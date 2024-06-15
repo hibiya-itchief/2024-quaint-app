@@ -15,7 +15,11 @@ export type Group = {
   public_page_content_url: string | null
   private_page_content_url: string | null
 
+  floor: number | null // 何階か
+  place: string | null // どこでやるか
   tags: Tag[]
+
+  type: string // 団体のタイプ情報
 }
 export type GroupLink = {
   id: string
@@ -32,6 +36,11 @@ export type GroupEdit = {
   public_thumbnail_image_url?: string | null
   public_page_content_url?: string | null
   private_page_content_url?: string | null
+
+  floor: number | null // 何階か
+  place: string | null // 場所
+
+  type: string | null // 団体のタイプ情報
 }
 export type Event = {
   id: string
@@ -45,6 +54,7 @@ export type Event = {
   ticket_stock: number
   lottery: boolean
 }
+
 export type Ticket = {
   group_id: string
   event_id: string
@@ -60,4 +70,18 @@ export type OwnerOf = {
   group_id: string
   user_id: string
   note: string
+}
+
+export type News = {
+  title: string
+  author: string
+  detail: string
+  timestamp: string
+  id: string
+}
+
+export type EditNews = {
+  title: string
+  author: string
+  detail: string
 }
