@@ -22,6 +22,23 @@
                 ></v-img>
                 <v-card-title>{{ group.title }}</v-card-title>
                 <v-card-subtitle>{{ group.groupname }}</v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-text v-if="group.floor || group.place">
+                  <v-row>
+                    <v-col
+                      v-if="group.floor"
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-stairs</v-icon> {{ group.floor }}
+                    </v-col>
+                    <v-col
+                      v-if="group.place"
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-map-marker</v-icon>{{ group.place }}
+                    </v-col>
+                  </v-row>
+                </v-card-text>
                 <v-card-text>
                   {{ group?.description }}
                 </v-card-text>
