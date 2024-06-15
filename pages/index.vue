@@ -462,10 +462,6 @@ body {
   overflow: hidden; /* スプラッシュ背景が消えた時に、videoがはみ出さないようにする */
 }
 
-.c-p {
-  cursor: pointer;
-}
-
 video {
   max-width: 100%;
   max-height: 70vh;
