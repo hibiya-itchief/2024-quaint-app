@@ -22,6 +22,35 @@
                 ></v-img>
                 <v-card-title>{{ group.title }}</v-card-title>
                 <v-card-subtitle>{{ group.groupname }}</v-card-subtitle>
+                <v-divider></v-divider>
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                      v-if="group.floor"
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-stairs</v-icon> {{ group.floor }}階
+                    </v-col>
+                    <v-col
+                      v-else
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-stairs</v-icon> 情報なし
+                    </v-col>
+                    <v-col
+                      v-if="group.place"
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-map-marker</v-icon> {{ group.place }}
+                    </v-col>
+                    <v-col
+                      v-else
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-map-marker</v-icon> 情報なし
+                    </v-col>
+                  </v-row>
+                </v-card-text>
                 <v-card-text>
                   {{ group?.description }}
                 </v-card-text>
@@ -104,19 +133,6 @@
                     ><v-icon>mdi-instagram</v-icon></v-btn
                   >
                   <v-spacer></v-spacer>
-                  <div class="mx-2">
-                    <span
-                      class="grey--text text--darken-2 text-caption"
-                      style="display: block"
-                      >過去7日間の閲覧数</span
-                    >
-                    <div style="text-align: right">
-                      <v-icon>mdi-eye</v-icon>
-                      <span class="text--darken-2 text-subtitle-1">{{
-                        view_count
-                      }}</span>
-                    </div>
-                  </div>
                   <v-btn
                     v-if="is_bookmarked"
                     icon
@@ -356,6 +372,7 @@ export default Vue.extend({
     }
 
     // 「閲覧数」にまつわる処理
+    /*
     this.$axios
       .$get(
         '/ga/screenpageview?start_date=7daysAgo&end_date=today&page_path=' +
@@ -367,6 +384,8 @@ export default Vue.extend({
       .catch(() => {
         this.view_count = 'エラー'
       })
+    */
+    this.view_count = 'エラー'
 
     // 配布時間外のチケットをout_time_eventsに格納
     for (const event of this.suitableEvents()) {
