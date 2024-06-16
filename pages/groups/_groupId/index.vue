@@ -104,19 +104,6 @@
                     ><v-icon>mdi-instagram</v-icon></v-btn
                   >
                   <v-spacer></v-spacer>
-                  <div class="mx-2">
-                    <span
-                      class="grey--text text--darken-2 text-caption"
-                      style="display: block"
-                      >過去7日間の閲覧数</span
-                    >
-                    <div style="text-align: right">
-                      <v-icon>mdi-eye</v-icon>
-                      <span class="text--darken-2 text-subtitle-1">{{
-                        view_count
-                      }}</span>
-                    </div>
-                  </div>
                   <v-btn
                     v-if="is_bookmarked"
                     icon
