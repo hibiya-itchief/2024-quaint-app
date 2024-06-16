@@ -25,6 +25,7 @@
                 <!-- 2023年度のものをサンプルとして取っておきます
                 <v-img src="/images/Sairai.jpeg"></v-img>
               -->
+                <h2>Magic</h2>
                 <v-card-title class="justify-center">星陵祭2024</v-card-title>
               </v-card>
             </v-col>
@@ -38,7 +39,7 @@
           <v-col cols="12" sm="6" md="6">
             <h2 class="info-subtitle">令和6年度</h2>
             <h2 class="info-subtitle">
-              9月16日(<span style="color: blue">土</span>)ー17日(<span
+              9月14日(<span style="color: blue">土</span>)ー15日(<span
                 style="color: red"
                 >日</span
               >)
@@ -57,8 +58,7 @@
               "
             >
               <!-- テーマが決まったら変更してください -->
-              「<ruby>未定<rt>みてい</rt></ruby
-              >」
+              「<ruby>Magic</ruby>」
             </h1>
             <br />
             <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
@@ -73,13 +73,13 @@
             <br />
           </v-col>
           <v-col cols="12" sm="6" md="6">
-            <h2 class="info-subtitle">9月16日</h2>
+            <h2 class="info-subtitle">9月14日</h2>
             <br />
             <h3 class="info-subtitle">8時30分 受付開始</h3>
             <h3 class="info-subtitle">16時00分 公開終了</h3>
             <br />
             <br />
-            <h2 class="info-subtitle">9月17日</h2>
+            <h2 class="info-subtitle">9月15日</h2>
             <br />
             <h3 class="info-subtitle">8時30分 受付開始</h3>
             <h3 class="info-subtitle">15時20分 公開終了</h3>
