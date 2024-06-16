@@ -356,6 +356,7 @@ export default Vue.extend({
     }
 
     // 「閲覧数」にまつわる処理
+    /*
     this.$axios
       .$get(
         '/ga/screenpageview?start_date=7daysAgo&end_date=today&page_path=' +
@@ -367,6 +368,8 @@ export default Vue.extend({
       .catch(() => {
         this.view_count = 'エラー'
       })
+    */
+    this.view_count = 'エラー'
 
     // 配布時間外のチケットをout_time_eventsに格納
     for (const event of this.suitableEvents()) {
