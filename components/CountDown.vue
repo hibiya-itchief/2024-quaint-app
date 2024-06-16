@@ -19,10 +19,14 @@ export default Vue.extend({
       ctx.font = 'bold 160px serif'
       ctx.fillStyle = 'white'
       ctx.textAlign = 'center'
-      ctx.fillText(diff, canvas.width / 2, canvas.height / 2)
+      ctx.fillText(diff, (canvas.width * 60) / 100, (canvas.height * 65) / 100)
       ctx.lineWidth = 2
       ctx.strokeStyle = '#666'
-      ctx.strokeText(diff, canvas.width / 2, canvas.height / 2)
+      ctx.strokeText(
+        diff,
+        (canvas.width * 60) / 100,
+        (canvas.height * 65) / 100
+      )
     }
   },
 })
