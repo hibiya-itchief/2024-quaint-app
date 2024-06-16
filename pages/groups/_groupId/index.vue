@@ -23,19 +23,31 @@
                 <v-card-title>{{ group.title }}</v-card-title>
                 <v-card-subtitle>{{ group.groupname }}</v-card-subtitle>
                 <v-divider></v-divider>
-                <v-card-text v-if="group.floor || group.place">
+                <v-card-text>
                   <v-row>
                     <v-col
                       v-if="group.floor"
                       style="font-family: serif; font-weight: bolder"
                     >
-                      <v-icon>mdi-stairs</v-icon> {{ group.floor }}
+                      <v-icon>mdi-stairs</v-icon> {{ group.floor }}階
+                    </v-col>
+                    <v-col
+                      v-else
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-stairs</v-icon> 情報なし
                     </v-col>
                     <v-col
                       v-if="group.place"
                       style="font-family: serif; font-weight: bolder"
                     >
-                      <v-icon>mdi-map-marker</v-icon>{{ group.place }}
+                      <v-icon>mdi-map-marker</v-icon> {{ group.place }}
+                    </v-col>
+                    <v-col
+                      v-else
+                      style="font-family: serif; font-weight: bolder"
+                    >
+                      <v-icon>mdi-map-marker</v-icon> 情報なし
                     </v-col>
                   </v-row>
                 </v-card-text>
