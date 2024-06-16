@@ -12,8 +12,8 @@
       ></video>
     </div>
   -->
-    <v-row justify="center">
-      <v-col cols="12">
+    <v-row justify="center" style="margin: 0 !important">
+      <v-col cols="12" style="padding: 0 !important">
         <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
         <v-parallax src="/images/topBackground2.jpg" height="600">
           <v-row align="center" justify="center">
@@ -24,7 +24,8 @@
                 >
                 <!-- 2023年度のものをサンプルとして取っておきます
                 <v-img src="/images/Sairai.jpeg"></v-img>
-                -->
+              -->
+                <h2>Magic</h2>
                 <v-card-title class="justify-center">星陵祭2024</v-card-title>
               </v-card>
             </v-col>
@@ -136,8 +137,7 @@
               "
             >
               <!-- テーマが決まったら変更してください -->
-              「<ruby>未定<rt>みてい</rt></ruby
-              >」
+              「<ruby>Magic</ruby>」
             </h1>
             <br />
             <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
@@ -179,7 +179,11 @@
         background-color: var(--theme-color);
       "
     >
-      <v-row justify="center" class="pb-10">
+      <v-row
+        justify="center"
+        class="pb-10"
+        style="margin-left: 0 !important; margin-right: 0 !important"
+      >
         <v-col cols="10">
           <h1 class="pages-title">ご案内</h1>
           <v-row justify="center">
@@ -207,7 +211,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-row justify="center" class="pt-6">
+    <v-row justify="center" class="pt-6" style="margin: 0 !important">
       <v-col cols="10" md="5" sm="10"
         ><v-card class="my-auto" to="/groups">
           <div>
@@ -225,6 +229,7 @@
           </div>
         </v-card></v-col
       >
+
       <CountDown
         v-if="$vuetify.breakpoint.xs"
         class="ma-1 justify-center"
