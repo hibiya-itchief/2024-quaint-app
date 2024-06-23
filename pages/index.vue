@@ -13,7 +13,7 @@
     </div>
   -->
     <v-row justify="center" style="margin: 0 !important">
-      <v-col v-if="!is_developping" cols="12" style="padding: 0 !important">
+      <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
         <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
         <v-parallax src="/images/topBackground2.jpg" height="600">
           <v-row align="center" justify="center">
@@ -33,7 +33,7 @@
         </v-parallax>
       </v-col>
 
-      <v-col v-if="is_developping" cols="10">
+      <v-col v-if="is_developing" cols="10">
         <h1 class="info-title">星陵祭2024 「Magic」</h1>
         <h4>⚠︎現在このサイトは開発段階です。</h4>
       </v-col>
@@ -118,7 +118,7 @@
       </v-col>
 
       <!--開発段階につき情報非公開-->
-      <div v-if="!is_developping">
+      <div v-if="!is_developing">
         <v-col cols="10">
           <h1 class="info-title">開催概要</h1>
           <v-row>
@@ -181,7 +181,7 @@
       </div>
     </v-row>
     <div
-      v-if="!is_developping"
+      v-if="!is_developing"
       style="
         margin-top: 30px;
         width: 100%;
@@ -277,7 +277,7 @@ import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
 
 type Data = {
-  is_developping: boolean
+  is_developing: boolean
 
   user_groups: {
     admin: string
@@ -303,7 +303,7 @@ export default Vue.extend({
   },
   data(): Data {
     return {
-      is_developping: true,
+      is_developing: true,
 
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
