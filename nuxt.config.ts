@@ -34,28 +34,27 @@ const nuxt_config: NuxtConfig = {
       {
         hid: 'og:title',
         property: 'og:title',
-        content: '日比谷高校星陵祭2023公式サイト',
+        content: '日比谷高校星陵祭2024公式サイト',
       },
       {
         hid: 'og:url',
         property: 'og:url',
-        content: 'https://2023.seiryofes.com/',
+        content: 'https://2024.seiryofes.com/',
       },
       {
         hid: 'og:description',
         property: 'og:description',
-        content:
-          '令和５年度　第48回星陵祭　9月16日(土)、17日(日)開催　今年度の星陵祭は、4年ぶりの通常開催です！テーマは祭徠。日比谷のお祭りをみんなで盛り上げましょう！皆様のご来場を心よりお待ち申し上げております。',
+        content: '令和５年度　第49回星陵祭　9月14日(土)、15日(日)開催　皆様のご来場を心よりお待ち申し上げております。',
       },
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://2023.seiryofes.com/ogpimage.png',
+        content: 'https://2024.seiryofes.com/ogpimage_dev.png', // 正式実装時は'/ogpimage.png'、開発時は'/ogpimage_dev.png'を使用
       },
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: '日比谷高校星陵祭2023公式サイト',
+        content: '日比谷高校星陵祭2024公式サイト',
       },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
@@ -63,7 +62,7 @@ const nuxt_config: NuxtConfig = {
       {
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'https://2023.seiryofes.com/ogpimage.png',
+        content: 'https://2024.seiryofes.com/ogpimage_dev.png', // 正式実装時は'/ogpimage.png'、開発時は'/ogpimage_dev.png'を使用
       },
     ],
     link: [
