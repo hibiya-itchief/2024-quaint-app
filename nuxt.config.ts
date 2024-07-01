@@ -18,7 +18,7 @@ const nuxt_config: NuxtConfig = {
       lang: 'ja',
       prefix: 'og: http://ogp.me/ns#', // OGPを使う宣言
     },
-    titleTemplate: '%s - 日比谷高校星陵祭2023「祭徠」公式サイト',
+    titleTemplate: '%s - 日比谷高校星陵祭2024「Magic」公式サイト',
     title: '星陵祭',
     meta: [
       { charset: 'utf-8' },
@@ -27,7 +27,7 @@ const nuxt_config: NuxtConfig = {
         hid: 'description',
         name: 'description',
         content:
-          '令和５年度　第48回星陵祭　9月16日(土)、17日(日)開催　今年度の星陵祭は、4年ぶりの通常開催です！テーマは祭徠。日比谷のお祭りをみんなで盛り上げましょう！皆様のご来場を心よりお待ち申し上げております。',
+          '令和6年度　第49回星陵祭　9月14日(土)、15日(日)開催　今年度の星陵祭は、テーマは「Magic」。日比谷のお祭りをみんなで盛り上げましょう！皆様のご来場を心よりお待ち申し上げております。',
       },
       { name: 'format-detection', content: 'telephone=no' },
       // OGP
@@ -45,7 +45,7 @@ const nuxt_config: NuxtConfig = {
         hid: 'og:description',
         property: 'og:description',
         content:
-          '令和６年度　第49回星陵祭　9月14日(土)、15日(日)開催　テーマはMagic。皆様のご来場を心よりお待ち申し上げております。',
+          '令和６年度　第49回星陵祭　9月14日(土)、15日(日)開催　テーマは「Magic」。皆様のご来場を心よりお待ち申し上げております。',
       },
       {
         hid: 'og:image',

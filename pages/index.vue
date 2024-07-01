@@ -354,7 +354,7 @@ export default Vue.extend({
           'Seiryofes,星陵祭,日比谷高校,文化祭,公式,星稜祭,日比谷,星陵祭公式,日比谷高校文化祭,IT委員会,日比谷IT,祭徠',
       },
     ],
-    title: '日比谷高校星陵祭2023「祭徠」公式サイト',
+    title: '日比谷高校星陵祭2024「Magic」公式サイト',
     titleTemplate: '',
     link: [
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
