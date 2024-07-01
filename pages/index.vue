@@ -346,7 +346,7 @@ export default Vue.extend({
       },
       {
         name: 'description',
-        content: 'Seiryofes 2023 official website',
+        content: 'Seiryofes 2024 official website',
       },
       {
         name: 'keywords',
