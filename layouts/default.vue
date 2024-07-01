@@ -225,7 +225,7 @@ export default Vue.extend({
         {
           hid: 'og:url',
           property: 'og:url',
-          content: 'https://2023.seiryofes.com' + this.$route.fullPath,
+          content: 'https://2024.seiryofes.com' + this.$route.fullPath,
         },
       ],
     }

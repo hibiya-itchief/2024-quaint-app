@@ -13,7 +13,7 @@
     </div>
   -->
     <v-row justify="center" style="margin: 0 !important">
-      <v-col cols="12" style="padding: 0 !important">
+      <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
         <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
         <v-parallax src="/images/topBackground2.jpg" height="600">
           <v-row align="center" justify="center">
@@ -31,6 +31,11 @@
             </v-col>
           </v-row>
         </v-parallax>
+      </v-col>
+
+      <v-col v-if="is_developing" cols="10">
+        <h1 class="info-title">星陵祭2024 「Magic」</h1>
+        <h4>⚠︎現在このサイトは開発段階です。</h4>
       </v-col>
 
       <v-col v-if="!(news.length === 0)" cols="10">
@@ -111,68 +116,79 @@
           </div>
         </div>
       </v-col>
+      <v-col v-else-if="editable_news" cols="10">
+        <p style="margin-bottom: 20px">
+          News（現在お知らせはありません。この表示は編集権限がついている人のみ表示されています。）
+        </p>
 
-      <v-col cols="10">
-        <h1 class="info-title">開催概要</h1>
-        <v-row>
-          <v-col cols="12" sm="6" md="6">
-            <h2 class="info-subtitle">令和6年度</h2>
-            <h2 class="info-subtitle">
-              9月14日(<span style="color: blue">土</span>)ー15日(<span
-                style="color: red"
-                >日</span
-              >)
-            </h2>
-            <br />
-            <h2 class="info-subtitle">
-              第49回 <ruby>星陵<rt>せいりょう</rt></ruby
-              >祭
-            </h2>
-            <h1
-              class="info-subtitle"
-              style="
-                font-family: serif;
-                font-weight: bold;
-                color: var(--theme-color);
-              "
-            >
-              <!-- テーマが決まったら変更してください -->
-              「<ruby>Magic</ruby>」
-            </h1>
-            <br />
-            <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
-            <p class="info-caption">〒100-0014 東京都千代田区永田町2-16-1</p>
-            <br />
-            <h2 class="info-subtitle">すべての方に</h2>
-            <h2 class="info-subtitle">ご入場いただけます。</h2>
-            <!-- 日比谷公式からこの記述が消えたので一旦消去
+        <v-btn depressed outlined small to="/news/">編集</v-btn>
+      </v-col>
+
+      <!--開発段階につき情報非公開-->
+      <div v-if="!is_developing">
+        <v-col cols="10">
+          <h1 class="info-title">開催概要</h1>
+          <v-row>
+            <v-col cols="12" sm="6" md="6">
+              <h2 class="info-subtitle">令和6年度</h2>
+              <h2 class="info-subtitle">
+                9月14日(<span style="color: blue">土</span>)ー15日(<span
+                  style="color: red"
+                  >日</span
+                >)
+              </h2>
+              <br />
+              <h2 class="info-subtitle">
+                第49回 <ruby>星陵<rt>せいりょう</rt></ruby
+                >祭
+              </h2>
+              <h1
+                class="info-subtitle"
+                style="
+                  font-family: serif;
+                  font-weight: bold;
+                  color: var(--theme-color);
+                "
+              >
+                <!-- テーマが決まったら変更してください -->
+                「<ruby>Magic</ruby>」
+              </h1>
+              <br />
+              <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
+              <p class="info-caption">〒100-0014 東京都千代田区永田町2-16-1</p>
+              <br />
+              <h2 class="info-subtitle">すべての方に</h2>
+              <h2 class="info-subtitle">ご入場いただけます。</h2>
+              <!-- 日比谷公式からこの記述が消えたので一旦消去
               <p class="info-caption">感染症の流行状況により変更の可能性があります。</p>
               -->
-            <br />
-            <br />
-          </v-col>
-          <v-col cols="12" sm="6" md="6">
-            <h2 class="info-subtitle">9月14日</h2>
-            <br />
-            <h3 class="info-subtitle">8時30分 受付開始</h3>
-            <h3 class="info-subtitle">16時00分 公開終了</h3>
-            <br />
-            <br />
-            <h2 class="info-subtitle">9月15日</h2>
-            <br />
-            <h3 class="info-subtitle">8時30分 受付開始</h3>
-            <h3 class="info-subtitle">15時20分 公開終了</h3>
-            <br />
-            <br />
-            <h3 class="info-subtitle">
-              詳しくは<NuxtLink to="/schedule">スケジュール</NuxtLink
-              >をご覧ください。
-            </h3>
-          </v-col>
-        </v-row>
-      </v-col>
+              <br />
+              <br />
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <h2 class="info-subtitle">9月14日</h2>
+              <br />
+              <h3 class="info-subtitle">8時30分 受付開始</h3>
+              <h3 class="info-subtitle">16時00分 公開終了</h3>
+              <br />
+              <br />
+              <h2 class="info-subtitle">9月15日</h2>
+              <br />
+              <h3 class="info-subtitle">8時30分 受付開始</h3>
+              <h3 class="info-subtitle">15時20分 公開終了</h3>
+              <br />
+              <br />
+              <h3 class="info-subtitle">
+                詳しくは<NuxtLink to="/schedule">スケジュール</NuxtLink
+                >をご覧ください。
+              </h3>
+            </v-col>
+          </v-row>
+        </v-col>
+      </div>
     </v-row>
     <div
+      v-if="!is_developing"
       style="
         margin-top: 30px;
         width: 100%;
@@ -268,6 +284,8 @@ import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
 
 type Data = {
+  is_developing: boolean
+
   user_groups: {
     admin: string
     chief: string
@@ -292,6 +310,8 @@ export default Vue.extend({
   },
   data(): Data {
     return {
+      is_developing: true,
+
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
@@ -333,15 +353,15 @@ export default Vue.extend({
       },
       {
         name: 'description',
-        content: 'Seiryofes 2023 official website',
+        content: 'Seiryofes 2024 official website',
       },
       {
         name: 'keywords',
         content:
-          'Seiryofes,星陵祭,日比谷高校,文化祭,公式,星稜祭,日比谷,星陵祭公式,日比谷高校文化祭,IT委員会,日比谷IT,祭徠',
+          'Seiryofes,星陵祭,日比谷高校,文化祭,公式,星稜祭,日比谷,星陵祭公式,日比谷高校文化祭,IT委員会,日比谷IT,Magic,magic,MAGIC',
       },
     ],
-    title: '日比谷高校星陵祭2023「祭徠」公式サイト',
+    title: '日比谷高校星陵祭2024「Magic」公式サイト',
     titleTemplate: '',
     link: [
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
