@@ -116,6 +116,13 @@
           </div>
         </div>
       </v-col>
+      <v-col v-else-if="editable_news" cols="10">
+        <p style="margin-bottom: 20px">
+          News（現在お知らせはありません。この表示は編集権限がついている人のみ表示されています。）
+        </p>
+
+        <v-btn depressed outlined small to="/news/">編集</v-btn>
+      </v-col>
 
       <!--開発段階につき情報非公開-->
       <div v-if="!is_developing">
