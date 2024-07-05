@@ -69,6 +69,12 @@
                   >
                     チーフ会
                   </v-chip>
+                  <v-chip
+                    v-show="$auth.user?.groups?.includes(user_groups.guest)"
+                    outlined
+                  >
+                    ゲスト
+                  </v-chip>
                   <!--(
                   user_groups.entry)で同様の処理が可能？
                 <v-chip
@@ -214,6 +220,7 @@ export default Vue.extend({
         students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
         teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
       },
       app_env: process.env.QUAINT_ENV,
       api_url: process.env.BASEURL,
