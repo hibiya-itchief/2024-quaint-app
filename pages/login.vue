@@ -7,19 +7,7 @@
           <p align="center" class="">
             整理券の取得にはログインが必要となります。
           </p>
-          <v-divider class="my-3"></v-divider>
-          <v-btn class="light-blue darken-4 my-3" block disabled>
-            一般の方はこちらから
-          </v-btn>
-          <!--p align="center" class="text-caption">
-            アカウントをお持ちでない方も上のボタンを押していただき、指示に従って作成してください。当日入場する際に再ログインが求められる可能性があるため、パスワードを必ず記憶してください。
-          </p-->
-          <p align="center" class="text-caption">
-            <span style="color: #f00"
-              >今年度は一般向けのオンライン整理券は実施しません。</span
-            ><br />下記の「一般向け整理券配布方法」をご覧ください。
-          </p>
-          <v-divider class="my-3"></v-divider>
+
           <v-btn
             height="72"
             class="light-blue darken-4 my-3"
@@ -27,10 +15,10 @@
             dark
             @click="loginAd()"
           >
-            本校生徒・保護者の方と<br />先生方はこちらから
+            ログイン
           </v-btn>
           <p align="center" class="text-caption">
-            学校から配布されているMicrosoftアカウント(「@metro.ed.jp」で終わるもの)でログインしてください
+            生徒は学校から配布されているMicrosoftアカウント(「@metro.ed.jp」で終わるもの)でログインしてください。保護者の皆様は学校から事前に配布されたアカウントでログインしてください。一般客の皆様は受付で配布されたアカウントを使ってログインしてください。
           </p>
         </v-sheet>
       </v-col>
