@@ -14,11 +14,7 @@
           <!--p align="center" class="text-caption">
             アカウントをお持ちでない方も上のボタンを押していただき、指示に従って作成してください。当日入場する際に再ログインが求められる可能性があるため、パスワードを必ず記憶してください。
           </p-->
-          <p align="center" class="text-caption">
-            <span style="color: #f00"
-              >今年度は一般向けのオンライン整理券は実施しません。</span
-            ><br />下記の「一般向け整理券配布方法」をご覧ください。
-          </p>
+          <p align="center" class="text-caption">現在開発中です。</p>
           <v-divider class="my-3"></v-divider>
           <v-btn
             height="72"
