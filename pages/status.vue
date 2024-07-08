@@ -179,18 +179,28 @@ export default Vue.extend({
       this.floor_filtered_groups = [[], [], [], [], []]
       this.grade_filtered_groups = [[], [], [], []]
 
-      // URLを本番用に置き換える
       this.groups = await this.$axios.$get('/groups')
       this.tags = await this.$axios.$get('/tags')
 
       // 劇の団体を抽出
-      this.groups = this.groups.filter(
-        (group) => group.type === 'play' || group.type === 'test'
-      )
+      // 団体を並び替える
+      this.groups = this.groups
+        .filter((group) => group.type === 'play' || group.type === 'test')
+        .sort((a: Group, b: Group) => {
+          // 団体のタイプがクラス劇ではないものは一番うしろに配置
+          if (a.type !== 'play') {
+            return 1
+          }
+          if (b.type !== 'play') {
+            return -1
+          }
 
-      // eventsを作成(key:group name, object:event)
+          // もしAPIのほうでtype=playの団体に対する命名規則を変更したならこの部分のコードはうまく動かなくなる可能性が高いから注意
+          return parseInt(a.id.split('r')[0]) - parseInt(b.id.split('r')[0])
+        })
+
+      // eventsを作成(key: group name, object: event)
       for (const group of this.groups as Group[]) {
-        // URLを本番用に置き換える
         this.events[group.id] = await this.$axios.$get(
           '/groups/' + group.id + '/events'
         )
