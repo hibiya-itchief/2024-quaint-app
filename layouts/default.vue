@@ -120,6 +120,15 @@
             </v-card>
 
             <v-divider></v-divider>
+            <v-list-item v-for="page in pages" :key="page.icon" :to="page.link">
+              <v-list-item-icon>
+                <v-icon color="theme_color">{{ page.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title
+                style="font-family: serif; font-weight: bold"
+                >{{ page.text }}</v-list-item-title
+              >
+            </v-list-item>
           </v-list-item-group>
         </v-list>
         <template #append>
@@ -217,6 +226,22 @@ export default Vue.extend({
       },
       app_env: process.env.QUAINT_ENV,
       api_url: process.env.BASEURL,
+      pages: [
+        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/about' },
+        {
+          icon: 'mdi-ticket-confirmation',
+          text: '整理券制度',
+          link: '/system',
+        },
+        { icon: 'mdi-train', text: 'アクセス', link: '/access' },
+        { icon: 'mdi-map', text: '校内マップ', link: '/map' },
+        { icon: 'mdi-clock', text: 'スケジュール', link: '/schedule' },
+        {
+          icon: 'mdi-tooltip-question-outline',
+          text: 'ヘルプ',
+          link: '/help',
+        },
+      ],
     }
   },
   head() {
