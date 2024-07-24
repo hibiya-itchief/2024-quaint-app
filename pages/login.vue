@@ -7,7 +7,6 @@
           <p align="center" class="">
             整理券の取得にはログインが必要となります。
           </p>
-
           <v-btn
             height="72"
             class="light-blue darken-4 my-3"
@@ -23,128 +22,7 @@
         </v-sheet>
       </v-col>
     </v-row>
-    <v-row justify="center" class="ma-4">
-      <v-col cols="11" md="6" lg="4" class="ma-0 pa-0">
-        <v-sheet color="white" elevation="4" class="py-4 px-2">
-          <h2 align="center" class="text-h5 ma-3">一般向け整理券配布方法</h2>
-          <p align="center" class="mb-5">
-            <NuxtLink to="/schedule">配布スケジュール</NuxtLink
-            >やパンフレットにも掲載されています。<br />
-          </p>
-          <p align="center" class="">3年生クラス劇の配布&emsp;＠サブアリーナ</p>
-          <p align="center" class="text-caption">
-            3年生のクラス劇の整理券配布は、体育館棟1階サブアリーナで行います。配布開始は1つ前の公演が始まってからです。<br />
-            また、配布開始前の規定時間から、同じくサブアリーナ付近で待機列を設けます。
-            時間について、詳しくは下記の表をご覧ください。
-          </p>
-          <p align="center" class="">1日目（3年生）</p>
-          <table align="center">
-            <tbody>
-              <tr>
-                <td class="tdx">公演</td>
-                <td>第1公演</td>
-                <td>第2公演</td>
-                <td>第3公演</td>
-                <td>第4公演</td>
-                <td>第5公演</td>
-              </tr>
-              <tr>
-                <td class="tdx">待機開始</td>
-                <td>--</td>
-                <td>8:50</td>
-                <td>9:30</td>
-                <td>10:40</td>
-                <td>12:20</td>
-              </tr>
-              <tr>
-                <td class="tdx">配布開始</td>
-                <td>8:50</td>
-                <td>9:30</td>
-                <td>10:40</td>
-                <td>12:20</td>
-                <td>13:30</td>
-              </tr>
-            </tbody>
-          </table>
-          <p align="center" class="">2日目（3年生）</p>
-          <table align="center">
-            <tbody>
-              <tr>
-                <td class="tdx">公演</td>
-                <td>第1公演</td>
-                <td>第2公演</td>
-                <td>第3公演</td>
-                <td>第4公演</td>
-                <td>第5公演</td>
-              </tr>
-              <tr>
-                <td class="tdx">待機開始</td>
-                <td>--</td>
-                <td>8:30</td>
-                <td>9:10</td>
-                <td>10:20</td>
-                <td>11:30</td>
-              </tr>
-              <tr>
-                <td class="tdx">配布開始</td>
-                <td>8:30</td>
-                <td>9:10</td>
-                <td>10:20</td>
-                <td>11:30</td>
-                <td>12:50</td>
-              </tr>
-            </tbody>
-          </table>
-          <br />
-          <br />
-          <p align="center" class="">1、2年生クラス劇の配布&emsp;＠剣道場</p>
-          <p align="center" class="text-caption">
-            1、2年生のクラス劇の整理券配布は、体育館棟3階の剣道場で行います。ただし、入り口は1階アーケードからです。<br />
-            配布開始は1つ前及び2つ前の公演が始まってからです。また、3年生と異なり、待機列の設定は行いません。
-            時間について、詳しくは下記の表をご覧ください。
-          </p>
-          <p align="center" class="">1日目（1、2年生）</p>
-          <table align="center">
-            <tbody>
-              <tr>
-                <td class="tdx">公演</td>
-                <td>第1公演</td>
-                <td>第2公演</td>
-                <td>第3公演</td>
-                <td>第4公演</td>
-                <td>第5公演</td>
-              </tr>
-              <tr>
-                <td class="tdx">配布開始</td>
-                <td colspan="2">8:50</td>
-                <td>9:30</td>
-                <td colspan="2">12:20</td>
-              </tr>
-            </tbody>
-          </table>
-          <p align="center" class="">2日目（1、2年生）</p>
-          <table align="center">
-            <tbody>
-              <tr>
-                <td class="tdx">公演</td>
-                <td>第1公演</td>
-                <td>第2公演</td>
-                <td>第3公演</td>
-                <td>第4公演</td>
-                <td>第5公演</td>
-              </tr>
-              <tr>
-                <td class="tdx">配布開始</td>
-                <td colspan="2">8:30</td>
-                <td>9:10</td>
-                <td>10:20</td>
-                <td>12:50</td>
-              </tr>
-            </tbody>
-          </table>
-        </v-sheet>
-      </v-col>
-    </v-row>
+
     <v-snackbar v-model="error_alert" color="red" elevation="2">
       ログイン失敗 もう一度お試しください
       <template #action="{ attrs }">
