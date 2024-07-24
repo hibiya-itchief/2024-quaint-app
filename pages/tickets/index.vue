@@ -399,6 +399,7 @@ type Data = {
     students: string
     teachers: string
     chief: string
+    guest: string
   }
 }
 export default Vue.extend({
@@ -430,6 +431,7 @@ export default Vue.extend({
         students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
         teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
       },
     }
   },
