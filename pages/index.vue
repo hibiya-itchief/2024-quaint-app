@@ -12,28 +12,195 @@
       ></video>
     </div>
   -->
-    <v-row justify="center" style="margin: 0 !important">
-      <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
-        <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
-        <v-parallax src="/images/topBackground2.jpg" height="600">
-          <v-row align="center" justify="center">
-            <v-col cols="10" md="5" sm="10">
-              <v-card class="text-center">
-                <v-card-title class="justify-center"
-                  >日比谷高校文化祭</v-card-title
-                >
-                <!-- 2023年度のものをサンプルとして取っておきます
-                <v-img src="/images/Sairai.jpeg"></v-img>
-              -->
-                <h2>Magic</h2>
-                <v-card-title class="justify-center">星陵祭2024</v-card-title>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-parallax>
-      </v-col>
 
-      <v-col v-if="is_developing" cols="10">
+    <div
+      style="
+        width: 100vw;
+        height: 50vh;
+        text-align: center;
+        align-content: center;
+        position: relative;
+      "
+    >
+      <div class="animated-circle">
+        <svg viewBox="0 0 100 100" style="background-color: #fff">
+          <defs>
+            <clipPath id="circleClipMask">
+              <circle cx="50" cy="50" r="45" fill="black" />
+            </clipPath>
+
+            <clipPath id="customClipPath">
+              <polygon
+                id="customClipPathPolygon"
+                points="0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45"
+                fill="none"
+              />
+            </clipPath>
+
+            <pattern
+              id="diagonalHatch"
+              width="4"
+              height="4"
+              patternTransform="rotate(135 0 0)"
+              patternUnits="userSpaceOnUse"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="10"
+                style="stroke: white; stroke-width: 0.3"
+              />
+            </pattern>
+
+            <pattern
+              id="diagonalHatch2"
+              width="4"
+              height="4"
+              patternTransform="rotate(45 0 0)"
+              patternUnits="userSpaceOnUse"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="10"
+                style="stroke: white; stroke-width: 0.3"
+              />
+            </pattern>
+          </defs>
+
+          <g clip-path="url(#circleClipMask)">
+            <g>
+              <circle cx="50" cy="50" r="50" fill="black" />
+              <circle cx="50" cy="50" r="50" fill="url(#diagonalHatch2)" />
+            </g>
+            <g clip-path="url(#customClipPath)">
+              <circle cx="50" cy="50" r="50" fill="black" />
+              <circle cx="50" cy="50" r="50" fill="url(#diagonalHatch)" />
+              <polygon
+                id="polygon"
+                points="0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45"
+                fill="none"
+                stroke="#fff"
+                stroke-width=".5"
+              />
+            </g>
+          </g>
+
+          <animate
+            xlink:href="#customClipPathPolygon"
+            attributeName="points"
+            dur="8s"
+            values="
+                    0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45;
+                    0,65, 0,100, 100,100, 100,45, 90,50, 80,60, 60,45, 40,55, 30,65, 15,50;
+                    0,70, 0,100, 100,100, 100,45, 90,40, 80,50, 60,40, 40,50, 30,70, 15,55;
+                    0,65, 0,100, 100,100, 100,50, 90,30, 80,40, 60,35, 40,45, 30,65, 15,60;
+                    0,60, 0,100, 100,100, 100,55, 90,40, 80,30, 60,30, 40,40, 30,60, 15,55;
+                    0,55, 0,100, 100,100, 100,60, 90,50, 80,25, 60,35, 40,35, 30,55, 15,50;
+                    0,50, 0,100, 100,100, 100,65, 90,60, 80,30, 60,40, 40,30, 30,50, 15,45;
+                    0,45, 0,100, 100,100, 100,70, 90,50, 80,40, 60,45, 40,25, 30,45, 15,40;
+                    0,40, 0,100, 100,100, 100,65, 90,45, 80,50, 60,50, 40,20, 30,40, 15,35;
+                    0,45, 0,100, 100,100, 100,60, 90,45, 80,60, 60,55, 40,30, 30,45, 15,30;
+                    0,40, 0,100, 100,100, 100,55, 90,40, 80,70, 60,60, 40,40, 30,40, 15,40;
+                    0,35, 0,100, 100,100, 100,50, 90,35, 80,70, 60,65, 40,50, 30,35, 15,45;
+                    0,30, 0,100, 100,100, 100,55, 90,30, 80,60, 60,70, 40,60, 30,30, 15,50;
+                    0,35, 0,100, 100,100, 100,60, 90,40, 80,50, 60,60, 40,55, 30,25, 15,55;
+                    0,40, 0,100, 100,100, 100,65, 90,50, 80,40, 60,50, 40,50, 30,30, 15,60;
+                    0,45, 0,100, 100,100, 100,70, 90,55, 80,30, 60,45, 40,45, 30,40, 15,70;
+                    0,50, 0,100, 100,100, 100,65, 90,60, 80,40, 60,45, 40,40, 30,45, 15,60;
+                    0,55, 0,100, 100,100, 100,60, 90,65, 80,50, 60,50, 40,40, 30,50, 15,50;
+                    0,50, 0,100, 100,100, 100,55, 90,70, 80,60, 60,60, 40,45, 30,55, 15,55;
+                    0,55, 0,100, 100,100, 100,50, 90,65, 80,65, 60,55, 40,50, 30,60, 15,50;
+                    0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45;"
+            keyTimes="
+                    0;
+                    0.05;
+                    0.1;
+                    0.15;
+                    0.2;
+                    0.25;
+                    0.3;
+                    0.35;
+                    0.4;
+                    0.45;
+                    0.5;
+                    0.55;
+                    0.6;
+                    0.65;
+                    0.7;
+                    0.75;
+                    0.8;
+                    0.85;
+                    0.9;
+                    0.95;
+                    1"
+            repeatCount="indefinite"
+          />
+
+          <animate
+            xlink:href="#polygon"
+            attributeName="points"
+            dur="8s"
+            values="
+                    0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45;
+                    0,65, 0,100, 100,100, 100,45, 90,50, 80,60, 60,45, 40,55, 30,65, 15,50;
+                    0,70, 0,100, 100,100, 100,45, 90,40, 80,50, 60,40, 40,50, 30,70, 15,55;
+                    0,65, 0,100, 100,100, 100,50, 90,30, 80,40, 60,35, 40,45, 30,65, 15,60;
+                    0,60, 0,100, 100,100, 100,55, 90,40, 80,30, 60,30, 40,40, 30,60, 15,55;
+                    0,55, 0,100, 100,100, 100,60, 90,50, 80,25, 60,35, 40,35, 30,55, 15,50;
+                    0,50, 0,100, 100,100, 100,65, 90,60, 80,30, 60,40, 40,30, 30,50, 15,45;
+                    0,45, 0,100, 100,100, 100,70, 90,50, 80,40, 60,45, 40,25, 30,45, 15,40;
+                    0,40, 0,100, 100,100, 100,65, 90,45, 80,50, 60,50, 40,20, 30,40, 15,35;
+                    0,45, 0,100, 100,100, 100,60, 90,45, 80,60, 60,55, 40,30, 30,45, 15,30;
+                    0,40, 0,100, 100,100, 100,55, 90,40, 80,70, 60,60, 40,40, 30,40, 15,40;
+                    0,35, 0,100, 100,100, 100,50, 90,35, 80,70, 60,65, 40,50, 30,35, 15,45;
+                    0,30, 0,100, 100,100, 100,55, 90,30, 80,60, 60,70, 40,60, 30,30, 15,50;
+                    0,35, 0,100, 100,100, 100,60, 90,40, 80,50, 60,60, 40,55, 30,25, 15,55;
+                    0,40, 0,100, 100,100, 100,65, 90,50, 80,40, 60,50, 40,50, 30,30, 15,60;
+                    0,45, 0,100, 100,100, 100,70, 90,55, 80,30, 60,45, 40,45, 30,40, 15,70;
+                    0,50, 0,100, 100,100, 100,65, 90,60, 80,40, 60,45, 40,40, 30,45, 15,60;
+                    0,55, 0,100, 100,100, 100,60, 90,65, 80,50, 60,50, 40,40, 30,50, 15,50;
+                    0,50, 0,100, 100,100, 100,55, 90,70, 80,60, 60,60, 40,45, 30,55, 15,55;
+                    0,55, 0,100, 100,100, 100,50, 90,65, 80,65, 60,55, 40,50, 30,60, 15,50;
+                    0,60, 0,100, 100,100, 100,40, 90,60, 80,70, 60,50, 40,60, 30,60, 15,45;"
+            keyTimes="
+                    0;
+                    0.05;
+                    0.1;
+                    0.15;
+                    0.2;
+                    0.25;
+                    0.3;
+                    0.35;
+                    0.4;
+                    0.45;
+                    0.5;
+                    0.55;
+                    0.6;
+                    0.65;
+                    0.7;
+                    0.75;
+                    0.8;
+                    0.85;
+                    0.9;
+                    0.95;
+                    1"
+            repeatCount="indefinite"
+          />
+        </svg>
+      </div>
+      <header>
+        <div class="header-container">
+          <h1 id="title">Magic</h1>
+        </div>
+      </header>
+    </div>
+
+    <!-- developing -->
+    <v-row v-if="is_developing">
+      <v-col cols="10">
         <h1 class="info-title">星陵祭2024 「Magic」</h1>
         <h4>⚠︎現在このサイトは開発段階です。</h4>
       </v-col>
@@ -123,9 +290,11 @@
 
         <v-btn depressed outlined small to="/news/">編集</v-btn>
       </v-col>
+    </v-row>
 
-      <!--開発段階につき情報非公開-->
-      <div v-if="!is_developing">
+    <!--開発段階につき情報非公開-->
+    <div v-if="!is_developing">
+      <v-row>
         <v-col cols="10">
           <h1 class="info-title">開催概要</h1>
           <v-row>
@@ -185,48 +354,51 @@
             </v-col>
           </v-row>
         </v-col>
-      </div>
-    </v-row>
-    <div
-      v-if="!is_developing"
-      style="
-        margin-top: 30px;
-        width: 100%;
-        background-color: var(--theme-color);
-      "
-    >
-      <v-row
-        justify="center"
-        class="pb-10"
-        style="margin-left: 0 !important; margin-right: 0 !important"
-      >
-        <v-col cols="10">
-          <h1 class="pages-title">ご案内</h1>
-          <v-row justify="center">
-            <v-col
-              v-for="page in pages"
-              :key="page.icon"
-              cols="6"
-              sm="4"
-              md="3"
-              class="my-0 py-2"
-            >
-              <v-card
-                class="pa-1"
-                :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
-                outlined
-                :to="page.link"
-              >
-                <v-icon size="100" color="theme_color" style="display: flex">{{
-                  page.icon
-                }}</v-icon>
-                <p class="pages-text">{{ page.text }}</p>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
       </v-row>
+      <div
+        style="
+          margin-top: 30px;
+          width: 100%;
+          background-color: var(--theme-color);
+        "
+      >
+        <v-row
+          justify="center"
+          class="pb-10"
+          style="margin-left: 0 !important; margin-right: 0 !important"
+        >
+          <v-col cols="10">
+            <h1 class="pages-title">ご案内</h1>
+            <v-row justify="center">
+              <v-col
+                v-for="page in pages"
+                :key="page.icon"
+                cols="6"
+                sm="4"
+                md="3"
+                class="my-0 py-2"
+              >
+                <v-card
+                  class="pa-1"
+                  :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
+                  outlined
+                  :to="page.link"
+                >
+                  <v-icon
+                    size="100"
+                    color="theme_color"
+                    style="display: flex"
+                    >{{ page.icon }}</v-icon
+                  >
+                  <p class="pages-text">{{ page.text }}</p>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
     </div>
+
     <v-row justify="center" class="pt-6" style="margin: 0 !important">
       <v-col cols="10" md="5" sm="10"
         ><v-card class="my-auto" to="/groups">
@@ -279,9 +451,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap'
+import MotionPathPlugin from 'gsap'
 import { Route } from 'vue-router'
 import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
+
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin)
 
 type Data = {
   is_developing: boolean
@@ -310,7 +487,7 @@ export default Vue.extend({
   },
   data(): Data {
     return {
-      is_developing: true,
+      is_developing: false,
 
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
@@ -432,6 +609,35 @@ export default Vue.extend({
     } else {
       this.show_video = false
     }
+
+    const tl = gsap.timeline()
+
+    tl.set('.animated-circle', {
+      autoAlpha: 0,
+    })
+
+    tl.fromTo(
+      '#title', // アニメーションさせる要素
+      {
+        autoAlpha: 0, // アニメーション開始前は透明
+        y: -100, // 100px上に移動
+      },
+      {
+        scrollTrigger: '#header-title',
+        autoAlpha: 1, // アニメーション後は出現(透過率0)
+        duration: 1,
+        y: 0, // 100px下に移動
+        ease: 'bounce.out', // イージング
+      }
+    )
+      .to('.animated-circle', {
+        autoAlpha: 0.8,
+        duration: 2,
+      })
+      .to('#title', {
+        color: '#57c4ff',
+        duration: 1,
+      })
   },
 
   methods: {
@@ -464,67 +670,47 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+#title {
+  color: #335594;
+  font-size: min(15vw, 90px);
+  font-family: 'Times New Roman', Times, serif;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  line-height: 1.5;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.header-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.char {
+  transform: translateY(100px);
+  transition: transfrom 0.5s;
+}
+
 body {
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #fff;
 }
 
-html,
-body {
-  height: 100%;
-}
-
-.splash-video {
+.animated-circle {
   background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  animation: fade-out linear 5.5s forwards;
-
-  /* keyframeに対応していないブラウザで見ると一生画面が真っ白になるので、 */
-  width: 0;
-  height: 0;
-  overflow: hidden; /* スプラッシュ背景が消えた時に、videoがはみ出さないようにする */
-}
-
-video {
-  max-width: 100%;
-  max-height: 70vh;
+  max-width: 500px;
+  width: 100%;
   position: absolute;
+  transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
-
-  90% {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
-
-  99% {
-    opacity: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-    z-index: -1000;
-  }
-
-  100% {
-    opacity: 0;
-    display: none;
-    width: 0;
-    height: 0;
-    z-index: -1000;
-  }
 }
 </style>
