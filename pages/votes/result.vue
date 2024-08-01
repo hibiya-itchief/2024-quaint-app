@@ -2,15 +2,29 @@
   <v-app>
     <div v-if="!now_loading">
       <v-row justify="center">
-        <h1>投票結果(管理者・チーフ会のみ閲覧可能)</h1>
+        <v-col cols="10">
+          <h1>投票結果(管理者・チーフ会のみ閲覧可能)</h1>
+        </v-col>
         <v-col cols="12">
           <v-list>
-            <v-list-item v-for="group of groups" :key="group.id">
-              <v-list-item-title>{{ group.groupname }}</v-list-item-title>
-              <v-list-item-subtitle>{{
-                result[group.id]
-              }}</v-list-item-subtitle>
-            </v-list-item>
+            <div v-if="$vuetify.breakpoint.xs">
+              <v-list-item v-for="group of groups" :key="group.id" three-line>
+                <v-list-item-content>
+                  <v-list-item-title>{{ group.groupname }}</v-list-item-title>
+                  <v-list-item-subtitle>{{
+                    result[group.id]
+                  }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
+            <div v-else>
+              <v-list-item v-for="group of groups" :key="group.id">
+                <v-list-item-title>{{ group.groupname }}</v-list-item-title>
+                <v-list-item-subtitle>{{
+                  result[group.id]
+                }}</v-list-item-subtitle>
+              </v-list-item>
+            </div>
           </v-list>
         </v-col>
       </v-row>

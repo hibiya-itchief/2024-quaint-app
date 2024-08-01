@@ -96,18 +96,43 @@
                 </p>
               </v-card-text>
               <v-card-actions>
-                <v-btn
-                  v-show="$auth.user?.groups?.includes(user_groups.admin)"
-                  outlined
-                  color="primary"
-                  to="/admin"
-                >
-                  管理者用画面
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn outlined color="primary" @click="logout()">
-                  ログアウト
-                </v-btn>
+                <v-row>
+                  <v-col cols="10">
+                    <v-btn
+                      v-show="$auth.user?.groups?.includes(user_groups.admin)"
+                      outlined
+                      color="primary"
+                      to="/admin"
+                    >
+                      管理者用画面
+                    </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <!-- adminとchiefの両方に表示されるようにほとんど同じものを2回書いてるけどもっといい方法がありそう -->
+                    <v-btn
+                      v-show="$auth.user?.groups?.includes(user_groups.admin)"
+                      outlined
+                      color="primary"
+                      to="/manage"
+                    >
+                      サイト管理
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      v-show="$auth.user?.groups?.includes(user_groups.chief)"
+                      outlined
+                      color="primary"
+                      to="/manage"
+                    >
+                      サイト管理
+                    </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <v-btn outlined color="primary" @click="logout()">
+                      ログアウト
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-card-actions>
             </v-card>
 
@@ -247,6 +272,11 @@ export default Vue.extend({
           icon: 'mdi-tooltip-question-outline',
           text: 'ヘルプ',
           link: '/help',
+        },
+        {
+          icon: 'mdi-vote',
+          text: '投票',
+          link: '/votes',
         },
       ],
     }
