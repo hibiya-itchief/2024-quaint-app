@@ -5,7 +5,7 @@
         <v-sheet color="white" elevation="4" class="py-4 px-2">
           <h2 align="center" class="text-h5 ma-3">ログイン</h2>
           <p align="center" class="">
-            整理券の取得にはログインが必要となります。
+            整理券の取得・投票にはログインが必要となります。
           </p>
           <v-btn
             height="72"
