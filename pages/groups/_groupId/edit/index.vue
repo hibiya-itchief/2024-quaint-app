@@ -222,7 +222,7 @@
                 <v-card-text class="mx-0 px-0 py-2">
                   <v-text-field
                     v-model="change_twitter_url_input"
-                    prefix="https://twitter.com/"
+                    prefix="https://x.com/"
                     filled
                     class="ma-0 pt-1 pb-0"
                   >
@@ -244,7 +244,7 @@
                     color="primary"
                     @click="
                       group_edit.twitter_url =
-                        'https://twitter.com/' + change_twitter_url_input
+                        'https://x.com/' + change_twitter_url_input
                       updateGroup()
                     "
                   >
@@ -885,7 +885,7 @@ type Data = {
 
   group_edit: GroupEdit
 
-  user_groups: { admin: string; owner: string }
+  user_groups: { admin: string; owner: string; chief: string }
   hostname: string
 
   success_alert: boolean
@@ -979,6 +979,7 @@ export default Vue.extend({
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         owner: process.env.AZURE_AD_GROUPS_QUAINT_OWNER as string,
+        chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
       },
       hostname: '',
       success_alert: false,
@@ -1045,7 +1046,8 @@ export default Vue.extend({
 
     this.hostname = location.host // data()のreturn()内で使うとエラーになるのでここで代入
     if (
-      !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin) &&
+      !(this.$auth.user?.groups as string[]).includes(this.user_groups.chief)
     ) {
       if (
         (this.$auth.user?.groups as string[]).includes(this.user_groups.owner)

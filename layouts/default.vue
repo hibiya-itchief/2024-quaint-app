@@ -69,6 +69,12 @@
                   >
                     チーフ会
                   </v-chip>
+                  <v-chip
+                    v-show="$auth.user?.groups?.includes(user_groups.guest)"
+                    outlined
+                  >
+                    ゲスト
+                  </v-chip>
                   <!--(
                   user_groups.entry)で同様の処理が可能？
                 <v-chip
@@ -90,18 +96,36 @@
                 </p>
               </v-card-text>
               <v-card-actions>
-                <v-btn
-                  v-show="$auth.user?.groups?.includes(user_groups.admin)"
-                  outlined
-                  color="primary"
-                  to="/admin"
-                >
-                  管理者用画面
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn outlined color="primary" @click="logout()">
-                  ログアウト
-                </v-btn>
+                <v-row>
+                  <v-col cols="10">
+                    <v-btn
+                      v-show="$auth.user?.groups?.includes(user_groups.admin)"
+                      outlined
+                      color="primary"
+                      to="/admin"
+                    >
+                      管理者用画面
+                    </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                      v-show="
+                        $auth.user?.groups?.includes(user_groups.admin) ||
+                        $auth.user?.groups?.includes(user_groups.chief)
+                      "
+                      outlined
+                      color="primary"
+                      to="/manage"
+                    >
+                      サイト管理
+                    </v-btn>
+                    <v-spacer></v-spacer>
+
+                    <v-btn outlined color="primary" @click="logout()">
+                      ログアウト
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-card-actions>
             </v-card>
 
@@ -120,6 +144,15 @@
             </v-card>
 
             <v-divider></v-divider>
+            <v-list-item v-for="page in pages" :key="page.icon" :to="page.link">
+              <v-list-item-icon>
+                <v-icon color="theme_color">{{ page.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title
+                style="font-family: serif; font-weight: bold"
+                >{{ page.text }}</v-list-item-title
+              >
+            </v-list-item>
           </v-list-item-group>
         </v-list>
         <template #append>
@@ -214,9 +247,31 @@ export default Vue.extend({
         students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
         teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
       },
       app_env: process.env.QUAINT_ENV,
       api_url: process.env.BASEURL,
+      pages: [
+        { icon: 'mdi-hexagon-outline', text: '星陵祭とは', link: '/about' },
+        {
+          icon: 'mdi-ticket-confirmation',
+          text: '整理券制度',
+          link: '/system',
+        },
+        { icon: 'mdi-train', text: 'アクセス', link: '/access' },
+        { icon: 'mdi-map', text: '校内マップ', link: '/map' },
+        { icon: 'mdi-clock', text: 'スケジュール', link: '/schedule' },
+        {
+          icon: 'mdi-tooltip-question-outline',
+          text: 'ヘルプ',
+          link: '/help',
+        },
+        {
+          icon: 'mdi-vote',
+          text: '投票',
+          link: '/votes',
+        },
+      ],
     }
   },
   head() {

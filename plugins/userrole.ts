@@ -33,6 +33,7 @@ Vue.prototype.$quaintUserRole = (
   const students = '865bb05d-cb7d-4919-b18d-8b977ec0499b'
   const teachers = '0a8ee476-cd37-4c31-bd6e-c34e750574f4'
   const chief = '67e48f08-22e0-4ec4-9674-1428aaa5c055'
+  const guest = '94c45b57-680c-4b5b-a98b-d78f1fd90d71'
 
   if (!(user.iss !== undefined && typeof user.iss === 'string')) {
     return false
@@ -101,6 +102,13 @@ Vue.prototype.$quaintUserRole = (
         user.groups !== undefined &&
         Array.isArray(user.groups) &&
         (user.groups.includes(students) || user.groups.includes(teachers))
+      )
+    case 'guest':
+      return (
+        user.iss.includes(ad_issuer) &&
+        user.groups !== undefined &&
+        Array.isArray(user.groups) &&
+        user.groups.includes(guest)
       )
     case 'visited':
       return (

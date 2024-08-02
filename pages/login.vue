@@ -5,17 +5,8 @@
         <v-sheet color="white" elevation="4" class="py-4 px-2">
           <h2 align="center" class="text-h5 ma-3">ログイン</h2>
           <p align="center" class="">
-            整理券の取得にはログインが必要となります。
+            整理券の取得・投票にはログインが必要となります。
           </p>
-          <v-divider class="my-3"></v-divider>
-          <v-btn class="light-blue darken-4 my-3" block disabled>
-            一般の方はこちらから
-          </v-btn>
-          <!--p align="center" class="text-caption">
-            アカウントをお持ちでない方も上のボタンを押していただき、指示に従って作成してください。当日入場する際に再ログインが求められる可能性があるため、パスワードを必ず記憶してください。
-          </p-->
-          <p align="center" class="text-caption">現在開発中です。</p>
-          <v-divider class="my-3"></v-divider>
           <v-btn
             height="72"
             class="light-blue darken-4 my-3"
@@ -23,10 +14,10 @@
             dark
             @click="loginAd()"
           >
-            本校生徒・保護者の方と<br />先生方はこちらから
+            ログイン
           </v-btn>
           <p align="center" class="text-caption">
-            学校から配布されているMicrosoftアカウント(「@metro.ed.jp」で終わるもの)でログインしてください
+            生徒は学校から配布されているMicrosoftアカウント(「@metro.ed.jp」で終わるもの)でログインしてください。保護者の皆様は学校から事前に配布されたアカウントでログインしてください。一般客の皆様は受付で配布されたアカウントを使ってログインしてください。
           </p>
         </v-sheet>
       </v-col>

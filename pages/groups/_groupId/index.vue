@@ -88,7 +88,13 @@
                   >
                 </v-card-actions>
                 <v-divider></v-divider>
-                <v-card-actions v-if="editable == true" class="py-1">
+                <v-card-actions
+                  v-if="
+                    editable == true ||
+                    $auth.user?.groups.includes(user_groups.chief)
+                  "
+                  class="py-1"
+                >
                   <v-btn
                     color="blue-grey"
                     dark
@@ -259,6 +265,7 @@ type Data = {
     students: string
     teachers: string
     chief: string
+    guest: string
   }
   group: Group | undefined
   events: Event[]
@@ -283,7 +290,8 @@ export default Vue.extend({
 
   async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
     const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
-    return { group }
+    const links = await $axios.$get('/groups/' + params.groupId + '/links')
+    return { group, links }
   },
 
   data(): Data {
@@ -296,6 +304,7 @@ export default Vue.extend({
         students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
         teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
       },
       group: undefined,
       events: [],

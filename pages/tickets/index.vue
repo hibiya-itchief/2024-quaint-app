@@ -4,20 +4,6 @@
       <v-container name="ticket_container">
         <v-row justify="center" align-content="center">
           <v-col cols="12" sm="6" lg="6">
-            <v-btn
-              v-show="$auth.user?.groups?.includes(user_groups.parents)"
-              href="https://forms.office.com/Pages/ResponsePage.aspx?id=07VbxZj7okm9Yto1xwcA4mrjYZ4y3-RGkgE_OQbXv41UNEVDRU9BWUtWUlI5REtGTjZaUzNFVkNVNi4u"
-              class="primary"
-            >
-              保護者用投票フォーム
-            </v-btn>
-            <v-btn
-              v-show="$auth.user?.groups?.includes(user_groups.students)"
-              href="https://forms.office.com/Pages/ResponsePage.aspx?id=07VbxZj7okm9Yto1xwcA4mrjYZ4y3-RGkgE_OQbXv41UOTNTRlIzRTJIMU1IQUI2UlFEM1dWTlk0RS4u"
-              class="primary"
-            >
-              生徒用投票フォーム
-            </v-btn>
             <!--現在時刻を表示・現在時刻を取得するとv-progress-linearが正常に動作しないため非表示-->
             <!--
             <v-chip v-if="time" label class="ma-1"
@@ -399,6 +385,7 @@ type Data = {
     students: string
     teachers: string
     chief: string
+    guest: string
   }
 }
 export default Vue.extend({
@@ -430,6 +417,7 @@ export default Vue.extend({
         students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
         teachers: process.env.AZURE_AD_GROUPS_QUAINT_TEACHERS as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
       },
     }
   },
