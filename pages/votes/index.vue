@@ -6,7 +6,7 @@
           <ToolsBackButton></ToolsBackButton>
           <h1 class="info-title">投票</h1>
           <p>
-            整理券を取得した2つの団体まで投票できます。三年生の演劇については投票は行なっておりません。投票は取り消すことができません。慎重に行なってください。
+            整理券を取得した2つの団体まで投票できます。取得した整理券の公演が終わってからのみ投票可能です。三年生の演劇については投票は行なっておりません。投票は取り消すことができません。慎重に行なってください。
           </p>
 
           <v-card>
@@ -125,10 +125,10 @@ export default Vue.extend({
         if (group.enable_vote) {
           this.saw_groups.push(group)
 
-          // ユーザーが二回投票していないかつその団体に投票していない -> 団体に投票できる
+          // ユーザーが二回投票していないかつその団体に投票可能 -> 団体に投票できる
           if (
             this.vote_count < 2 &&
-            (await this.$axios.$get('/users/me/votes/' + group.id)) === false
+            (await this.$axios.$get('/users/me/votes/' + group.id)) === true
           ) {
             this.votable[group.id] = true
           } else {
