@@ -108,18 +108,11 @@
                     </v-btn>
                     <v-spacer></v-spacer>
 
-                    <!-- adminとchiefの両方に表示されるようにほとんど同じものを2回書いてるけどもっといい方法がありそう -->
                     <v-btn
-                      v-show="$auth.user?.groups?.includes(user_groups.admin)"
-                      outlined
-                      color="primary"
-                      to="/manage"
-                    >
-                      サイト管理
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      v-show="$auth.user?.groups?.includes(user_groups.chief)"
+                      v-show="
+                        $auth.user?.groups?.includes(user_groups.admin) ||
+                        $auth.user?.groups?.includes(user_groups.chief)
+                      "
                       outlined
                       color="primary"
                       to="/manage"
