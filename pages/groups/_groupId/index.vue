@@ -88,7 +88,13 @@
                   >
                 </v-card-actions>
                 <v-divider></v-divider>
-                <v-card-actions v-if="editable == true" class="py-1">
+                <v-card-actions
+                  v-if="
+                    editable == true ||
+                    $auth.user?.groups.includes(user_groups.chief)
+                  "
+                  class="py-1"
+                >
                   <v-btn
                     color="blue-grey"
                     dark
@@ -284,7 +290,8 @@ export default Vue.extend({
 
   async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
     const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
-    return { group }
+    const links = await $axios.$get('/groups/' + params.groupId + '/links')
+    return { group, links }
   },
 
   data(): Data {
