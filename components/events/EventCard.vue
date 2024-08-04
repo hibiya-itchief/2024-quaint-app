@@ -1,75 +1,151 @@
 <!--イベントを表示するコンポーネント-->
 <template>
   <div>
-    <v-card
-      class="ma-2 d-flex"
-      :disabled="!isAvailable(event) || taken_tickets >= ticket_stock"
-      @click.stop="selectEvent(event)"
-    >
-      <div>
-        <v-card-text
-          class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
-        >
-          <div v-if="!cut_volume_date">
-            {{ dateFormatter(event.starts_at) }}
-          </div>
-          <div v-if="!cut_volume_title">
-            {{ event.eventname }}
-          </div>
-        </v-card-text>
-        <v-spacer></v-spacer>
-        <v-card-title class="pt-0 pb-1 text-h5">
-          {{ timeFormatter(event.starts_at) }}
-          <span class="caption pl-1">
-            - {{ timeFormatter(event.ends_at) }}</span
+    <div v-if="is_family_ticket">
+      <v-card
+        class="ma-2 d-flex"
+        :disabled="isSellEnd(event) || taken_tickets >= ticket_stock"
+        @click.stop="selectEvent(event, is_family_ticket)"
+      >
+        <div>
+          <v-card-text
+            class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
           >
-        </v-card-title>
-      </div>
-      <v-spacer></v-spacer>
-      <div class="my-auto mx-2">
-        <!--ここから配布ステータスの条件分岐-->
-        <v-btn
-          v-if="!isAvailable(event)"
-          color="grey"
-          outlined
-          style="font-weight: bold"
-          ><div v-if="!cut_volume_icon_text">時間外</div>
-          <v-icon>mdi-cancel</v-icon></v-btn
-        >
-        <v-btn
-          v-else-if="taken_tickets / ticket_stock < 0.5"
-          color="green"
-          outlined
-          style="font-weight: bold"
-          ><div v-if="!cut_volume_icon_text">配布中</div>
-          <v-icon>mdi-circle-double</v-icon></v-btn
-        >
-        <!--5割以上で黄色になる-->
-        <v-btn
-          v-else-if="
-            taken_tickets / ticket_stock >= 0.5 && taken_tickets < ticket_stock
-          "
-          color="orange"
-          outlined
-          style="font-size: 80%; font-weight: bold"
-          ><div v-if="!cut_volume_icon_text">残りわずか</div>
-          <v-icon>mdi-triangle-outline</v-icon></v-btn
-        >
-        <v-btn
-          v-else-if="taken_tickets >= ticket_stock"
-          color="red"
-          outlined
-          style="font-weight: bold"
-          ><div v-if="!cut_volume_icon_text">完売</div>
-          <v-icon>mdi-close</v-icon></v-btn
-        >
-        <!--ここまで配布ステータスの条件分岐-->
-      </div>
-    </v-card>
+            <div v-if="!cut_volume_date">
+              {{ dateFormatter(event.starts_at) }}
+            </div>
+            <div v-if="!cut_volume_title">
+              {{ event.eventname }}
+            </div>
+          </v-card-text>
+          <v-spacer></v-spacer>
+          <v-card-title class="pt-0 pb-1 text-h5">
+            {{ timeFormatter(event.starts_at) }}
+            <span class="caption pl-1">
+              - {{ timeFormatter(event.ends_at) }}</span
+            >
+          </v-card-title>
+        </div>
+        <v-spacer></v-spacer>
+        <div class="my-auto mx-2">
+          <!--ここから配布ステータスの条件分岐-->
+          <v-btn
+            v-if="isSellEnd(event)"
+            color="grey"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">時間外</div>
+            <v-icon>mdi-cancel</v-icon></v-btn
+          >
+          <v-btn
+            v-else-if="taken_tickets / ticket_stock < 0.5"
+            color="green"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">配布中</div>
+            <v-icon>mdi-circle-double</v-icon></v-btn
+          >
+          <!--5割以上で黄色になる-->
+          <v-btn
+            v-else-if="
+              taken_tickets / ticket_stock >= 0.5 &&
+              taken_tickets < ticket_stock
+            "
+            color="orange"
+            outlined
+            style="font-size: 80%; font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">残りわずか</div>
+            <v-icon>mdi-triangle-outline</v-icon></v-btn
+          >
+          <v-btn
+            v-else-if="taken_tickets >= ticket_stock"
+            color="red"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">完売</div>
+            <v-icon>mdi-close</v-icon></v-btn
+          >
+          <!--ここまで配布ステータスの条件分岐-->
+        </div>
+      </v-card>
+    </div>
+    <div v-else>
+      <v-card
+        class="ma-2 d-flex"
+        :disabled="!isAvailable(event) || taken_tickets >= ticket_stock"
+        @click.stop="selectEvent(event, is_family_ticket)"
+      >
+        <div>
+          <v-card-text
+            class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
+          >
+            <div v-if="!cut_volume_date">
+              {{ dateFormatter(event.starts_at) }}
+            </div>
+            <div v-if="!cut_volume_title">
+              {{ event.eventname }}
+            </div>
+          </v-card-text>
+          <v-spacer></v-spacer>
+          <v-card-title class="pt-0 pb-1 text-h5">
+            {{ timeFormatter(event.starts_at) }}
+            <span class="caption pl-1">
+              - {{ timeFormatter(event.ends_at) }}</span
+            >
+          </v-card-title>
+        </div>
+        <v-spacer></v-spacer>
+        <div class="my-auto mx-2">
+          <!--ここから配布ステータスの条件分岐-->
+          <v-btn
+            v-if="!isAvailable(event)"
+            color="grey"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">時間外</div>
+            <v-icon>mdi-cancel</v-icon></v-btn
+          >
+          <v-btn
+            v-else-if="taken_tickets / ticket_stock < 0.5"
+            color="green"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">配布中</div>
+            <v-icon>mdi-circle-double</v-icon></v-btn
+          >
+          <!--5割以上で黄色になる-->
+          <v-btn
+            v-else-if="
+              taken_tickets / ticket_stock >= 0.5 &&
+              taken_tickets < ticket_stock
+            "
+            color="orange"
+            outlined
+            style="font-size: 80%; font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">残りわずか</div>
+            <v-icon>mdi-triangle-outline</v-icon></v-btn
+          >
+          <v-btn
+            v-else-if="taken_tickets >= ticket_stock"
+            color="red"
+            outlined
+            style="font-weight: bold"
+            ><div v-if="!cut_volume_icon_text">完売</div>
+            <v-icon>mdi-close</v-icon></v-btn
+          >
+          <!--ここまで配布ステータスの条件分岐-->
+        </div>
+      </v-card>
+    </div>
 
     <v-dialog v-model="dialog" max-width="500" persistent>
       <v-card class="pa-2">
-        <v-card-title>この公演の整理券をとりますか？</v-card-title>
+        <div v-if="is_family_ticket">
+          <v-card-title>この公演の保護者用優先券をとりますか？</v-card-title>
+        </div>
+        <div v-else>
+          <v-card-title>この公演の整理券をとりますか？</v-card-title>
+        </div>
 
         <v-card-subtitle class="pt-5 pb-0">
           {{ dateFormatter(event.starts_at) }}
@@ -88,7 +164,10 @@
           {{ timeFormatter(event.ends_at) }}
         </v-card-subtitle>
 
-        <v-card-subtitle v-if="$quaintUserRole('school', $auth.user)"
+        <v-card-subtitle
+          v-if="
+            $quaintUserRole('school', $auth.user) || is_family_ticket === true
+          "
           ><span class="text-h5"><v-icon>mdi-account-supervisor</v-icon>1</span
           >人</v-card-subtitle
         >
@@ -115,9 +194,16 @@
           <v-spacer></v-spacer>
 
           <v-btn color="red" text @click.stop="dialog = false"> いいえ </v-btn>
-          <v-btn color="primary" @click="createTicket(event, ticket_person)">
-            はい
-          </v-btn>
+          <div v-if="is_family_ticket">
+            <v-btn color="primary" @click="createFamilyTicket(event)">
+              はい
+            </v-btn>
+          </div>
+          <div v-else>
+            <v-btn color="primary" @click="createTicket(event, ticket_person)">
+              はい
+            </v-btn>
+          </div>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -153,6 +239,11 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
+    is_family_ticket: {
+      type: Boolean,
+      required: true,
+    },
+
     // 配布状況のアイコンの横のテキストをカットするか
     cut_volume_icon_text: {
       type: Boolean,
@@ -192,6 +283,14 @@ export default Vue.extend({
         new Date() > new Date(event.sell_starts) &&
         new Date(event.sell_ends) > new Date()
       ) {
+        return true
+      } else {
+        return false
+      }
+    },
+
+    isSellEnd(event: Event) {
+      if (new Date() > new Date(event.sell_ends)) {
         return true
       } else {
         return false
@@ -252,8 +351,63 @@ export default Vue.extend({
         })
     },
 
-    selectEvent(event: Event) {
-      if (
+    async createFamilyTicket(event: Event) {
+      if (!this.$auth.loggedIn) {
+        this.$store.commit('ShowErrorSnackbar', {
+          message: '整理券の取得には',
+          link: '/login',
+        })
+        return 1
+      }
+      this.dialog = false
+      await this.$axios
+        .post(
+          '/groups/' +
+            event.group_id +
+            '/events/' +
+            event.id +
+            '/tickets/family'
+        )
+        .then(() => {
+          this.$store.commit('ShowSuccessSnackbar', {
+            message: '保護者用優先券を取得できました！',
+            link: '/tickets',
+          })
+          this.$nuxt.refresh()
+        })
+        .catch((e) => {
+          if (e.response) {
+            this.$store.commit('ShowErrorSnackbar', {
+              message: e.response.data.detail,
+              link: '',
+            })
+          } else {
+            this.$store.commit('ShowErrorSnackbar', {
+              message:
+                '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️',
+              link: '',
+            })
+          }
+        })
+    },
+
+    selectEvent(event: Event, is_family_ticket: boolean) {
+      if (is_family_ticket) {
+        if (new Date() > new Date(event.sell_ends)) {
+          this.$store.commit('ShowErrorSnackbar', {
+            message: '配布時間外です',
+            link: '',
+          })
+        } else if (!this.$auth.loggedIn) {
+          this.$store.commit('ShowErrorSnackbar', {
+            message: '整理券の取得には',
+            link: '/login',
+          })
+        } else {
+          this.dialog = true
+          this.$store.commit('CloseErrorSnackbar')
+        }
+      } else if (
         new Date() < new Date(event.sell_starts) ||
         new Date(event.sell_ends) < new Date()
       ) {
