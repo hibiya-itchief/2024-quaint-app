@@ -12,27 +12,13 @@
       ></video>
     </div>
   -->
-    <v-row justify="center" style="margin: 0 !important">
-      <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
-        <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
-        <v-parallax src="/images/topBackground2.jpg" height="600">
-          <v-row align="center" justify="center">
-            <v-col cols="10" md="5" sm="10">
-              <v-card class="text-center">
-                <v-card-title class="justify-center"
-                  >日比谷高校文化祭</v-card-title
-                >
-                <!-- 2023年度のものをサンプルとして取っておきます
-                <v-img src="/images/Sairai.jpeg"></v-img>
-              -->
-                <h2>Magic</h2>
-                <v-card-title class="justify-center">星陵祭2024</v-card-title>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-parallax>
-      </v-col>
+    <div>
+      <div class="top-logo-container">
+        <FesLogo />
+      </div>
+    </div>
 
+    <v-row justify="center" style="margin: 0 !important">
       <v-col v-if="is_developing" cols="10">
         <h1 class="info-title">星陵祭2024 「Magic」</h1>
         <h4>⚠︎現在このサイトは開発段階です。</h4>
@@ -310,7 +296,7 @@ export default Vue.extend({
   },
   data(): Data {
     return {
-      is_developing: true,
+      is_developing: false,
 
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
@@ -464,6 +450,10 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.top-logo-container {
+  text-align: center;
+}
+
 body {
   margin: 0;
   padding: 0;
