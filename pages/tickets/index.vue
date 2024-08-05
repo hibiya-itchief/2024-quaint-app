@@ -221,10 +221,25 @@
                             <v-list-item-subtitle
                               class="mb-2 grey--text text--darken-2 text-truncate"
                             >
-                              <span class="text-h5"
-                                ><v-icon>mdi-account-supervisor</v-icon
-                                >{{ ticket_info.ticket.person }}</span
-                              >人
+                              <v-row>
+                                <v-col cols="6">
+                                  <span class="text-h5"
+                                    ><v-icon>mdi-account-supervisor</v-icon
+                                    >{{ ticket_info.ticket.person }}</span
+                                  >人
+                                </v-col>
+                                <v-col
+                                  v-if="
+                                    ticket_info.ticket.is_family_ticket == true
+                                  "
+                                  style="margin-top: 7%"
+                                  cols="5"
+                                >
+                                  <div>
+                                    <span style="color: orange">優先権</span>
+                                  </div>
+                                </v-col>
+                              </v-row>
                             </v-list-item-subtitle>
 
                             <!--整理券の状況を「開場前」（開演20分前まで），「開場中」（開演20分前から終演），「公演終了」（終演以降）に分けて表示-->

@@ -373,7 +373,7 @@ export default Vue.extend({
             message: '保護者用優先券を取得できました！',
             link: '/tickets',
           })
-          this.$nuxt.refresh()
+          window.location.reload()
         })
         .catch((e) => {
           if (e.response) {

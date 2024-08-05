@@ -189,7 +189,7 @@
                 <div v-if="is_parents">
                   <v-switch
                     v-model="is_family_ticket"
-                    label="優先券"
+                    :label="`優先券(${taken_family_ticket_counter}/2)`"
                     inset
                     :disabled="!is_able_family_ticket"
                     style="margin-left: 5%"
