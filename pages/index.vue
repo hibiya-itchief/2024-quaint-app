@@ -12,9 +12,38 @@
       ></video>
     </div>
   -->
-    <div>
-      <div class="top-logo-container">
-        <FesLogo />
+    <div class="top-logo-container">
+      <div v-if="logo_size === 700" class="top-logo" style="width: 700px">
+        <FesLogo :logo-size="logo_size" />
+        <div class="top-logo-text">
+          <span style="font-size: min(3vw, 20px)"
+            >2024/<span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >14</span
+            >
+            Sat - <span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >15</span
+            >
+            Sun</span
+          >
+        </div>
+      </div>
+      <div v-else class="top-logo">
+        <FesLogo :logo-size="logo_size" />
+        <div class="top-logo-text">
+          <span style="font-size: min(3vw, 20px)"
+            >2024/<span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >14</span
+            >
+            Sat - <span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >15</span
+            >
+            Sun</span
+          >
+        </div>
       </div>
     </div>
 
@@ -283,6 +312,8 @@ type Data = {
   shown_news_group: number
   shown_news: News[][]
   editable_news: boolean
+
+  logo_size: number
 }
 export default Vue.extend({
   name: 'IndexPage',
@@ -324,6 +355,8 @@ export default Vue.extend({
       shown_news_group: 1,
       shown_news: [[]],
       editable_news: false,
+
+      logo_size: 0,
     }
   },
   head: {
@@ -377,6 +410,17 @@ export default Vue.extend({
   },
 
   async created() {
+    // ロゴの描写
+    const size = Math.min(
+      this.$vuetify.breakpoint.width,
+      this.$vuetify.breakpoint.height
+    )
+    if (size < 700) {
+      this.logo_size = size
+    } else {
+      this.logo_size = 700
+    }
+
     this.news = await this.$axios.$get('/news')
 
     // newsの並び替え
@@ -452,6 +496,20 @@ export default Vue.extend({
 <style scoped>
 .top-logo-container {
   text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.top-logo {
+  position: relative;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-logo-text {
+  position: relative;
+  font-family: 'EB Garamond', 'Noto Serif JP', 'BIZ UDMincho', serif;
 }
 
 body {
