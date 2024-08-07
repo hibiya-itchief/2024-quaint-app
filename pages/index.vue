@@ -1,17 +1,14 @@
 <template>
   <v-app>
-    <!-- 次にvideoを追加するときのサンプルとするために2023年度版のものを取っておきます-->
-    <!--
     <div v-if="show_video" class="splash-video">
       <video
-        src="/images/sairai_short2.mp4"
+        src="/animations/magic_animation.mp4"
         webkit-playsinline
         playsinline
         autoplay
         muted
       ></video>
     </div>
-  -->
     <v-row justify="center" style="margin: 0 !important">
       <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
         <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
