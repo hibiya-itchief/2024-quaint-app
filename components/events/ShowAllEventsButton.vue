@@ -46,6 +46,7 @@
                     :event="event"
                     :taken_tickets="list_taken_tickets[index]"
                     :ticket_stock="list_stock[index]"
+                    :is_family_ticket="false"
                     :cut_volume_icon_text="true"
                     :cut_volume_date="true"
                   />
@@ -56,6 +57,7 @@
                     :event="event"
                     :taken_tickets="list_taken_tickets[index]"
                     :ticket_stock="list_stock[index]"
+                    :is_family_ticket="false"
                   />
                 </div>
               </div>
@@ -73,6 +75,7 @@
                     :event="event"
                     :taken_tickets="list_taken_tickets[index]"
                     :ticket_stock="list_stock[index]"
+                    :is_family_ticket="false"
                     :cut_volume_icon_text="true"
                     :cut_volume_date="true"
                   />
@@ -83,6 +86,7 @@
                     :event="event"
                     :taken_tickets="list_taken_tickets[index]"
                     :ticket_stock="list_stock[index]"
+                    :is_family_ticket="false"
                   />
                 </div>
               </div>
@@ -99,6 +103,7 @@
                       :event="event"
                       :taken_tickets="list_taken_tickets[index]"
                       :ticket_stock="list_stock[index]"
+                      :is_family_ticket="false"
                       :cut_volume_icon_text="true"
                     />
                   </div>
@@ -108,6 +113,7 @@
                       :event="event"
                       :taken_tickets="list_taken_tickets[index]"
                       :ticket_stock="list_stock[index]"
+                      :is_family_ticket="false"
                     />
                   </div>
                 </div>
