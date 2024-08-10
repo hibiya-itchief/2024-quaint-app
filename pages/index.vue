@@ -170,7 +170,7 @@
                   </p>
                 </v-col>
                 <v-col cols="6">
-                  <div class="circle-img-container">
+                  <div class="circle-img-container" style="margin: 0 auto">
                     <div class="festival-image"></div>
                   </div>
                 </v-col>
