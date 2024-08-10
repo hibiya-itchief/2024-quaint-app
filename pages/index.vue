@@ -9,249 +9,240 @@
         muted
       ></video>
     </div>
-    <v-row justify="center" style="margin: 0 !important">
-      <v-col v-if="!is_developing" cols="12" style="padding: 0 !important">
-        <!-- 2023年度版の画像が使われているので2024年度版のものができたら変更 -->
-        <v-parallax src="/images/topBackground2.jpg" height="600">
-          <v-row align="center" justify="center">
-            <v-col cols="10" md="5" sm="10">
-              <v-card class="text-center">
-                <v-card-title class="justify-center"
-                  >日比谷高校文化祭</v-card-title
-                >
-                <!-- 2023年度のものをサンプルとして取っておきます
-                <v-img src="/images/Sairai.jpeg"></v-img>
-              -->
-                <h2>Magic</h2>
-                <v-card-title class="justify-center">星陵祭2024</v-card-title>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-parallax>
-      </v-col>
 
-      <v-col v-if="is_developing" cols="10">
-        <h1 class="info-title">星陵祭2024 「Magic」</h1>
-        <h4>⚠︎現在このサイトは開発段階です。</h4>
-      </v-col>
-
-      <v-col v-if="!(news.length === 0)" cols="10">
-        <h1 class="info-title" style="margin-bottom: 20px">News</h1>
-
-        <!--権限がある人がnewsを編集する-->
-        <div v-if="editable_news" style="margin-bottom: 10px">
-          <v-btn depressed outlined small to="/news/">編集</v-btn>
-        </div>
-
-        <!--最大5コのnewsを表示する-->
-        <div v-for="i in shown_news[shown_news_group]" :key="i.id">
-          <div v-if="$vuetify.breakpoint.xs">
-            <v-divider></v-divider>
-            <v-row style="margin-top: 5px; margin-bottom: 5px">
-              <v-col cols="4">
-                {{ dateFormatter(i.timestamp) }}
-                {{ timeFormatter(i.timestamp) }}
-              </v-col>
-              <v-col cols="8">
-                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-              </v-col>
-            </v-row>
-          </div>
-          <div v-else>
-            <v-divider></v-divider>
-            <v-row style="margin-top: 5px; margin-bottom: 5px">
-              <v-col cols="2">
-                {{ dateFormatter(i.timestamp) }}
-                {{ timeFormatter(i.timestamp) }}
-              </v-col>
-              <v-col cols="3">{{ i.author }}</v-col>
-              <v-col cols="7">
-                <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
-              </v-col>
-            </v-row>
-          </div>
-        </div>
-        <div v-if="news.length > 5">
-          <div
-            style="
-              justify-content: center;
-              text-align: center;
-              margin-top: 20px;
-            "
+    <div class="top-logo-container">
+      <div v-if="logo_size === 700" class="top-logo" style="width: 700px">
+        <FesLogo :logo-size="logo_size" />
+        <div class="top-logo-text">
+          <span style="font-size: min(3vw, 20px)"
+            >2024/<span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >14</span
+            >
+            Sat - <span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >15</span
+            >
+            Sun</span
           >
-            <v-row justify="center">
-              <v-col>
-                <div v-if="!(shown_news_group === 1)">
-                  <v-btn
-                    depressed
-                    x-small
-                    color="white"
-                    @click="shown_news_group = shown_news_group - 1"
-                  >
-                    <v-icon color="theme_color">mdi-arrow-left</v-icon>
-                  </v-btn>
-                </div>
-              </v-col>
-              <v-col>
-                <h4 style="color: var(--theme-color)">
-                  {{ shown_news_group }}/{{ shown_news.length - 1 }}
-                </h4>
-              </v-col>
-              <v-col>
-                <div v-if="!(shown_news_group === Math.ceil(news.length / 5))">
-                  <v-btn
-                    depressed
-                    x-small
-                    color="white"
-                    @click="shown_news_group = shown_news_group + 1"
-                  >
-                    <v-icon color="theme_color">mdi-arrow-right</v-icon>
-                  </v-btn>
-                </div>
-              </v-col>
-            </v-row>
-          </div>
         </div>
-      </v-col>
-      <v-col v-else-if="editable_news" cols="10">
-        <p style="margin-bottom: 20px">
-          News（現在お知らせはありません。この表示は編集権限がついている人のみ表示されています。）
-        </p>
+      </div>
+      <div v-else class="top-logo">
+        <FesLogo :logo-size="logo_size" />
+        <div class="top-logo-text">
+          <span style="font-size: min(3vw, 20px)"
+            >2024/<span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >14</span
+            >
+            Sat - <span style="font-size: min(1.33em, 25px)">9</span>/<span
+              style="font-size: min(1.33em, 25px)"
+              >15</span
+            >
+            Sun</span
+          >
+        </div>
+      </div>
+    </div>
 
-        <v-btn depressed outlined small to="/news/">編集</v-btn>
-      </v-col>
+    <div class="main-container">
+      <!-- news -->
+      <div class="news-container">
+        <v-row justify="center" style="margin: 0 !important">
+          <v-col v-if="!(news.length === 0)" cols="10">
+            <h2 class="info-title" style="margin-bottom: 20px">News</h2>
 
-      <!--開発段階につき情報非公開-->
-      <div v-if="!is_developing">
-        <v-col cols="10">
-          <h1 class="info-title">開催概要</h1>
-          <v-row>
-            <v-col cols="12" sm="6" md="6">
-              <h2 class="info-subtitle">令和6年度</h2>
-              <h2 class="info-subtitle">
-                9月14日(<span style="color: blue">土</span>)ー15日(<span
-                  style="color: red"
-                  >日</span
-                >)
-              </h2>
-              <br />
-              <h2 class="info-subtitle">
-                第49回 <ruby>星陵<rt>せいりょう</rt></ruby
-                >祭
-              </h2>
-              <h1
-                class="info-subtitle"
+            <!--権限がある人がnewsを編集する-->
+            <div v-if="editable_news" style="margin-bottom: 10px">
+              <v-btn depressed outlined small to="/news/">編集</v-btn>
+            </div>
+
+            <!--最大5コのnewsを表示する-->
+            <div v-for="i in shown_news[shown_news_group]" :key="i.id">
+              <div v-if="$vuetify.breakpoint.xs">
+                <v-divider></v-divider>
+                <v-row style="margin-top: 5px; margin-bottom: 5px">
+                  <v-col cols="4">
+                    {{ dateFormatter(i.timestamp) }}
+                    {{ timeFormatter(i.timestamp) }}
+                  </v-col>
+                  <v-col cols="8">
+                    <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-else>
+                <v-divider></v-divider>
+                <v-row style="margin-top: 5px; margin-bottom: 5px">
+                  <v-col cols="2">
+                    {{ dateFormatter(i.timestamp) }}
+                    {{ timeFormatter(i.timestamp) }}
+                  </v-col>
+                  <v-col cols="3">{{ i.author }}</v-col>
+                  <v-col cols="7">
+                    <NuxtLink :to="'/news/' + i.id">{{ i.title }}</NuxtLink>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
+            <div v-if="news.length > 5">
+              <div
                 style="
-                  font-family: serif;
-                  font-weight: bold;
-                  color: var(--theme-color);
+                  justify-content: center;
+                  text-align: center;
+                  margin-top: 20px;
                 "
               >
-                <!-- テーマが決まったら変更してください -->
-                「<ruby>Magic</ruby>」
-              </h1>
-              <br />
-              <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
-              <p class="info-caption">〒100-0014 東京都千代田区永田町2-16-1</p>
-              <br />
-              <h2 class="info-subtitle">すべての方に</h2>
-              <h2 class="info-subtitle">ご入場いただけます。</h2>
-              <!-- 日比谷公式からこの記述が消えたので一旦消去
-              <p class="info-caption">感染症の流行状況により変更の可能性があります。</p>
-              -->
-              <br />
-              <br />
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <h2 class="info-subtitle">9月14日</h2>
-              <br />
-              <h3 class="info-subtitle">8時30分 受付開始</h3>
-              <h3 class="info-subtitle">16時00分 公開終了</h3>
-              <br />
-              <br />
-              <h2 class="info-subtitle">9月15日</h2>
-              <br />
-              <h3 class="info-subtitle">8時30分 受付開始</h3>
-              <h3 class="info-subtitle">15時20分 公開終了</h3>
-              <br />
-              <br />
-              <h3 class="info-subtitle">
-                詳しくは<NuxtLink to="/schedule">スケジュール</NuxtLink
-                >をご覧ください。
-              </h3>
-            </v-col>
-          </v-row>
-        </v-col>
+                <v-row justify="center">
+                  <v-col>
+                    <div v-if="!(shown_news_group === 1)">
+                      <v-btn
+                        depressed
+                        x-small
+                        color="white"
+                        @click="shown_news_group = shown_news_group - 1"
+                      >
+                        <v-icon color="theme_color">mdi-arrow-left</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-col>
+                  <v-col>
+                    <h4 style="color: var(--theme-color)">
+                      {{ shown_news_group }}/{{ shown_news.length - 1 }}
+                    </h4>
+                  </v-col>
+                  <v-col>
+                    <div
+                      v-if="!(shown_news_group === Math.ceil(news.length / 5))"
+                    >
+                      <v-btn
+                        depressed
+                        x-small
+                        color="white"
+                        @click="shown_news_group = shown_news_group + 1"
+                      >
+                        <v-icon color="theme_color">mdi-arrow-right</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
+          </v-col>
+          <v-col v-else-if="editable_news" cols="10">
+            <p style="margin-bottom: 20px">
+              News（現在お知らせはありません。この表示は編集権限がついている人のみ表示されています。）
+            </p>
+
+            <v-btn depressed outlined small to="/news/">編集</v-btn>
+          </v-col>
+        </v-row>
       </div>
-    </v-row>
-    <div
-      v-if="!is_developing"
-      style="
-        margin-top: 30px;
-        width: 100%;
-        background-color: var(--theme-color);
-      "
-    >
-      <v-row
-        justify="center"
-        class="pb-10"
-        style="margin-left: 0 !important; margin-right: 0 !important"
-      >
-        <v-col cols="10">
-          <h1 class="pages-title">ご案内</h1>
-          <v-row justify="center">
-            <v-col
-              v-for="page in pages"
-              :key="page.icon"
-              cols="6"
-              sm="4"
-              md="3"
-              class="my-0 py-2"
-            >
-              <v-card
-                class="pa-1"
-                :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
-                outlined
-                :to="page.link"
+
+      <div class="ex-container" style="margin-bottom: 5%">
+        <v-row justify="center">
+          <v-col cols="10">
+            <div class="ex-theme-container">
+              <h2 class="info-title" style="margin-bottom: 5%">
+                テーマ「Magic」
+              </h2>
+              <v-row justify="center">
+                <v-col cols="10">
+                  <div class="theme-image"></div>
+                </v-col>
+                <v-col cols="10">
+                  <p>
+                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+                  </p>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+          <v-col cols="10">
+            <div class="ex-festival-container">
+              <h2 class="info-title" style="margin-bottom: 5%">星陵祭</h2>
+              <v-row>
+                <v-col cols="6">
+                  <p>
+                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+                  </p>
+                </v-col>
+                <v-col cols="6">
+                  <div class="circle-img-container" style="margin: 0 auto">
+                    <div class="festival-image"></div>
+                  </div>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+      </div>
+
+      <!-- ご案内 -->
+      <div class="info-container">
+        <v-row
+          justify="center"
+          class="pb-10"
+          style="margin-left: 0 !important; margin-right: 0 !important"
+        >
+          <v-col cols="10">
+            <h2 class="pages-title">ご案内</h2>
+            <v-row justify="center">
+              <v-col
+                v-for="page in pages"
+                :key="page.icon"
+                cols="6"
+                sm="4"
+                md="3"
+                class="my-0 py-2"
               >
-                <v-icon size="100" color="theme_color" style="display: flex">{{
-                  page.icon
-                }}</v-icon>
-                <p class="pages-text">{{ page.text }}</p>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </div>
-    <v-row justify="center" class="pt-6" style="margin: 0 !important">
-      <v-col cols="10" md="5" sm="10"
-        ><v-card class="my-auto" to="/groups">
-          <div>
-            <v-card-title><v-icon>mdi-magnify</v-icon>公演一覧</v-card-title>
-          </div>
-        </v-card></v-col
-      >
-      <v-col cols="10" md="5" sm="10"
-        ><v-card class="my-auto" to="/tickets">
-          <div>
-            <v-card-title
-              ><v-icon x-large color="theme_color">mdi-ticket</v-icon
-              >あなたの整理券</v-card-title
-            >
-          </div>
-        </v-card></v-col
-      >
+                <v-card
+                  class="pa-1"
+                  :class="$vuetify.breakpoint.xs ? 'pages-xs' : 'pages-else'"
+                  outlined
+                  :to="page.link"
+                >
+                  <v-icon
+                    size="100"
+                    color="theme_color"
+                    style="display: flex"
+                    >{{ page.icon }}</v-icon
+                  >
+                  <p class="pages-text">{{ page.text }}</p>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
+      <v-row justify="center" class="pt-6" style="margin: 0 !important">
+        <v-col cols="10" md="5" sm="10"
+          ><v-card class="my-auto" to="/groups">
+            <div>
+              <v-card-title><v-icon>mdi-magnify</v-icon>公演一覧</v-card-title>
+            </div>
+          </v-card></v-col
+        >
+        <v-col cols="10" md="5" sm="10"
+          ><v-card class="my-auto" to="/tickets">
+            <div>
+              <v-card-title
+                ><v-icon x-large color="theme_color">mdi-ticket</v-icon
+                >あなたの整理券</v-card-title
+              >
+            </div>
+          </v-card></v-col
+        >
 
-      <CountDown
-        v-if="$vuetify.breakpoint.xs"
-        class="ma-1 justify-center"
-        style="width: 100vw"
-      />
-      <CountDown v-else class="ma-1 justify-center" style="height: 50vh" />
+        <CountDown
+          v-if="$vuetify.breakpoint.xs"
+          class="ma-1 justify-center"
+          style="width: 100vw"
+        />
+        <CountDown v-else class="ma-1 justify-center" style="height: 50vh" />
 
-      <!--チーフ会のTwitter-->
-      <!--
+        <!--チーフ会のTwitter-->
+        <!--
       <v-col cols="10">
         <v-card>
           <a
@@ -269,8 +260,9 @@
       </v-col>
       -->
 
-      <!--コピーライトとか-->
-    </v-row>
+        <!--コピーライトとか-->
+      </v-row>
+    </div>
   </v-app>
 </template>
 
@@ -281,12 +273,11 @@ import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
 import gsap from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
-gsap.registerPlugin(CustomEase)
+gsap.registerPlugin(ScrollTrigger, CustomEase)
 
 type Data = {
-  is_developing: boolean
-
   user_groups: {
     admin: string
     chief: string
@@ -298,6 +289,8 @@ type Data = {
   shown_news_group: number
   shown_news: News[][]
   editable_news: boolean
+
+  logo_size: number
 }
 export default Vue.extend({
   name: 'IndexPage',
@@ -311,8 +304,6 @@ export default Vue.extend({
   },
   data(): Data {
     return {
-      is_developing: true,
-
       user_groups: {
         admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
         chief: process.env.AZURE_AD_GROUPS_QUAINT_CHIEF as string,
@@ -339,6 +330,8 @@ export default Vue.extend({
       shown_news_group: 1,
       shown_news: [[]],
       editable_news: false,
+
+      logo_size: 0,
     }
   },
   head: {
@@ -392,6 +385,17 @@ export default Vue.extend({
   },
 
   async created() {
+    // ロゴの描写
+    const size = Math.min(
+      this.$vuetify.breakpoint.width,
+      this.$vuetify.breakpoint.height
+    )
+    if (size < 700) {
+      this.logo_size = size
+    } else {
+      this.logo_size = 700
+    }
+
     this.news = await this.$axios.$get('/news')
 
     // newsの並び替え
@@ -434,11 +438,27 @@ export default Vue.extend({
       this.show_video = false
     }
 
-    const tl = gsap.timeline()
-
+    // animation
+    // 初期設定
     gsap.set('.splach-video', {
       opacity: 1,
     })
+
+    gsap.set(
+      [
+        '.news-container',
+        '.info-container',
+        '.ex-theme-container',
+        '.ex-festival-container',
+      ],
+      {
+        opacity: 0, // 透明に
+        y: 100, // したから上にスライドさせるから下げておく
+      }
+    )
+
+    // 最初のムービー
+    const tl = gsap.timeline()
 
     tl.to('.splash-video', {
       duration: 2.5,
@@ -449,6 +469,33 @@ export default Vue.extend({
       ),
     }).set('.splash-video', {
       zIndex: -1000,
+    })
+
+    // news theme festival
+    gsap.to(
+      ['.news-container', '.ex-theme-container', '.ex-festival-container'],
+      {
+        scrollTrigger: {
+          trigger: '.news-container',
+          start: 'top 75%',
+        }, // 自身が画面の中に入ったら
+        duration: 2,
+        y: 0,
+        opacity: 1,
+        ease: 'power4.out',
+      }
+    )
+
+    // info
+    gsap.to('.info-container', {
+      scrollTrigger: {
+        trigger: '.info-container',
+        start: 'top 75%',
+      },
+      duration: 2,
+      y: 0,
+      opacity: 1,
+      ease: 'power4.out',
     })
   },
 
@@ -482,6 +529,54 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.top-logo-container {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.top-logo {
+  position: relative;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-logo-text {
+  position: relative;
+  font-family: 'EB Garamond', 'Noto Serif JP', 'BIZ UDMincho', serif;
+}
+
+.info-container {
+  background-color: var(--theme-color);
+}
+
+.circle-img-container {
+  aspect-ratio: 1 / 1;
+  background-image: linear-gradient(180deg, #b3e8e2, #b0dde8 50%, #b1d0f2);
+  border-radius: 50%;
+  transform: translate(3.75%, 3.75%);
+  width: min(100%, 300px);
+}
+
+.theme-image {
+  width: 100%;
+  height: 30vh;
+  background-image: url('../static/images/2024_logo.png');
+  background-position: center;
+  background-size: contain;
+}
+
+.festival-image {
+  aspect-ratio: 1 / 1;
+  background-image: url('../static/images/topBackground2.jpg');
+  background-position: bottom 0 right -2vw;
+  background-size: cover;
+  border-radius: 50%;
+  transform: translate(-3.75%, -3.75%);
+  width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
