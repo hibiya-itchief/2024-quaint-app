@@ -279,6 +279,10 @@ import Vue from 'vue'
 import { Route } from 'vue-router'
 import CountDown from '~/components/CountDown.vue'
 import { News } from 'types/quaint'
+import gsap from 'gsap'
+import CustomEase from 'gsap/dist/CustomEase'
+
+gsap.registerPlugin(CustomEase)
 
 type Data = {
   is_developing: boolean
@@ -429,6 +433,23 @@ export default Vue.extend({
     } else {
       this.show_video = false
     }
+
+    const tl = gsap.timeline()
+
+    gsap.set('.splach-video', {
+      opacity: 1,
+    })
+
+    tl.to('.splash-video', {
+      duration: 2.5,
+      opacity: 0,
+      ease: CustomEase.create(
+        'custom',
+        'M0,0 C0.099,0 0.406,0.016 0.689,0.017 0.883,0.017 0.962,0.79 1,1 '
+      ),
+    }).set('.splash-video', {
+      zIndex: -1000,
+    })
   },
 
   methods: {
@@ -476,12 +497,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  animation: fade-out linear 5.5s forwards;
-
-  /* keyframeに対応していないブラウザで見ると一生画面が真っ白になるので、 */
-  width: 0;
-  height: 0;
-  overflow: hidden; /* スプラッシュ背景が消えた時に、videoがはみ出さないようにする */
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
 }
 
 video {
@@ -491,37 +509,5 @@ video {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
-
-  90% {
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-  }
-
-  99% {
-    opacity: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-    z-index: -1000;
-  }
-
-  100% {
-    opacity: 0;
-    display: none;
-    width: 0;
-    height: 0;
-    z-index: -1000;
-  }
 }
 </style>
