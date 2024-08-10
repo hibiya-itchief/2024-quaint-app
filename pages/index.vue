@@ -443,7 +443,7 @@ export default Vue.extend({
     gsap.set('.splach-video', {
       opacity: 1,
     })
-    
+
     gsap.set(
       [
         '.news-container',
@@ -457,7 +457,6 @@ export default Vue.extend({
       }
     )
 
-    
     // 最初のムービー
     const tl = gsap.timeline()
 
@@ -470,8 +469,8 @@ export default Vue.extend({
       ),
     }).set('.splash-video', {
       zIndex: -1000,
-      })
-    
+    })
+
     // news theme festival
     gsap.to(
       ['.news-container', '.ex-theme-container', '.ex-festival-container'],
