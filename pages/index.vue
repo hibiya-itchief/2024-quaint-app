@@ -52,7 +52,7 @@
       <div class="news-container">
         <v-row justify="center" style="margin: 0 !important">
           <v-col v-if="!(news.length === 0)" cols="10">
-            <h1 class="info-title" style="margin-bottom: 20px">News</h1>
+            <h2 class="info-title" style="margin-bottom: 20px">News</h2>
 
             <!--権限がある人がnewsを編集する-->
             <div v-if="editable_news" style="margin-bottom: 10px">
@@ -141,6 +141,46 @@
         </v-row>
       </div>
 
+      <div class="ex-container" style="margin-bottom: 5%">
+        <v-row justify="center">
+          <v-col cols="10">
+            <div class="ex-theme-container">
+              <h2 class="info-title" style="margin-bottom: 5%">
+                テーマ「Magic」
+              </h2>
+              <v-row justify="center">
+                <v-col cols="10">
+                  <div class="theme-image"></div>
+                </v-col>
+                <v-col cols="10">
+                  <p>
+                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+                  </p>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+          <v-col cols="10">
+            <div class="ex-festival-container">
+              <h2 class="info-title" style="margin-bottom: 5%">星陵祭</h2>
+              <v-row>
+                <v-col cols="6">
+                  <p>
+                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+                  </p>
+                </v-col>
+                <v-col cols="6">
+                  <div class="circle-img-container">
+                    <div class="festival-image"></div>
+                  </div>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+      </div>
+
+      <!-- ご案内 -->
       <div class="info-container">
         <v-row
           justify="center"
@@ -148,7 +188,7 @@
           style="margin-left: 0 !important; margin-right: 0 !important"
         >
           <v-col cols="10">
-            <h1 class="pages-title">ご案内</h1>
+            <h2 class="pages-title">ご案内</h2>
             <v-row justify="center">
               <v-col
                 v-for="page in pages"
@@ -403,22 +443,33 @@ export default Vue.extend({
 
     // animation
     // 初期設定
-    gsap.set(['.news-container', '.info-container'], {
-      opacity: 0, // 透明に
-      y: 100, // したから上にスライドさせるから下げておく
-    })
+    gsap.set(
+      [
+        '.news-container',
+        '.info-container',
+        '.ex-theme-container',
+        '.ex-festival-container',
+      ],
+      {
+        opacity: 0, // 透明に
+        y: 100, // したから上にスライドさせるから下げておく
+      }
+    )
 
-    // news
-    gsap.to('.news-container', {
-      scrollTrigger: {
-        trigger: '.news-container',
-        start: 'top 75%',
-      }, // 自身が画面の中に入ったら
-      duration: 2,
-      y: -100,
-      opacity: 1,
-      ease: 'power4.out',
-    })
+    // news theme festival
+    gsap.to(
+      ['.news-container', '.ex-theme-container', '.ex-festival-container'],
+      {
+        scrollTrigger: {
+          trigger: '.news-container',
+          start: 'top 75%',
+        }, // 自身が画面の中に入ったら
+        duration: 2,
+        y: 0,
+        opacity: 1,
+        ease: 'power4.out',
+      }
+    )
 
     // info
     gsap.to('.info-container', {
@@ -427,7 +478,7 @@ export default Vue.extend({
         start: 'top 75%',
       },
       duration: 2,
-      y: -100,
+      y: 0,
       opacity: 1,
       ease: 'power4.out',
     })
@@ -479,6 +530,36 @@ export default Vue.extend({
 .top-logo-text {
   position: relative;
   font-family: 'EB Garamond', 'Noto Serif JP', 'BIZ UDMincho', serif;
+}
+
+.info-container {
+  background-color: var(--theme-color);
+}
+
+.circle-img-container {
+  aspect-ratio: 1 / 1;
+  background-image: linear-gradient(180deg, #b3e8e2, #b0dde8 50%, #b1d0f2);
+  border-radius: 50%;
+  transform: translate(3.75%, 3.75%);
+  width: min(100%, 300px);
+}
+
+.theme-image {
+  width: 100%;
+  height: 30vh;
+  background-image: url('../static/images/2024_logo.png');
+  background-position: center;
+  background-size: contain;
+}
+
+.festival-image {
+  aspect-ratio: 1 / 1;
+  background-image: url('../static/images/topBackground2.jpg');
+  background-position: bottom 0 right -2vw;
+  background-size: cover;
+  border-radius: 50%;
+  transform: translate(-3.75%, -3.75%);
+  width: 100%;
 }
 
 body {
