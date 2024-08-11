@@ -7,13 +7,13 @@
       timeout="-1"
     >
       {{ $store.state.success_message }}
-      <a
+      <NuxtLink
         v-show="$store.state.success_snackbar_link"
         :href="$store.state.success_snackbar_link"
         class="link-snackbar"
       >
         取得した整理券を表示
-      </a>
+      </NuxtLink>
       <template #action="{ attrs }">
         <v-btn
           color="white"
