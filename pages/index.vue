@@ -151,9 +151,7 @@
                   <div class="theme-image"></div>
                 </v-col>
                 <v-col cols="10">
-                  <p>
-                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-                  </p>
+                  <p>近日公開</p>
                 </v-col>
               </v-row>
             </div>
@@ -163,9 +161,7 @@
               <h2 class="info-title" style="margin-bottom: 5%">星陵祭</h2>
               <v-row>
                 <v-col cols="6">
-                  <p>
-                    サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-                  </p>
+                  <p>近日公開</p>
                 </v-col>
                 <v-col cols="6">
                   <div class="circle-img-container" style="margin: 0 auto">
@@ -234,13 +230,6 @@
           </v-card></v-col
         >
 
-        <CountDown
-          v-if="$vuetify.breakpoint.xs"
-          class="ma-1 justify-center"
-          style="width: 100vw"
-        />
-        <CountDown v-else class="ma-1 justify-center" style="height: 50vh" />
-
         <!--チーフ会のTwitter-->
         <!--
       <v-col cols="10">
@@ -263,6 +252,7 @@
         <!--コピーライトとか-->
       </v-row>
     </div>
+    <CountDown />
   </v-app>
 </template>
 
@@ -444,18 +434,10 @@ export default Vue.extend({
       opacity: 1,
     })
 
-    gsap.set(
-      [
-        '.news-container',
-        '.info-container',
-        '.ex-theme-container',
-        '.ex-festival-container',
-      ],
-      {
-        opacity: 0, // 透明に
-        y: 100, // したから上にスライドさせるから下げておく
-      }
-    )
+    gsap.set(['.main-container'], {
+      opacity: 0, // 透明に
+      y: 100, // したから上にスライドさせるから下げておく
+    })
 
     // 最初のムービー
     const tl = gsap.timeline()
@@ -471,27 +453,12 @@ export default Vue.extend({
       zIndex: -1000,
     })
 
-    // news theme festival
-    gsap.to(
-      ['.news-container', '.ex-theme-container', '.ex-festival-container'],
-      {
-        scrollTrigger: {
-          trigger: '.news-container',
-          start: 'top 75%',
-        }, // 自身が画面の中に入ったら
-        duration: 2,
-        y: 0,
-        opacity: 1,
-        ease: 'power4.out',
-      }
-    )
-
-    // info
-    gsap.to('.info-container', {
+    // main content
+    gsap.to('.main-container', {
       scrollTrigger: {
-        trigger: '.info-container',
+        trigger: '.news-container',
         start: 'top 75%',
-      },
+      }, // 自身が画面の中に入ったら
       duration: 2,
       y: 0,
       opacity: 1,
@@ -577,6 +544,10 @@ export default Vue.extend({
   width: 100%;
 }
 
+.main-container {
+  z-index: 1;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -593,7 +564,7 @@ body {
   top: 0;
   left: 0;
   z-index: 1000;
-  width: 100%;
+  width: 100vw;
   height: 100%;
 }
 
