@@ -185,49 +185,81 @@
                   @click="getAllEventsData()"
                   ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
                 >
-                <div v-for="(event, index) in suitableEvents()" :key="event.id">
-                  <!-- 配布中のチケットを表示 -->
-                  <div v-if="isAvailable(event)">
+
+                <div v-if="is_parents">
+                  <v-switch
+                    v-model="is_family_ticket"
+                    :label="`優先券(${taken_family_ticket_counter}/2)`"
+                    inset
+                    :disabled="!is_able_family_ticket"
+                    style="margin-left: 5%"
+                  ></v-switch>
+                </div>
+
+                <div v-if="is_family_ticket">
+                  <div
+                    v-for="(event, index) in suitableEvents()"
+                    :key="event.id"
+                  >
+                    <!-- 全てのチケットを表示 -->
                     <EventsEventCard
                       :group="group"
                       :event="event"
                       :taken_tickets="list_taken_tickets[index]"
                       :ticket_stock="list_stock[index]"
+                      :is_family_ticket="is_family_ticket"
                     />
                   </div>
                 </div>
-
-                <v-col cols="12">
-                  <!--表示する公演が無い時，以下のメッセージを表示-->
-                  <v-col
-                    v-if="suitableEvents().length === out_time_events.length"
-                    cols="12"
+                <div v-else>
+                  <div
+                    v-for="(event, index) in suitableEvents()"
+                    :key="event.id"
                   >
-                    <v-card class="pa-2">
-                      <span class="grey--text text-h5"
-                        >現在選択できる公演はありません。</span
-                      >
-                    </v-card>
-                  </v-col>
-
-                  <!--配布時間外のチケットがある場合はいくつあるかをインフォーム-->
-                  <div v-if="out_time_events.length !== 0">
-                    <EventsTimeOutEventInform
-                      :number="out_time_events.length"
-                    />
-                  </div>
-
-                  <v-row justify="center">
-                    <div v-if="suitableEvents().length > 0">
-                      <EventsShowAllEventsButton
+                    <!-- 配布中のチケットを表示 -->
+                    <div v-if="isAvailable(event)">
+                      <EventsEventCard
                         :group="group"
-                        :events="suitableEvents()"
-                        :list_stock="list_stock"
-                        :list_taken_tickets="list_taken_tickets"
+                        :event="event"
+                        :taken_tickets="list_taken_tickets[index]"
+                        :ticket_stock="list_stock[index]"
+                        :is_family_ticket="is_family_ticket"
                       />
                     </div>
-                  </v-row>
-                </v-col>
+                  </div>
+
+                  <v-col cols="12">
+                    <!--表示する公演が無い時，以下のメッセージを表示-->
+                    <v-col
+                      v-if="suitableEvents().length === out_time_events.length"
+                      cols="12"
+                    >
+                      <v-card class="pa-2">
+                        <span class="grey--text text-h5"
+                          >現在選択できる公演はありません。</span
+                        >
+                      </v-card>
+                    </v-col>
+
+                    <!--配布時間外のチケットがある場合はいくつあるかをインフォーム-->
+                    <div v-if="out_time_events.length !== 0">
+                      <EventsTimeOutEventInform
+                        :number="out_time_events.length"
+                      />
+                    </div>
+
+                    <v-row justify="center">
+                      <div v-if="suitableEvents().length > 0">
+                        <EventsShowAllEventsButton
+                          :group="group"
+                          :events="suitableEvents()"
+                          :list_stock="list_stock"
+                          :list_taken_tickets="list_taken_tickets"
+                        />
+                      </div>
+                    </v-row>
+                  </v-col>
+                </div>
               </v-card>
               <v-card v-else class="pa-2">
                 <v-card-title>
@@ -283,6 +315,11 @@ type Data = {
   list_stock: number[]
   list_taken_tickets: number[]
   view_count: number | string
+  is_family_ticket: boolean // 優先券作るモードかどうか default:false
+  is_parents: boolean // 保護者かどうか
+  is_able_family_ticket: boolean // 保護者が優先券を使い切っているかどうか（保護者用アカウントでない場合はfalseに設定されている）
+  taken_family_ticket_counter: number // 保護者が使用済みの優先券の枚数 default:0
+  family_ticket_sell_starts: Date
 }
 export default Vue.extend({
   name: 'IndivisualGroupPage',
@@ -326,6 +363,13 @@ export default Vue.extend({
       list_stock: [],
       list_taken_tickets: [],
       view_count: '...',
+      is_able_family_ticket: false,
+      is_parents: false,
+      is_family_ticket: false,
+      taken_family_ticket_counter: 0,
+      // new Date(year, monthIndex, day)となっているため9月はmonthIndex=8と指定する
+      // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
+      family_ticket_sell_starts: new Date(2024, 8, 13),
     }
   },
 
@@ -377,6 +421,18 @@ export default Vue.extend({
             this.editable = true
           }
         })
+      } else if (this.$auth.user?.groups.includes(this.user_groups.parents)) {
+        this.is_parents = true
+
+        if (
+          (await this.$axios.$get('/users/me/tickets/family')) === false &&
+          new Date() > this.family_ticket_sell_starts
+        ) {
+          this.is_able_family_ticket = true
+        }
+        this.taken_family_ticket_counter = await this.$axios.$get(
+          '/users/me/count/tickets/family'
+        )
       }
     }
 

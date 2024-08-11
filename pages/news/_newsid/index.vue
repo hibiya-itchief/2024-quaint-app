@@ -3,27 +3,27 @@
     <v-row justify="center">
       <v-col cols="10">
         <ToolsBackButton />
-        <h1 class="info-title" style="margin-bottom: 20px">{{ news.title }}</h1>
         <div v-if="$vuetify.breakpoint.xs">
-          <h3>
+          <p>
             {{ dateFormatter(news.timestamp) }}
             {{ timeFormatter(news.timestamp) }}
-          </h3>
-          <h3>{{ news.author }}</h3>
+          </p>
+          <p class="font-weight-bold">{{ news.author }}</p>
         </div>
         <div v-else>
           <v-row>
             <v-col cols="4"
-              ><h3>
+              ><p>
                 {{ dateFormatter(news.timestamp) }}
                 {{ timeFormatter(news.timestamp) }}
-              </h3></v-col
+              </p></v-col
             >
             <v-col cols="8">
-              <h3>{{ news.author }}</h3>
+              <p class="font-weight-bold">{{ news.author }}</p>
             </v-col>
           </v-row>
         </div>
+        <h1 class="info-title" style="margin-bottom: 20px">{{ news.title }}</h1>
         <p style="margin-top: 20px">{{ news.detail }}</p>
       </v-col>
     </v-row>
