@@ -31,7 +31,7 @@
                   >団体名
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink class="mx-0 my-2 pa-0 text-body-2">編集できません</NuxtLink>
+                <a class="mx-0 my-2 pa-0 text-body-2">編集できません</a>
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
                 <span class="mx-0 my-2 pa-0 text-body-1">{{
@@ -49,7 +49,7 @@
                   団体ID(ページのURL)
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink class="mx-0 my-2 pa-0 text-body-2">編集できません</NuxtLink>
+                <a class="mx-0 my-2 pa-0 text-body-2">編集できません</a>
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
                 <NuxtLink
@@ -71,7 +71,7 @@
                   来場者からの投票
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink class="mx-0 my-2 pa-0 text-body-2">編集できません</NuxtLink>
+                <a class="mx-0 my-2 pa-0 text-body-2">編集できません</a>
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
                 <span
@@ -92,17 +92,17 @@
                   演目名
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_title_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_title_form = !change_title_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_title_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_title_form = !change_title_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -146,17 +146,17 @@
                   説明文
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_description_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_description_form = !change_description_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_description_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_description_form = !change_description_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -200,17 +200,17 @@
                   Twitter URL
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_twitter_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_twitter_url_form = !change_twitter_url_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_twitter_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_twitter_url_form = !change_twitter_url_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -263,21 +263,21 @@
                   Instagram URL
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_instagram_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="
                     change_instagram_url_form = !change_instagram_url_form
                   "
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_instagram_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="
                     change_instagram_url_form = !change_instagram_url_form
                   "
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -330,17 +330,17 @@
                   その他のリンク(Streamでの映像配信へのリンクもこちらへ)
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_url_form = !change_url_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_url_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_url_form = !change_url_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -390,21 +390,21 @@
                   サムネイル画像
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_thumbnail_image_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="
                     change_thumbnail_image_form = !change_thumbnail_image_form
                   "
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_thumbnail_image_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="
                     change_thumbnail_image_form = !change_thumbnail_image_form
                   "
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -461,17 +461,17 @@
                   階
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_floor_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_floor_form = !change_floor_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_floor_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_floor_form = !change_floor_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -516,17 +516,17 @@
                   場所
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_place_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_place_form = !change_place_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_place_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_place_form = !change_place_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -574,17 +574,17 @@
                   タグ
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_tags_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_tags_form = !change_tags_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_tags_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_tags_form = !change_tags_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -646,17 +646,17 @@
                   タイプ
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_type_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_type_form = !change_type_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_type_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_type_form = !change_type_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
@@ -695,17 +695,17 @@
                   公演
                 </p>
                 <v-spacer></v-spacer>
-                <NuxtLink
+                <a
                   v-show="!change_events_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_events_form = !change_events_form"
-                  >編集</NuxtLink
+                  >編集</a
                 >
-                <NuxtLink
+                <a
                   v-show="change_events_form"
                   class="mx-0 my-2 pa-0 text-body-2"
                   @click="change_events_form = !change_events_form"
-                  >キャンセル</NuxtLink
+                  >キャンセル</a
                 >
               </v-card-title>
               <v-card-text class="ma-0 pa-0">
