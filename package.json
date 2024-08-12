@@ -66,6 +66,7 @@
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.0.4",
+    "eslint-plugin-lintfix": "^1.1.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-vue": "^9.5.1",
     "husky": "^8.0.1",
