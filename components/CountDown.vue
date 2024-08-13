@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 20vh auto" class="countdown-container">
     <div class="countdown-text-container">
-      <v-row justify="center">
+      <v-row justify="center" style="margin: 0 !important">
         <v-col cols="8">
           <h2 class="countdown-text">
             <v-row justify="center">
