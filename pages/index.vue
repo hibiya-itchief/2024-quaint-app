@@ -140,7 +140,7 @@
       </div>
 
       <div class="ex-container" style="margin-bottom: 5%">
-        <v-row justify="center">
+        <v-row justify="center" style="margin: 0 !important">
           <v-col cols="10">
             <div class="ex-theme-container">
               <h2 class="info-title" style="margin-bottom: 5%">
