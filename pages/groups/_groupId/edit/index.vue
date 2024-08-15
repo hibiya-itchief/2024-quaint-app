@@ -1016,6 +1016,8 @@ export default Vue.extend({
         { target: 'parents', text: '保護者のみ' },
         { target: 'student', text: '生徒のみ' },
         { target: 'paper', text: '紙整理券' },
+        { target: 'everyone', text: '全員' },
+        { target: 'guest', text: '一般客' },
       ],
       add_event_target: {
         target: 'school_parents',
