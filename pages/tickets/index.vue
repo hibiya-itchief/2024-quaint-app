@@ -129,11 +129,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <!--終演時刻前の時だけ「整理券をキャンセル」ボタンを表示-->
-                  <v-btn
-                    v-if="!isUsed(new Date(ticket_info.event.ends_at))"
-                    color="error"
-                    @click="selectCancelTicket(ticket_info)"
-                  >
+                  <v-btn disabled>
                     <v-icon>mdi-close</v-icon>
                     整理券をキャンセル
                   </v-btn>
@@ -504,6 +500,7 @@ export default Vue.extend({
         return false
       }
     },
+
     async fetchTicket() {
       const tickets: Ticket[] = await this.$axios.$get('/users/me/tickets')
 
