@@ -123,7 +123,10 @@
                       >人
                     </v-card-subtitle>
                     <v-spacer></v-spacer>
-                    <img class="chochin" src="/images/chochin.png" />
+                    <ToolsMagicLamp
+                      :logo_size="110"
+                      style="margin-left: 15px"
+                    />
                   </div>
                 </div>
                 <v-card-actions>
