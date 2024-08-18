@@ -37,6 +37,31 @@
           </p>
         </v-col>
       </v-row>
+
+      <div class="movies">
+        <div v-if="$vuetify.breakpoint.xs">
+          <video :width="$vuetify.breakpoint.width * 0.8" controls>
+            <source src="/movies/info_map_nagata_mv.mp4" type="video/mp4" />
+          </video>
+          <video :width="$vuetify.breakpoint.width * 0.8" controls>
+            <source src="/movies/info_map_akasaka_mv.mp4" type="video/mp4" />
+          </video>
+          <video :width="$vuetify.breakpoint.width * 0.8" controls>
+            <source src="/movies/info_map_gijido_mv.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div v-else style="display: block">
+          <video :width="($vuetify.breakpoint.width / 3) * 0.8" controls>
+            <source src="/movies/info_map_nagata_mv.mp4" type="video/mp4" />
+          </video>
+          <video :width="($vuetify.breakpoint.width / 3) * 0.8" controls>
+            <source src="/movies/info_map_akasaka_mv.mp4" type="video/mp4" />
+          </video>
+          <video :width="($vuetify.breakpoint.width / 3) * 0.8" controls>
+            <source src="/movies/info_map_gijido_mv.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -69,5 +94,9 @@ h2 {
   border-bottom: 3px solid var(--theme-color);
   font-family: serif;
   font-weight: bold;
+}
+
+.movies {
+  text-align: center;
 }
 </style>
