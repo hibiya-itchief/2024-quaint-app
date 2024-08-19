@@ -139,6 +139,69 @@
         </v-row>
       </div>
 
+      <!-- 開催概要 -->
+      <div class="schedule-container">
+        <v-row justify="center" style="margin: 0 !important">
+          <v-col cols="10">
+            <h1 class="info-title">開催概要</h1>
+            <v-row>
+              <v-col cols="12" sm="6" md="6">
+                <h2 class="info-subtitle">2024年</h2>
+                <h2 class="info-subtitle">
+                  9月14日(<span style="color: blue">土</span>)ー15日(<span
+                    style="color: red"
+                    >日</span
+                  >)
+                </h2>
+                <br />
+                <h2 class="info-subtitle">
+                  第49回 <ruby>星陵<rt>せいりょう</rt></ruby
+                  >祭
+                </h2>
+                <h1
+                  class="info-subtitle"
+                  style="
+                    font-family: serif;
+                    font-weight: bold;
+                    color: var(--theme-color);
+                  "
+                >
+                  「<ruby>Magic</ruby>」
+                </h1>
+                <br />
+                <h2 class="info-subtitle">東京都立日比谷高等学校</h2>
+                <p class="info-caption">
+                  〒100-0014 東京都千代田区永田町2-16-1
+                </p>
+                <br />
+                <h2 class="info-subtitle">すべての方に</h2>
+                <h2 class="info-subtitle">ご入場いただけます。</h2>
+                <br />
+                <br />
+              </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <h2 class="info-subtitle">9月14日</h2>
+                <br />
+                <h3 class="info-subtitle">8時20分 受付開始</h3>
+                <h3 class="info-subtitle">16時00分 公開終了</h3>
+                <br />
+                <br />
+                <h2 class="info-subtitle">9月15日</h2>
+                <br />
+                <h3 class="info-subtitle">8時20分 受付開始</h3>
+                <h3 class="info-subtitle">15時20分 公開終了</h3>
+                <br />
+                <br />
+                <h3 class="info-subtitle">
+                  詳しくは<NuxtLink to="/schedule">スケジュール</NuxtLink
+                  >をご覧ください。
+                </h3>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </div>
+
       <div class="ex-container" style="margin-bottom: 5%">
         <v-row justify="center" style="margin: 0 !important">
           <v-col cols="10">
