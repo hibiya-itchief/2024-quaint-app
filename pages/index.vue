@@ -223,15 +223,14 @@
             <div class="ex-festival-container">
               <h2 class="info-title" style="margin-bottom: 5%">星陵祭</h2>
               <v-row>
-                <v-col cols="6">
+                <v-col cols="7">
                   <p>
-                    日比谷高校の文化祭は「星陵祭」と呼ばれており、全クラスが劇を行います。
-                    今年の星陵祭のテーマは「Magic」です。
+                    日比谷高校の文化祭、「星陵祭」。今年のテーマは「Magic」です。
                     日比谷生が劇やパフォーマンス、校内に施された装飾物
                     によって、あなたを魔法にかけます。最高の夏を星陵祭で。来場お待ちしています！
                   </p>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="5">
                   <div class="circle-img-container" style="margin: 0 auto">
                     <div class="festival-image"></div>
                   </div>
