@@ -369,7 +369,7 @@ export default Vue.extend({
       taken_family_ticket_counter: 0,
       // new Date(year, monthIndex, day)となっているため9月はmonthIndex=8と指定する
       // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
-      family_ticket_sell_starts: new Date(2024, 7, 22),
+      family_ticket_sell_starts: new Date(2024, 8, 13),
     }
   },
 
