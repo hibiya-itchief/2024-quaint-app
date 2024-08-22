@@ -317,7 +317,7 @@ type Data = {
   view_count: number | string
   is_family_ticket: boolean // 優先券作るモードかどうか default:false
   is_parents: boolean // 保護者かどうか
-  is_able_family_ticket: boolean // 保護者が優先券を使い切っているかどうか（保護者用アカウントでない場合はfalseに設定されている）
+  is_able_family_ticket: boolean // 保護者が優先券を使い切っているかどうか（保護者用アカウントでない・団体の保護者として登録されていない場合はfalseに設定されている）
   taken_family_ticket_counter: number // 保護者が使用済みの優先券の枚数 default:0
   family_ticket_sell_starts: Date
 }
@@ -428,7 +428,13 @@ export default Vue.extend({
           (await this.$axios.$get('/users/me/tickets/family')) === false &&
           new Date() > this.family_ticket_sell_starts
         ) {
-          this.is_able_family_ticket = true
+          if (
+            (await this.$axios.$get(
+              '/users/me/family/belong/' + this.group?.id
+            )) === true
+          ) {
+            this.is_able_family_ticket = true
+          }
         }
         this.taken_family_ticket_counter = await this.$axios.$get(
           '/users/me/count/tickets/family'
