@@ -434,8 +434,6 @@ export default Vue.extend({
             )) === true
           ) {
             this.is_able_family_ticket = true
-          } else {
-            this.is_able_family_ticket = false
           }
         }
         this.taken_family_ticket_counter = await this.$axios.$get(
