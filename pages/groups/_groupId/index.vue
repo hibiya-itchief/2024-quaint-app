@@ -272,47 +272,56 @@
                     >ログイン</NuxtLink
                   >してください</v-card-subtitle
                 >
-                <div v-for="event in suitableEvents()" :key="event.id">
-                  <v-card class="ma-2 d-flex">
-                    <div>
-                      <v-card-text
-                        class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
-                      >
-                        <div>
-                          {{ dateFormatter(event.starts_at) }}
-                        </div>
-                        <div>
-                          {{ event.eventname }}
-                        </div>
-                      </v-card-text>
-                      <v-spacer></v-spacer>
-                      <v-card-title class="pt-0 pb-1 text-h5">
-                        {{ timeFormatter(event.starts_at) }}
-                        <span class="caption pl-1">
-                          - {{ timeFormatter(event.ends_at) }}</span
+                <div v-if="suitableEvents().length !== 0">
+                  <div v-for="event in suitableEvents()" :key="event.id">
+                    <v-card class="ma-2 d-flex">
+                      <div>
+                        <v-card-text
+                          class="pt-1 pb-0 mb-0 grey--text text--darken-2 text-caption"
                         >
-                      </v-card-title>
-                    </div>
-                    <v-spacer></v-spacer>
-                    <div class="my-auto mx-2">
-                      <!--ここから配布ステータスの条件分岐-->
-                      <v-btn
-                        v-if="isEventEnds(event)"
-                        color="grey"
-                        outlined
-                        style="font-weight: bold"
-                      >
-                        <v-icon>mdi-cancel</v-icon></v-btn
-                      >
-                      <v-btn
-                        v-else
-                        color="green"
-                        outlined
-                        style="font-weight: bold"
-                      >
-                        <v-icon>mdi-circle-double</v-icon></v-btn
-                      >
-                    </div>
+                          <div>
+                            {{ dateFormatter(event.starts_at) }}
+                          </div>
+                          <div>
+                            {{ event.eventname }}
+                          </div>
+                        </v-card-text>
+                        <v-spacer></v-spacer>
+                        <v-card-title class="pt-0 pb-1 text-h5">
+                          {{ timeFormatter(event.starts_at) }}
+                          <span class="caption pl-1">
+                            - {{ timeFormatter(event.ends_at) }}</span
+                          >
+                        </v-card-title>
+                      </div>
+                      <v-spacer></v-spacer>
+                      <div class="my-auto mx-2">
+                        <!--ここから配布ステータスの条件分岐-->
+                        <v-btn
+                          v-if="isEventEnds(event)"
+                          color="grey"
+                          outlined
+                          style="font-weight: bold"
+                        >
+                          <v-icon>mdi-cancel</v-icon></v-btn
+                        >
+                        <v-btn
+                          v-else
+                          color="green"
+                          outlined
+                          style="font-weight: bold"
+                        >
+                          <v-icon>mdi-circle-double</v-icon></v-btn
+                        >
+                      </div>
+                    </v-card>
+                  </div>
+                </div>
+                <div v-else>
+                  <v-card>
+                    <v-card-title>
+                      <span style="color: gray">イベントはありません</span>
+                    </v-card-title>
                   </v-card>
                 </div>
               </v-card>
