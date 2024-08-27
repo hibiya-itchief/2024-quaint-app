@@ -6,15 +6,15 @@
         <v-col cols="12" sm="6" md="6">
           <h2 class="mb-3">9月14日</h2>
           <h3 style="text-align: center; font-weight: normal">
-            午前8時20分 受付開始<br />
-            午後4時00分 公開終了
+            8時20分 受付開始<br />
+            16時00分 公開終了
           </h3>
         </v-col>
         <v-col cols="12" sm="6" md="6">
           <h2 class="mb-3">9月15日</h2>
           <h3 style="text-align: center; font-weight: normal">
-            午前8時20分 受付開始<br />
-            午後3時20分 公開終了
+            8時20分 受付開始<br />
+            15時20分 公開終了
           </h3>
         </v-col>
       </v-row>
