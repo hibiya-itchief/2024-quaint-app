@@ -813,6 +813,111 @@
                 </v-card-actions>
               </div>
             </v-card>
+            <v-card v-else class="mx-1 my-1 px-2 py-2" elevation="1">
+              <v-card-title class="ma-0 pa-0">
+                <p
+                  class="mx-0 my-1 pa-0 grey--text text--darken-2 text-subtitle-2"
+                >
+                  <v-icon color="light-blue" class="mr-2">mdi-calendar</v-icon>
+                  イベント
+                </p>
+                <v-spacer></v-spacer>
+                <a
+                  v-show="!change_events_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_events_form = !change_events_form"
+                  >編集</a
+                >
+                <a
+                  v-show="change_events_form"
+                  class="mx-0 my-2 pa-0 text-body-2"
+                  @click="change_events_form = !change_events_form"
+                  >キャンセル</a
+                >
+              </v-card-title>
+              <v-card-text class="ma-0 pa-0">
+                <v-card
+                  v-for="event in events"
+                  :key="event.id"
+                  class="mx-0 my-1 px-0"
+                  elevation="1"
+                >
+                  <v-card-title class="text-subtitle-1 py-2 px-1">
+                    {{ event.eventname }}
+                    <v-spacer></v-spacer>
+                    <v-dialog
+                      v-if="selected_event"
+                      v-model="delete_event_dialog"
+                      max-width="300"
+                    >
+                      <v-card>
+                        <v-card-title>このイベントを削除しますか?</v-card-title>
+                        <v-card-text>この操作は取り消せません</v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="delete_event_dialog = false"
+                            >キャンセル</v-btn
+                          >
+                          <v-btn
+                            color="primary"
+                            @click="deleteEvent(selected_event)"
+                            >削除</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                    <v-icon
+                      v-show="change_events_form"
+                      @click="selectDeleteEvent(event)"
+                      >mdi-close-circle</v-icon
+                    >
+                  </v-card-title>
+                  <v-card-text class="pb-2 px-1">
+                    <p class="ma-0 pa-0">
+                      イベント時間：{{ dateFormatter(event.starts_at) }} ~
+                      {{ dateFormatter(event.ends_at) }}
+                    </p>
+                  </v-card-text>
+                </v-card>
+              </v-card-text>
+              <div v-show="change_events_form" class="mt-2">
+                <v-card-text class="mx-0 px-0 py-2">
+                  <p class="ma-0 pa-0 text-subtitle-1">イベントの追加</p>
+                  <v-text-field v-model="add_eventname" label="公演名">
+                  </v-text-field>
+                  <v-select
+                    v-model="add_event_target"
+                    :items="add_event_target_list"
+                    item-text="text"
+                    label="イベントの対象者を選択"
+                    filled
+                    return-object
+                  >
+                  </v-select>
+                  <v-text-field
+                    v-model="add_event_starts_at"
+                    label="イベント開始時刻"
+                    type="datetime-local"
+                    suffix="JST"
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="add_event_ends_at"
+                    label="イベント終了時刻"
+                    type="datetime-local"
+                    suffix="JST"
+                  ></v-text-field>
+                </v-card-text>
+                <v-card-actions class="ma-0 px-0 py-0">
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" @click="createNotPlayEvent()">
+                    追加
+                  </v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
             <v-dialog v-model="delete_group_dialog" max-width="500">
               <v-card>
                 <v-card-title>本当にこの団体を削除しますか?</v-card-title>
@@ -1306,6 +1411,39 @@ export default Vue.extend({
         this.error_alert = true
       }
     },
+
+    createNotPlayEvent() {
+      this.$axios
+        .post('/groups/' + this.group?.id + '/events', {
+          eventname: this.add_eventname,
+          lottery: false,
+          target: this.add_event_target.target,
+          ticket_stock: Number(0),
+          starts_at: this.add_event_starts_at + '+09:00',
+          ends_at: this.add_event_ends_at + '+09:00',
+          sell_starts: '2024-01-01T00:00:00+09:00', // 整理券配布時間はイベント開始時間よりも前ならなんでもいい。整理券のシステムをイベントでも流用しているけど、この辺りを無理やり実装することになるから、本当は別のテーブルを用意した方がいいと思う
+          sell_ends: '2024-01-01T00:00:01+09:00', // 整理券配布終了時刻はイベント開始時刻よりも前 ^ 整理券配布開始時刻よりもあとならなんでもいい
+        })
+        .then(() => {
+          this.success_message = '公演が追加されました'
+          this.success_alert = true
+          this.$nuxt.refresh()
+        })
+        .catch((e) => {
+          if (e.response) {
+            this.error_message = e.response.data.detail
+            if (e.response.status === 422) {
+              this.error_message = '入力された値の形式が不適切です'
+            }
+          } else {
+            this.error_message =
+              '予期しないエラーが発生しました。IT委員にお声がけください🙇‍♂️'
+          }
+          this.error_alert = true
+          this.$nuxt.refresh()
+        })
+    },
+
     deleteGroup() {
       this.$axios
         .delete('/groups/' + this.group?.id)
