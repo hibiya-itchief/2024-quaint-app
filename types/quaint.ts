@@ -85,3 +85,30 @@ export type EditNews = {
   author: string
   detail: string
 }
+
+/*
+default.vueのmethods内で this.$auth.user.groupsを参照するとオブジェクトタイプがunknownになってしまいif文の中で使えない
+https://github.com/nuxt-community/auth-module/issues/1097
+↑おそらくこれが同じ問題にぶち当たっているissue
+応急処置としてuser型として使えるようにする
+とても昔から開かれているissueだし解決策がすでにあるのかも
+それか普通に知識不足
+*/
+export type User = {
+  aio: string
+  aud: string
+  exp: number
+  groups: Array<string>
+  iat: number
+  iss: string
+  name: string
+  nbf: number
+  oid: string
+  preferred_username: string
+  rh: string
+  sub: string
+  tid: string
+  uti: string
+  ver: string
+  wids: Array<string>
+}
