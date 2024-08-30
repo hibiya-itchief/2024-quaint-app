@@ -267,7 +267,7 @@
                   イベント時間
                   <v-spacer></v-spacer>
                 </v-card-title>
-                <v-card-subtitle
+                <v-card-subtitle v-if="!$auth.loggedIn"
                   >閲覧可能なイベントに絞り込むには<NuxtLink to="/login"
                     >ログイン</NuxtLink
                   >してください</v-card-subtitle
