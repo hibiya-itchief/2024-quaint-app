@@ -122,7 +122,8 @@ export default Vue.extend({
     for (const ticket of this.taken_tickets as Ticket[]) {
       const group = this.groups.find((group) => group.id === ticket.group_id)
       if (group) {
-        if (group.enable_vote) {
+        // 投票可能な団体 ^ saw_groupsの中にその団体がまだ格納されていないなら
+        if (group.enable_vote && !this.saw_groups.includes(group)) {
           this.saw_groups.push(group)
 
           // ユーザーが二回投票していないかつその団体に投票可能 -> 団体に投票できる
