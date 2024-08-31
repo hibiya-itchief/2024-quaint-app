@@ -354,6 +354,11 @@
           <v-icon>mdi-ticket</v-icon>
         </v-btn>
 
+        <v-btn to="/votes">
+          <span>投票</span>
+          <v-icon>mdi-vote</v-icon>
+        </v-btn>
+
         <v-btn to="/status">
           <span>配布状況</span>
           <v-icon>mdi-list-status</v-icon>
