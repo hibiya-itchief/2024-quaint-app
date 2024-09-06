@@ -137,6 +137,15 @@
                     整理券をキャンセル
                   </v-btn>
                 </v-card-actions>
+                <!-- QR code表示部分 -->
+                <div class="qrcode-container">
+                  <v-img
+                    class="mx-auto my-0"
+                    style="display: block"
+                    :src="ticket_info.qrcode"
+                    width="90%"
+                  />
+                </div>
                 <v-img
                   v-if="ticket_info.group.public_thumbnail_image_url != null"
                   :src="ticket_info.group.public_thumbnail_image_url"
@@ -293,6 +302,15 @@
                           取り消し
                         </v-btn>
                       </v-card-actions>
+                      <!-- QR code表示部分 -->
+                      <div class="qrcode-container">
+                        <v-img
+                          class="mx-auto my-0"
+                          style="display: block"
+                          :src="ticket_info.qrcode"
+                          width="90%"
+                        />
+                      </div>
                     </v-expansion-panel-content>
                   </div>
                 </v-expansion-panel>
@@ -373,6 +391,7 @@ type TicketInfo = {
   group: Group
   event: Event
   ticket: Ticket
+  qrcode: string
 }
 type Data = {
   nowloading: boolean
@@ -516,10 +535,12 @@ export default Vue.extend({
           const event: Event = await this.$axios.$get(
             '/groups/' + ticket.group_id + '/events/' + ticket.event_id
           )
+          const qrcode = await getQRCodeDataUrl(ticket.id as string)
           const ticket_info: TicketInfo = {
             group,
             event,
             ticket,
+            qrcode,
           }
           ticket_infos.push(ticket_info)
         }
