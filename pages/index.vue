@@ -320,6 +320,11 @@
       </v-row>
     </div>
     <CountDown />
+    <v-row justify="center">
+      <v-col cols="10">
+        <h3>本サイトはPTA様からの支援されています。</h3>
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 
