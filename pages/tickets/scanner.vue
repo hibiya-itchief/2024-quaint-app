@@ -1,12 +1,9 @@
 <template>
   <div>
-    <h2>整理券スキャナー</h2>
-    <p>
-      カメラへのアクセスを許可してください。一部のブラウザで使えない場合があります。
-    </p>
     <qrcode-stream
       :key="_uid"
       :track="selected.value"
+      style="height: 100vh; width: 100vw"
       @init="onInit"
       @decode="onDetect"
     />
@@ -60,8 +57,32 @@ export default Vue.extend({
       }
     },
 
-    onDetect(code: any) {
-      this.result = code
+    async onDetect(detected_code: string) {
+      await this.$axios
+        .$get('/tickets/' + detected_code + '/available')
+        .then((res) => {
+          if (res === true) {
+            this.$store.commit('ShowInternetSuccessSnackbar', {
+              message: '有効な整理券です',
+            })
+          } else {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message:
+                '無効な整理券です。整理券IDと照らし合わせ、確認してください。',
+            })
+          }
+        })
+        .catch((err) => {
+          if (err.response) {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: err.response.data.detail,
+            })
+          } else {
+            this.$store.commit('ShowInternetErrorSnackbar', {
+              message: '予期しないエラーが出ました。',
+            })
+          }
+        })
     },
 
     async onInit(promise: any) {
