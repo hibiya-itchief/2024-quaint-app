@@ -141,7 +141,7 @@
                 </div>
               </v-card>
               <p v-show="q1" class="pl-5 pt-2 fade-in">
-                一般の方は再度アカウントを配布しますので、受付までお越しください。<br />
+                一般の方は再度アカウントを配布しますので、体育棟1階、整理券相談所までお越しください。<br />
                 保護者で優先券を取ったアカウントを紛失してしまった方は各クラスの受付で優先券を取った旨を伝えてください。<br />
                 <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
                 <NuxtLink to="/schedule">配布スケジュール</NuxtLink><br />
@@ -279,7 +279,7 @@
                 </div>
               </v-card>
               <p v-show="q8" class="pl-5 pt-2 fade-in">
-                サブアリーナまでお越しください。星陵祭実行委員が対応します。<br />
+                体育棟1階、整理券相談所までお越しください。<br />
                 <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
                 <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
               </p>
@@ -289,7 +289,7 @@
 
           <h3 class="my-10">
             オンライン整理券システム・当サイトに関して、<br />
-            何かご不明な点がありましたら、サブアリーナまでお越しください。<br />
+            何かご不明な点がありましたら、体育棟1階、整理券相談所までお越しください。<br />
             <!--<NuxtLink to="/map">校内マップ</NuxtLink><br />-->
             <NuxtLink to="/schedule">配布スケジュール</NuxtLink>
           </h3>
