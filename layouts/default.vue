@@ -300,8 +300,20 @@
                   <v-list-item-title
                     ><a
                       style="text-decoration: none; color: inherit"
-                      href="https://forms.gle/aRv81UtSCSgS2gHq8"
+                      href="https://forms.gle/QuoXv1eyiPiuHMnm9"
                       >フィードバック</a
+                    ></v-list-item-title
+                  >
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon>
+                    <v-icon>mdi-chat-question-outline</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title
+                    ><a
+                      style="text-decoration: none; color: inherit"
+                      href="https://forms.gle/2Hhbt91csiwk5Rdi9"
+                      >お問い合わせ</a
                     ></v-list-item-title
                   >
                 </v-list-item>
