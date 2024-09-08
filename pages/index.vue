@@ -603,7 +603,7 @@ export default Vue.extend({
 
 .festival-image {
   aspect-ratio: 1 / 1;
-  background-image: url('../static/images/topBackground2.jpg');
+  background-image: url('../static/images/seiryofes_ex_image.jpg');
   background-position: bottom 0 right -2vw;
   background-size: cover;
   border-radius: 50%;
