@@ -89,6 +89,22 @@
                 </v-card-actions>
                 <v-divider></v-divider>
                 <v-card-actions
+                  v-if="$auth.user?.groups.includes(user_groups.students)"
+                  class="py-1"
+                >
+                  <v-btn
+                    color="blue-grey"
+                    dark
+                    outlined
+                    rounded
+                    width="100%"
+                    :to="'/groups/' + group?.id + '/data/id'"
+                  >
+                    <v-icon>mdi-cctv</v-icon>
+                    受付用ページ
+                  </v-btn>
+                </v-card-actions>
+                <v-card-actions
                   v-if="
                     editable == true ||
                     $auth.user?.groups.includes(user_groups.chief)
