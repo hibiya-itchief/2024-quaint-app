@@ -90,7 +90,10 @@ const nuxt_config: NuxtConfig = {
   css: ['~/assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/userrole.ts'],
+  plugins: [
+    '~/plugins/userrole.ts',
+    { src: '~/plugins/vue-qrcode-reader.ts', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

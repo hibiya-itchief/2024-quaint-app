@@ -287,6 +287,17 @@
                 >{{ page.text }}</v-list-item-title
               >
             </v-list-item>
+            <v-list-item
+              v-show="$auth.user?.groups?.includes(user_groups.students.id)"
+              to="/tickets/intoScanner"
+            >
+              <v-list-item-icon>
+                <v-icon color="theme_color">mdi-qrcode-scan</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title style="font-family: serif; font-weight: bold">
+                QRコード
+              </v-list-item-title>
+            </v-list-item>
           </v-list-item-group>
         </v-list>
         <template #append>
