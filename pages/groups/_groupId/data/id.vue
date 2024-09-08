@@ -2,17 +2,48 @@
   <v-app>
     <v-row justify="center">
       <v-col cols="10">
-        <h1 class="info-title" style="text-align: left">
+        <h1 class="info-title" style="text-align: left; margin-bottom: 5%">
           受付用整理券ID確認ページ
         </h1>
-        <v-btn to="/tickets/intoScanner" color="theme_color"
+        <br />
+        <v-btn
+          to="/tickets/intoScanner"
+          color="theme_color"
+          style="margin-bottom: 5%"
           ><span style="color: white">QRコードスキャナー</span></v-btn
-        >
-        <v-card v-for="event in events" :key="event.id">
-          <v-card-title>{{ event.eventname }}</v-card-title>
-
-          <v-btn @click="getAllTickets(event)">取得</v-btn>
-          <v-card-text>{{ tickets_id }}</v-card-text>
+        ><br />
+        <p>
+          QRコードでの読み取りがうまくいかないときに使用してください。<br />
+          <br />
+          <span style="font-weight: bold">＜使い方＞</span><br />
+          整理券のID一覧を取得したい公演の横に表示されている「取得」ボタンを押してください。取得結果が下にある「結果」に表示されます。
+        </p>
+        <v-card>
+          <v-card-title>公演を選択してください</v-card-title>
+          <ul>
+            <li
+              v-for="event in events"
+              :key="event.id"
+              style="margin-bottom: 5%"
+            >
+              <v-row>
+                <v-col cols="8"> {{ event.eventname }}</v-col
+                ><v-col cols="4" style="text-align: center"
+                  ><v-btn
+                    style="text-align: right"
+                    @click="getAllTickets(event)"
+                    >取得</v-btn
+                  ></v-col
+                >
+              </v-row>
+            </li>
+          </ul>
+        </v-card>
+        <v-card>
+          <v-card-title> 結果 </v-card-title>
+          <v-card-text>
+            {{ tickets_id }}
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -26,6 +57,9 @@ import { Event } from '~/types/quaint'
 type Data = {
   events: Event[]
   tickets_id: string[]
+  user_groups: {
+    students: string
+  }
 }
 
 export default Vue.extend({
@@ -33,6 +67,9 @@ export default Vue.extend({
     return {
       events: [],
       tickets_id: [],
+      user_groups: {
+        students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
+      },
     }
   },
 
@@ -71,6 +108,9 @@ export default Vue.extend({
         )
         .then((res) => {
           this.tickets_id = res
+          this.$store.commit('ShowInternetSuccessSnackbar', {
+            message: '情報の取得に成功しました。',
+          })
         })
         .catch((err) => {
           this.$store.commit('ShowInternetErrorSnackbar', {
