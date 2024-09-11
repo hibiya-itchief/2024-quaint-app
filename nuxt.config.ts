@@ -50,7 +50,7 @@ const nuxt_config: NuxtConfig = {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://2024.seiryofes.com/ogpimage_dev.png',
+        content: 'https://2024.seiryofes.com/ogpimage.png',
         // 正式実装期間は'ogpimage.png'、開発期間は'ogpimage_dev.png'を使用
       },
       {
@@ -64,7 +64,7 @@ const nuxt_config: NuxtConfig = {
       {
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'https://2024.seiryofes.com/ogpimage_dev.png',
+        content: 'https://2024.seiryofes.com/ogpimage.png',
         // 正式実装期間は'ogpimage.png'、開発期間は'ogpimage_dev.png'を使用
       },
     ],

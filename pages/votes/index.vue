@@ -117,23 +117,25 @@ export default Vue.extend({
 
   async created() {
     this.vote_count = await this.$axios.$get('/users/me/count/votes')
-    this.taken_tickets = await this.$axios.$get('/users/me/tickets/active')
+    this.taken_tickets = await this.$axios.$get('/users/me/tickets') // ←used状態のものも使えるようにする
 
     for (const ticket of this.taken_tickets as Ticket[]) {
-      const group = this.groups.find((group) => group.id === ticket.group_id)
-      if (group) {
-        // 投票可能な団体 ^ saw_groupsの中にその団体がまだ格納されていないなら
-        if (group.enable_vote && !this.saw_groups.includes(group)) {
-          this.saw_groups.push(group)
+      if (ticket.status === 'active' || ticket.status === 'used') {
+        const group = this.groups.find((group) => group.id === ticket.group_id)
+        if (group) {
+          // 投票可能な団体 ^ saw_groupsの中にその団体がまだ格納されていないなら
+          if (group.enable_vote && !this.saw_groups.includes(group)) {
+            this.saw_groups.push(group)
 
-          // ユーザーが二回投票していないかつその団体に投票可能 -> 団体に投票できる
-          if (
-            this.vote_count < 2 &&
-            (await this.$axios.$get('/users/me/votes/' + group.id)) === true
-          ) {
-            this.votable[group.id] = true
-          } else {
-            this.votable[group.id] = false
+            // ユーザーが二回投票していないかつその団体に投票可能 -> 団体に投票できる
+            if (
+              this.vote_count < 2 &&
+              (await this.$axios.$get('/users/me/votes/' + group.id)) === true
+            ) {
+              this.votable[group.id] = true
+            } else {
+              this.votable[group.id] = false
+            }
           }
         }
       }
