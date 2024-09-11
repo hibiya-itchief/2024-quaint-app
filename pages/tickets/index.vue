@@ -71,7 +71,7 @@
                   isUpNext(
                     new Date(ticket_info.event.starts_at),
                     new Date(ticket_info.event.ends_at)
-                  ) && ticket_info.ticket.status == 'active'
+                  ) && !(ticket_info.ticket.status == 'cancelled')
                 "
               >
                 <v-card-title class="mb-2"
@@ -96,7 +96,8 @@
                   >
 
                   <v-card-subtitle class="pb-0 text-truncate">
-                    {{ ticket_info.group.groupname }}</v-card-subtitle
+                    {{ ticket_info.group.groupname }}<br />
+                    ID :{{ ticket_info.ticket.id }}</v-card-subtitle
                   >
                   <div style="display: flex">
                     <v-card-subtitle
@@ -132,13 +133,17 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <!--終演時刻前の時だけ「整理券をキャンセル」ボタンを表示-->
-                  <v-btn disabled>
-                    <v-icon>mdi-close</v-icon>
-                    整理券をキャンセル
+                  <v-btn v-if="isUsed(ticket_info)" color="orange">
+                    <v-icon color="white">mdi-ticket-outline</v-icon>
+                    <span style="color: white">入場済み</span>
+                  </v-btn>
+                  <v-btn v-else color="green">
+                    <v-icon color="white">mdi-close</v-icon>
+                    <span style="color: white">入場待ち</span>
                   </v-btn>
                 </v-card-actions>
                 <!-- QR code表示部分 -->
-                <div class="qrcode-container">
+                <div v-if="!isUsed(ticket_info)" class="qrcode-container">
                   <v-img
                     class="mx-auto my-0"
                     style="display: block"
@@ -169,7 +174,7 @@
                   <!--activeな整理券のみ表示．キャンセル済み整理券とUpNextな整理券は表示されない-->
                   <div
                     v-if="
-                      ticket_info.ticket.status == 'active' &&
+                      !(ticket_info.ticket.status == 'cancelled') &&
                       !isUpNext(
                         new Date(ticket_info.event.starts_at),
                         new Date(ticket_info.event.ends_at)
@@ -265,7 +270,7 @@
                             >
                             <v-chip
                               v-else-if="
-                                isUsed(new Date(ticket_info.event.ends_at))
+                                isEventEnds(new Date(ticket_info.event.ends_at))
                               "
                               color="error"
                               outlined
@@ -293,8 +298,12 @@
                         <v-spacer></v-spacer>
 
                         <!--終演時刻前の時だけ「整理券をキャンセル」ボタンを表示-->
+                        <v-btn v-if="isUsed(ticket_info)" color="orange">
+                          <v-icon color="white">mdi-ticket-outline</v-icon>
+                          <span style="color: white">入場済み</span>
+                        </v-btn>
                         <v-btn
-                          v-if="!isUsed(new Date(ticket_info.event.ends_at))"
+                          v-else
                           color="error"
                           @click="selectCancelTicket(ticket_info)"
                         >
@@ -303,7 +312,7 @@
                         </v-btn>
                       </v-card-actions>
                       <!-- QR code表示部分 -->
-                      <div class="qrcode-container">
+                      <div v-if="!isUsed(ticket_info)" class="qrcode-container">
                         <v-img
                           class="mx-auto my-0"
                           style="display: block"
@@ -509,18 +518,33 @@ export default Vue.extend({
       }
     },
 
-    // 整理券が使用されたかどうか判定するmethod（時間だけで管理している）
-    // 引数には（終演時刻）を代入
-    isUsed: function (end: Date) {
+    isEventEnds: function (end: Date) {
       const date = new Date()
       const current_time: Date = new Date(date.getTime())
+
+      if (end < current_time) {
+        return true
+      }
+      return false
+    },
+
+    // 整理券が使用済みか
+    // 今年はQRコードの利用を完全に信用されていない関係で時間でも判定されるようになっている
+    isUsed: function (ticket_info: TicketInfo) {
+      const end = new Date(ticket_info.event.ends_at)
+      const date = new Date()
+      const current_time: Date = new Date(date.getTime())
+
+      // 整理券の状態がused
+      if (ticket_info.ticket.status === 'used') {
+        return true
+      }
 
       // 「終演時刻<現在時刻」を判定
       if (end < current_time) {
         return true
-      } else {
-        return false
       }
+      return false
     },
 
     async fetchTicket() {
@@ -528,7 +552,7 @@ export default Vue.extend({
 
       const ticket_infos: TicketInfo[] = []
       for (const ticket of tickets) {
-        if (ticket.status === 'active') {
+        if (ticket.status === 'active' || ticket.status === 'used') {
           const group: Group = await this.$axios.$get(
             '/groups/' + ticket.group_id
           )
