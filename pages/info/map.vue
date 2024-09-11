@@ -14,6 +14,7 @@
           <v-btn value="2F">2F</v-btn>
           <v-btn value="3F">3F</v-btn>
           <v-btn value="4F">4F</v-btn>
+          <v-btn value="5F">星陵会館への行き方</v-btn>
         </v-btn-toggle>
       </v-row>
       <v-row justify="center">
