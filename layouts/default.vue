@@ -287,6 +287,22 @@
                 >{{ page.text }}</v-list-item-title
               >
             </v-list-item>
+            <!-- 9/12のテストに向けて生徒も投票可能に -->
+            <v-list-item
+              v-show="
+                $auth.user?.groups?.includes(user_groups.parents.id) ||
+                $auth.user?.groups?.includes(user_groups.guest.id) ||
+                $auth.user?.groups?.includes(user_groups.students.id)
+              "
+              to="/votes"
+            >
+              <v-list-item-icon>
+                <v-icon color="theme_color">mdi-vote</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title style="font-family: serif; font-weight: bold">
+                投票
+              </v-list-item-title>
+            </v-list-item>
             <v-list-item
               v-show="$auth.user?.groups?.includes(user_groups.students.id)"
               to="/tickets/intoScanner"
@@ -548,11 +564,6 @@ export default Vue.extend({
           icon: 'mdi-tooltip-question-outline',
           text: 'ヘルプ',
           link: '/help',
-        },
-        {
-          icon: 'mdi-vote',
-          text: '投票',
-          link: '/votes',
         },
       ],
     }
