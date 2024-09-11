@@ -62,9 +62,18 @@ export default Vue.extend({
         .$get('/tickets/' + detected_code + '/available')
         .then((res) => {
           if (res === true) {
-            this.$store.commit('ShowInternetSuccessSnackbar', {
-              message: '有効な整理券です',
-            })
+            this.$axios
+              .$put('/tickets/' + detected_code)
+              .then(() => {
+                this.$store.commit('ShowInternetSuccessSnackbar', {
+                  message: '有効な整理券です。整理券を入場済みにしました。',
+                })
+              })
+              .catch(() => {
+                this.$store.commit('ShowInternetErrorSnackbar', {
+                  message: '整理券を入場済みにすることに失敗しました。',
+                })
+              }) // 読み取られた整理券を使用済みにする
           } else {
             this.$store.commit('ShowInternetErrorSnackbar', {
               message:
@@ -75,7 +84,7 @@ export default Vue.extend({
         .catch((err) => {
           if (err.response) {
             this.$store.commit('ShowInternetErrorSnackbar', {
-              message: err.response.data.detail,
+              message: '読み取られたIDは存在しません。',
             })
           } else {
             this.$store.commit('ShowInternetErrorSnackbar', {
