@@ -92,6 +92,12 @@ type Data = {
   now_loading: boolean
   votable: { [group_id: string]: boolean } // {"group_id":"votable"}の形で投票可能かを保存する
   vote_count: number // ユーザーが投票した数 -> まだ投票できるかの判定に利用
+  user_groups: {
+    admin: string
+    parents: string
+    guest: string
+    students: string
+  }
 }
 
 export default Vue.extend({
@@ -112,10 +118,37 @@ export default Vue.extend({
       now_loading: true,
       votable: {},
       vote_count: 0,
+      user_groups: {
+        admin: process.env.AZURE_AD_GROUPS_QUAINT_ADMIN as string,
+        parents: process.env.AZURE_AD_GROUPS_QUAINT_PARENTS as string,
+        guest: process.env.AZURE_AD_GROUPS_QUAINT_GUEST as string,
+        students: process.env.AZURE_AD_GROUPS_QUAINT_STUDENTS as string,
+      },
     }
   },
 
   async created() {
+    // 権限確認
+    // 9/12日のテストのためstudentsも許可
+    if (
+      !(
+        (this.$auth.user?.groups as string[]).includes(
+          this.user_groups.admin
+        ) ||
+        (this.$auth.user?.groups as string[]).includes(
+          this.user_groups.parents
+        ) ||
+        (this.$auth.user?.groups as string[]).includes(
+          this.user_groups.guest
+        ) ||
+        (this.$auth.user?.groups as string[]).includes(
+          this.user_groups.students
+        )
+      )
+    ) {
+      this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
+    }
+
     this.vote_count = await this.$axios.$get('/users/me/count/votes')
     this.taken_tickets = await this.$axios.$get('/users/me/tickets') // ←used状態のものも使えるようにする
 
