@@ -2,7 +2,7 @@
   <v-app>
     <v-container>
       <ToolsBackButton />
-      <h1 id="title">校内マップ</h1>
+      <h1 class="title">校内マップ</h1>
       <v-row justify="center">
         <v-btn-toggle
           v-model="selected_floor"
@@ -23,6 +23,19 @@
             :src="`/images/map${selected_floor}.png`"
             alt="1階の地図"
           />
+        </v-col>
+      </v-row>
+      <h1 class="title" style="margin-top: 10%; margin-bottom: 5%">
+        星陵会館へ
+      </h1>
+      <v-row justify="center">
+        <v-col cols="12" md="6">
+          <v-img
+            class="img"
+            :src="`/images/to_seiryo_kaikan.jpg`"
+            alt="星陵会館への行き方"
+          >
+          </v-img>
         </v-col>
       </v-row>
     </v-container>
@@ -55,7 +68,7 @@ h2 {
   border: 9px solid var(--theme-color);
 }
 
-#title {
+.title {
   display: inline-block;
   padding: 0.5rem 3rem 0.5rem 0;
   margin-bottom: 5rem;
