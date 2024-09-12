@@ -562,7 +562,10 @@
             </v-card>
 
             <v-card
-              v-show="$auth.user?.groups?.includes(user_groups.admin)"
+              v-show="
+                $auth.user?.groups?.includes(user_groups.admin) ||
+                $auth.user?.groups?.includes(user_groups.owner)
+              "
               class="mx-1 my-1 px-2 py-2"
               elevation="1"
             >
