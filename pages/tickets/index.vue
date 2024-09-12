@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div v-if="!nowloading">
+    <div v-if="!now_loading">
       <v-container name="ticket_container">
         <v-row justify="center" align-content="center">
           <v-col cols="12" sm="6" lg="6">
@@ -43,7 +43,6 @@
             <!--整理券未取得の場合に，「探す」タブへ誘導-->
             <v-card
               v-if="
-                now_loading == false &&
                 tickets.length == 0 &&
                 ($auth.user?.jobTitle?.includes('Visited') ||
                   $auth.$state.strategy === 'ad')
@@ -478,7 +477,7 @@ export default Vue.extend({
     // 500msごとに現在時刻を取得
     // setInterval(this.getNow, 500)
 
-    this.nowloading = false
+    this.now_loading = false
   },
 
   methods: {
@@ -584,7 +583,6 @@ export default Vue.extend({
         else return 0
       })
       this.tickets = ticket_infos
-      this.now_loading = false
     },
     timeFormatter(input_date: string) {
       const d = new Date(input_date)
