@@ -138,12 +138,7 @@ export default Vue.extend({
         (this.$auth.user?.groups as string[]).includes(
           this.user_groups.parents
         ) ||
-        (this.$auth.user?.groups as string[]).includes(
-          this.user_groups.guest
-        ) ||
-        (this.$auth.user?.groups as string[]).includes(
-          this.user_groups.students
-        )
+        (this.$auth.user?.groups as string[]).includes(this.user_groups.guest)
       )
     ) {
       this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
