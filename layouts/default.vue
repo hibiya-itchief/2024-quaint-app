@@ -291,8 +291,7 @@
             <v-list-item
               v-show="
                 $auth.user?.groups?.includes(user_groups.parents.id) ||
-                $auth.user?.groups?.includes(user_groups.guest.id) ||
-                $auth.user?.groups?.includes(user_groups.students.id)
+                $auth.user?.groups?.includes(user_groups.guest.id)
               "
               to="/votes"
             >
