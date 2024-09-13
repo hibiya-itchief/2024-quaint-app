@@ -288,6 +288,11 @@
                     >ログイン</NuxtLink
                   >してください</v-card-subtitle
                 >
+                <span style="color: orange"
+                  >クラス劇以外につきましては本サイト上での整理券配布は行っておりません。多くの団体では入場を制限していませんが、一部制限している団体がある可能性があります。各団体の説明に従ってください。</span
+                >
+                <br />
+                <br />
                 <div v-if="suitableEvents().length !== 0">
                   <div v-for="event in suitableEvents()" :key="event.id">
                     <v-card class="ma-2 d-flex">
