@@ -67,14 +67,26 @@
                         :key="i"
                         :value="'tab-' + i"
                       >
+                        <div v-if="floor_filtered_groups[i].length !== 0">
+                          <div
+                            v-for="group of floor_filtered_groups[i]"
+                            :key="group.id"
+                          >
+                            <StatusCard
+                              :group="group"
+                              :all_events="events[group.id]"
+                            />
+                          </div>
+                        </div>
                         <div
-                          v-for="group of floor_filtered_groups[i]"
-                          :key="group.id"
+                          v-else
+                          style="
+                            margin-top: 5%;
+                            margin-bottom: 5%;
+                            margin-left: 2%;
+                          "
                         >
-                          <StatusCard
-                            :group="group"
-                            :all_events="events[group.id]"
-                          />
+                          該当する団体は存在しません
                         </div>
                       </v-tab-item>
                     </v-tabs-items>
