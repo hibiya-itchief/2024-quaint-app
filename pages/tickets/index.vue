@@ -93,7 +93,6 @@ export default Vue.extend({
     title: '整理券',
   },
   async created() {
-    this.fetchTicket()
     try {
       if (this.$auth.$state.strategy === 'ad') {
         this.qrcode_url = await getQRCodeDataUrl(this.$auth.user?.oid as string)
