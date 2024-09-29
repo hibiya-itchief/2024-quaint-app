@@ -39,7 +39,6 @@ export default Vue.extend({
 
   async asyncData({ $axios, params }) {
     const news: News = await $axios.$get('/news/' + params.newsid)
-
     return { news }
   },
 

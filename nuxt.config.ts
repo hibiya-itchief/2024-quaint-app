@@ -2,7 +2,7 @@ import { NuxtConfig } from '@nuxt/types'
 import fetch from 'node-fetch'
 // @ts-ignore
 import colors from 'vuetify/es5/util/colors'
-import { Group, Tag } from './types/quaint'
+import { Group, News, Tag } from './types/quaint'
 
 const environment = process.env.QUAINT_ENV || 'development'
 const env_set = require(`./env.${environment}.js`)
@@ -256,6 +256,12 @@ const nuxt_config: NuxtConfig = {
         })
       ).json()) as Tag[]
 
+      const news: News[] = (await (
+        await fetch(baseurl_without_slash + '/news', {
+          method: 'GET',
+        })
+      ).json()) as News[]
+
       const group_routes = groups.map((group) => {
         return {
           route: `/groups/${group.id}`,
@@ -274,6 +280,12 @@ const nuxt_config: NuxtConfig = {
           payload: { group },
         }
       })
+      const news_routes = news.map((one) => {
+        return {
+          route: `/news/${one.id}`,
+        }
+      })
+
       return [
         {
           route: '/groups',
@@ -282,6 +294,7 @@ const nuxt_config: NuxtConfig = {
         ...group_routes,
         ...group_edit_routes,
         ...group_data_routes,
+        ...news_routes,
       ]
     },
   },
