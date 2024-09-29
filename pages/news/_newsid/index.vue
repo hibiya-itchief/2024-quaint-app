@@ -37,8 +37,8 @@ import { News } from 'types/quaint'
 export default Vue.extend({
   auth: false,
 
-  async asyncData({ $axios, params, payload }) {
-    const news: News = payload ?? (await $axios.$get('/news/' + params.newsid))
+  async asyncData({ $axios, params }) {
+    const news: News = await $axios.$get('/news/' + params.newsid)
     return { news }
   },
 
