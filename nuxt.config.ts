@@ -256,7 +256,7 @@ const nuxt_config: NuxtConfig = {
         })
       ).json()) as Tag[]
 
-      const news: News[] = (await (
+      const all_news: News[] = (await (
         await fetch(baseurl_without_slash + '/news', {
           method: 'GET',
         })
@@ -280,9 +280,10 @@ const nuxt_config: NuxtConfig = {
           payload: { group },
         }
       })
-      const news_routes = news.map((one) => {
+      const news_routes = all_news.map((news) => {
         return {
-          route: `/news/${one.id}`,
+          route: `/news/${news.id}`,
+          payload: { news },
         }
       })
 
