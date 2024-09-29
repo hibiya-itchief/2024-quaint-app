@@ -11,17 +11,7 @@
               style="background-color: var(--theme-color)"
             >
               <v-row justify="center">
-                <v-col cols="2">
-                  <v-btn
-                    class="ma-2"
-                    color="theme_color"
-                    dark
-                    depressed
-                    @click="getInfo()"
-                    ><v-icon class="mr-1">mdi-reload</v-icon></v-btn
-                  >
-                </v-col>
-                <v-col cols="10">
+                <v-col cols="12">
                   <v-card-title class="card-title">配布状況一覧</v-card-title>
                 </v-col>
               </v-row>
@@ -162,6 +152,21 @@ type Data = {
 export default Vue.extend({
   name: 'TicketsStatusPage',
   auth: false,
+
+  async asyncData({ $axios }) {
+    const groups = await $axios.$get('/groups')
+    const tags = await $axios.$get('/tags')
+
+    // eventsを作成(key: group name, object: event)
+    const events: { [key: string]: Event[] } = { '': [] }
+
+    for (const group of groups as Group[]) {
+      events[group.id] = await $axios.$get('/groups/' + group.id + '/events')
+    }
+
+    return { groups, tags, events }
+  },
+
   data(): Data {
     return {
       tags: [],
@@ -177,78 +182,53 @@ export default Vue.extend({
   },
 
   created() {
-    this.getInfo()
-  },
-
-  methods: {
-    async getInfo() {
-      this.nowloading = true
-
-      // 配列に保存されている情報を全て空で上書き
-      this.tags = []
-      this.groups = []
-      this.events = { '': [] }
-      this.floor_filtered_groups = [[], [], [], [], []]
-      this.grade_filtered_groups = [[], [], [], []]
-
-      this.groups = await this.$axios.$get('/groups')
-      this.tags = await this.$axios.$get('/tags')
-
-      // 劇の団体を抽出
-      // 団体を並び替える
-      this.groups = this.groups
-        .filter((group) => group.type === 'play' || group.type === 'test')
-        .sort((a: Group, b: Group) => {
-          // 団体のタイプがクラス劇ではないものは一番うしろに配置
-          if (a.type !== 'play') {
-            return 1
-          }
-          if (b.type !== 'play') {
-            return -1
-          }
-
-          // もしAPIのほうでtype=playの団体に対する命名規則を変更したならこの部分のコードはうまく動かなくなる可能性が高いから注意
-          return parseInt(a.id.split('r')[0]) - parseInt(b.id.split('r')[0])
-        })
-
-      // eventsを作成(key: group name, object: event)
-      for (const group of this.groups as Group[]) {
-        this.events[group.id] = await this.$axios.$get(
-          '/groups/' + group.id + '/events'
-        )
-      }
-
-      // 階、学年ごとに分けた配列を作成
-      for (const group of this.groups) {
-        if (
-          group.floor === 1 ||
-          group.floor === 2 ||
-          group.floor === 3 ||
-          group.floor === 4
-        ) {
-          this.floor_filtered_groups[group.floor].push(group)
-        } else {
-          this.floor_filtered_groups[0].push(group)
+    // 劇の団体を抽出
+    // 団体を並び替える
+    this.groups = this.groups
+      .filter((group) => group.type === 'play' || group.type === 'test')
+      .sort((a: Group, b: Group) => {
+        // 団体のタイプがクラス劇ではないものは一番うしろに配置
+        if (a.type !== 'play') {
+          return 1
+        }
+        if (b.type !== 'play') {
+          return -1
         }
 
-        switch (group.id.slice(0, 1)) {
-          case '1':
-            this.grade_filtered_groups[1].push(group)
-            break
-          case '2':
-            this.grade_filtered_groups[2].push(group)
-            break
-          case '3':
-            this.grade_filtered_groups[3].push(group)
-            break
-          default:
-            this.grade_filtered_groups[0].push(group)
-            break
-        }
+        // もしAPIのほうでtype=playの団体に対する命名規則を変更したならこの部分のコードはうまく動かなくなる可能性が高いから注意
+        return parseInt(a.id.split('r')[0]) - parseInt(b.id.split('r')[0])
+      })
+
+    // 階、学年ごとに分けた配列を作成
+    for (const group of this.groups) {
+      if (
+        group.floor === 1 ||
+        group.floor === 2 ||
+        group.floor === 3 ||
+        group.floor === 4
+      ) {
+        this.floor_filtered_groups[group.floor].push(group)
+      } else {
+        this.floor_filtered_groups[0].push(group)
       }
 
-      this.nowloading = false
-    },
+      switch (group.id.slice(0, 1)) {
+        case '1':
+          this.grade_filtered_groups[1].push(group)
+          break
+        case '2':
+          this.grade_filtered_groups[2].push(group)
+          break
+        case '3':
+          this.grade_filtered_groups[3].push(group)
+          break
+        default:
+          this.grade_filtered_groups[0].push(group)
+          break
+      }
+    }
+
+    this.nowloading = false
   },
 })
 </script>

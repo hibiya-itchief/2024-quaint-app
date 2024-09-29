@@ -194,14 +194,6 @@
                 >
                 <v-divider class="mb-3"></v-divider>
 
-                <v-btn
-                  class="ma-2"
-                  color="primary"
-                  dark
-                  @click="getAllEventsData()"
-                  ><v-icon class="mr-1">mdi-reload</v-icon>再読み込み</v-btn
-                >
-
                 <div v-if="is_parents">
                   <v-switch
                     v-model="is_family_ticket"
@@ -400,7 +392,38 @@ export default Vue.extend({
   async asyncData({ params, $axios, payload }): Promise<Partial<Data>> {
     const group = payload ?? (await $axios.$get('/groups/' + params.groupId))
     const links = await $axios.$get('/groups/' + params.groupId + '/links')
-    return { group, links }
+
+    const events = await $axios
+      .$get('/groups/' + params.groupId + '/events')
+      .then((result) => {
+        result.sort((x: Event, y: Event) => {
+          return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
+        })
+        return result
+      })
+    // 各チケットの取得
+    const list_stock: number[] = []
+    const list_taken_tickets: number[] = []
+
+    if (events.length !== 0) {
+      const get_tickets_info = []
+      for (let i = 0; i < events.length; i++) {
+        get_tickets_info.push(
+          $axios.$get(
+            `/groups/${params.groupId}/events/${events[i].id}/tickets`
+          )
+        )
+      }
+
+      Promise.all(get_tickets_info).then((tickets_info) => {
+        for (let i = 0; i < tickets_info.length; i++) {
+          list_stock.push(tickets_info[i].stock)
+          list_taken_tickets.push(tickets_info[i].taken_tickets)
+        }
+      })
+    }
+
+    return { group, links, events, list_stock, list_taken_tickets }
   },
 
   data(): Data {
@@ -478,42 +501,7 @@ export default Vue.extend({
     }
   },
 
-  async created() {
-    // まず、チケット情報関連を総取得する
-    await this.getAllEventsData()
-
-    // admin権限を持つ もしくは この団体にowner権限を持つユーザーがアクセスするとtrueになりページを編集できる
-    // 実際に編集できるかどうかはAPIがJWTで認証するのでここはあくまでフロント側の制御
-    if (this.$auth.user?.groups && Array.isArray(this.$auth.user?.groups)) {
-      if (this.$auth.user?.groups.includes(this.user_groups.admin)) {
-        this.editable = true
-      } else if (this.$auth.user?.groups.includes(this.user_groups.owner)) {
-        this.$axios.$get('/users/me/owner_of').then((res: string[]) => {
-          if (res.includes(this.group?.id as string)) {
-            this.editable = true
-          }
-        })
-      } else if (this.$auth.user?.groups.includes(this.user_groups.parents)) {
-        this.is_parents = true
-
-        if (
-          (await this.$axios.$get('/users/me/tickets/family')) === false &&
-          new Date() > this.family_ticket_sell_starts
-        ) {
-          if (
-            (await this.$axios.$get(
-              '/users/me/family/belong/' + this.group?.id
-            )) === true
-          ) {
-            this.is_able_family_ticket = true
-          }
-        }
-        this.taken_family_ticket_counter = await this.$axios.$get(
-          '/users/me/count/tickets/family'
-        )
-      }
-    }
-
+  created() {
     // 「閲覧数」にまつわる処理
     /*
     this.$axios
@@ -652,71 +640,6 @@ export default Vue.extend({
       }
       index = index % colors.length
       return colors[index]
-    },
-
-    // getAllEventsData: チケット情報の取得を統括したmethod
-    async getAllEventsData() {
-      // イベント情報の取得
-      this.events = await this.getEvents()
-      // 各チケットの取得
-      const res = this.getTickets(this.events)
-      this.list_stock = res.list_stock
-      this.list_taken_tickets = res.list_taken_tickets
-    },
-
-    // getEvents: event(公演)を取得するmethod
-    async getEvents(): Promise<Event[]> {
-      const res = await this.$axios
-        .$get('/groups/' + this.$route.params.groupId + '/events')
-        .then(
-          (result) => {
-            result.sort((x: Event, y: Event) => {
-              return new Date(x.starts_at) > new Date(y.starts_at) ? 1 : -1
-            })
-            return result
-          },
-          () => {
-            this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '情報の取得に失敗しました。再読み込みしてください。',
-            })
-            return undefined
-          }
-        )
-
-      return res
-    },
-
-    // getTickets: 各公演の整理券配布状況を取得するmethod
-    // list_stock…席数
-    // list_taken_tickets…既に取られた整理券の数
-    getTickets(events: Event[]) {
-      if (events.length !== 0) {
-        const get_tickets_info = []
-        for (let i = 0; i < events.length; i++) {
-          get_tickets_info.push(
-            this.$axios.$get(
-              `/groups/${this.$route.params.groupId}/events/${events[i].id}/tickets`
-            )
-          )
-        }
-        const list_stock: number[] = []
-        const list_taken_tickets: number[] = []
-        Promise.all(get_tickets_info)
-          .then((tickets_info) => {
-            for (let i = 0; i < tickets_info.length; i++) {
-              list_stock.push(tickets_info[i].stock)
-              list_taken_tickets.push(tickets_info[i].taken_tickets)
-            }
-          })
-          .catch(() => {
-            this.$store.commit('ShowInternetErrorSnackbar', {
-              message: '情報の取得に失敗しました。再読み込みしてください。',
-            })
-          })
-        return { list_stock, list_taken_tickets }
-      } else {
-        return { list_stock: [], list_taken_tickets: [] }
-      }
     },
   },
 })

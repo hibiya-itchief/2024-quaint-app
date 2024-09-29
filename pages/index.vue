@@ -359,6 +359,12 @@ export default Vue.extend({
       vm.prev_route = from
     })
   },
+
+  async asyncData({ $axios }) {
+    const news = await $axios.$get('/news')
+    return { news }
+  },
+
   data(): Data {
     return {
       user_groups: {
@@ -441,7 +447,7 @@ export default Vue.extend({
     ],
   },
 
-  async created() {
+  created() {
     // ロゴの描写
     const size = Math.min(
       this.$vuetify.breakpoint.width,
@@ -452,8 +458,6 @@ export default Vue.extend({
     } else {
       this.logo_size = 700
     }
-
-    this.news = await this.$axios.$get('/news')
 
     // newsの並び替え
     this.news.sort((x: News, y: News) => {

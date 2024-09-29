@@ -78,12 +78,10 @@ export default Vue.extend({
     }
   },
 
-  async created() {
+  created() {
     this.ticket_stock = this.event.ticket_stock
-    const res = await this.$axios.$get(
-      '/groups/' + this.group.id + '/events/' + this.event.id + '/tickets'
-    )
-    this.taken_tickets = res.taken_tickets
+    // 配布時間はすべて終了していて表示だけ変えられればいいから、取得されたチケット枚数を取得可能チケット枚数に合わせて無理やりやってる
+    this.taken_tickets = this.ticket_stock
   },
 
   methods: {

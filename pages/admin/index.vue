@@ -3,9 +3,6 @@
     <v-row v-if="isAdmin" justify="center">
       <v-col cols="12" md="8" lg="6">
         <h1 class="my-2">👑管理者用画面</h1>
-        <v-btn class="my-2" outlined color="primary" @click="updateFrontend"
-          >フロントエンドをビルドして最新の状態に更新</v-btn
-        >
         <v-btn
           class="my-2"
           outlined
@@ -72,11 +69,6 @@ export default Vue.extend({
     } else {
       this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
     }
-  },
-  methods: {
-    async updateFrontend() {
-      await this.$axios.$post('/admin/update_frontend')
-    },
   },
 })
 </script>
