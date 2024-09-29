@@ -201,6 +201,8 @@
                   >
                   <!--ADの場合ユーザーオブジェクトIDはoidに入ってる-->
                 </p>
+                <!-- 以下の部分は保護者が正常に登録されているか -->
+                <!--
                 <p
                   v-show="registered_class_synchronization"
                   class="ma-0 pa-0 text-caption green--text"
@@ -216,6 +218,7 @@
                 >
                   クラスの登録状況に異常があります。IT委員会にお声がけください。
                 </p>
+                -->
                 <p class="ma-0 pa-0 text-caption grey--text">
                   ユーザーID：{{ $auth.user?.oid ?? $auth.user?.sub }}
                   <!--ADの場合ユーザーオブジェクトIDはoidに入ってる-->
@@ -586,12 +589,14 @@ export default Vue.extend({
     }
 
     // $axios.user.groupsのtypeがunknownになってしまうため無理やり型を当てはめる
+    /*
     const user = this.$auth.user as User
     if (user) {
       if (user.groups.includes(this.user_groups.parents.id)) {
         this.checkSynchronization(user)
       }
     }
+    */
   },
   methods: {
     revealToken() {

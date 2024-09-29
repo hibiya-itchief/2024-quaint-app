@@ -195,14 +195,10 @@
 
           <v-btn color="red" text @click.stop="dialog = false"> いいえ </v-btn>
           <div v-if="is_family_ticket">
-            <v-btn color="primary" @click="createFamilyTicket(event)">
-              はい
-            </v-btn>
+            <v-btn color="primary" @click="createFamilyTicket()"> はい </v-btn>
           </div>
           <div v-else>
-            <v-btn color="primary" @click="createTicket(event, ticket_person)">
-              はい
-            </v-btn>
+            <v-btn color="primary" @click="createTicket()"> はい </v-btn>
           </div>
         </v-card-actions>
       </v-card>
@@ -311,7 +307,7 @@ export default Vue.extend({
       )
     },
 
-    async createTicket(event: Event, person: number) {
+    createTicket() {
       if (!this.$auth.loggedIn) {
         this.$store.commit('ShowErrorSnackbar', {
           message: '整理券の取得には',
@@ -320,38 +316,12 @@ export default Vue.extend({
         return 1
       }
       this.dialog = false
-      await this.$axios
-        .post(
-          '/groups/' +
-            event.group_id +
-            '/events/' +
-            event.id +
-            '/tickets?person=' +
-            person
-        )
-        .then(() => {
-          this.$store.commit('ShowSuccessSnackbar', {
-            message: '整理券を取得できました！',
-            link: '/tickets',
-          })
-        })
-        .catch((e) => {
-          if (e.response) {
-            this.$store.commit('ShowErrorSnackbar', {
-              message: e.response.data.detail,
-              link: '',
-            })
-          } else {
-            this.$store.commit('ShowErrorSnackbar', {
-              message:
-                '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️',
-              link: '',
-            })
-          }
-        })
+      this.$store.commit('ShowInternetErrorSnackbar', {
+        message: '2024年星陵祭は終了しました。',
+      })
     },
 
-    async createFamilyTicket(event: Event) {
+    createFamilyTicket() {
       if (!this.$auth.loggedIn) {
         this.$store.commit('ShowErrorSnackbar', {
           message: '整理券の取得には',
@@ -360,35 +330,9 @@ export default Vue.extend({
         return 1
       }
       this.dialog = false
-      await this.$axios
-        .post(
-          '/groups/' +
-            event.group_id +
-            '/events/' +
-            event.id +
-            '/tickets/family'
-        )
-        .then(() => {
-          this.$store.commit('ShowSuccessSnackbar', {
-            message: '保護者用優先券を取得できました！',
-            link: '/tickets',
-          })
-          window.location.reload()
-        })
-        .catch((e) => {
-          if (e.response) {
-            this.$store.commit('ShowErrorSnackbar', {
-              message: e.response.data.detail,
-              link: '',
-            })
-          } else {
-            this.$store.commit('ShowErrorSnackbar', {
-              message:
-                '予期せぬエラーが発生しました。IT委員にお声がけください🙇‍♂️',
-              link: '',
-            })
-          }
-        })
+      this.$store.commit('ShowInternetErrorSnackbar', {
+        message: '2024年星陵祭は終了しました。',
+      })
     },
 
     selectEvent(event: Event, is_family_ticket: boolean) {

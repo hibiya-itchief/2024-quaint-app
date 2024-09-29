@@ -52,8 +52,15 @@ export default Vue.extend({
       // nuxt generate時の操作という意味
       return { groups: payload.groups }
     }
-    const res = await $axios.$get('/groups')
-    return { groups: res }
+    const groups = await $axios.$get('/groups')
+
+    const result: { [group_id: string]: number } = {}
+    // resultを作成する
+    for (const group of groups) {
+      result[group.id] = await $axios.$get('/votes/' + group.id)
+    }
+
+    return { groups, result }
   },
 
   data(): Data {
@@ -68,7 +75,7 @@ export default Vue.extend({
     }
   },
 
-  async created() {
+  created() {
     if (
       !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin) &&
       !(this.$auth.user?.groups as string[]).includes(this.user_groups.chief)
@@ -92,11 +99,6 @@ export default Vue.extend({
         // もしAPIのほうでtype=playの団体に対する命名規則を変更したならこの部分のコードはうまく動かなくなる可能性が高いから注意
         return parseInt(a.id.split('r')[0]) - parseInt(b.id.split('r')[0])
       })
-
-    // resultを作成する
-    for (const group of this.groups) {
-      this.result[group.id] = await this.$axios.$get('/votes/' + group.id)
-    }
 
     this.now_loading = false
   },

@@ -164,23 +164,11 @@ export default Vue.extend({
       title: this.group?.groupname + ' - 整理券の残席状況',
     }
   },
-  async created() {
+  created() {
     if (
       !(this.$auth.user?.groups as string[]).includes(this.user_groups.admin)
     ) {
-      if (
-        (this.$auth.user?.groups as string[]).includes(this.user_groups.owner)
-      ) {
-        if (
-          !(
-            (await this.$axios.$get('/users/me/owner_of')) as string[]
-          ).includes(this.$route.params.groupId)
-        ) {
-          this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
-        }
-      } else {
-        this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
-      }
+      this.$nuxt.error({ statusCode: 403, message: 'Forbidden' })
     }
   },
   methods: {
