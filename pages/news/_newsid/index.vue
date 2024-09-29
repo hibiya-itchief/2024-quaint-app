@@ -34,12 +34,22 @@
 import Vue from 'vue'
 import { News } from 'types/quaint'
 
+type Data = {
+  news: News | null
+}
+
 export default Vue.extend({
   auth: false,
 
   async asyncData({ $axios, params, payload }) {
-    const news: News = payload ?? (await $axios.$get('/news/' + params.newsid))
+    const news = payload.news ?? (await $axios.$get('/news/' + params.newsid))
     return { news }
+  },
+
+  data(): Data {
+    return {
+      news: null,
+    }
   },
 
   methods: {

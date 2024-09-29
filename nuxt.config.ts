@@ -280,7 +280,7 @@ const nuxt_config: NuxtConfig = {
           payload: { group },
         }
       })
-      const news_routes = all_news.map((news) => {
+      const news_routes = all_news.map((news: News) => {
         return {
           route: `/news/${news.id}`,
           payload: { news },
