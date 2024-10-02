@@ -1,7 +1,7 @@
 name: mainブランチの内容をもとにAPIから事前にデータを取得しCloudflare Pagesにデプロイ
 on:
-  schedule:
-    - cron: '0 15 * * *' # 毎日0時(日本時間)にビルド
+  #  schedule:
+  #    - cron: '0 15 * * *' # 毎日0時(日本時間)にビルド
   workflow_dispatch:
   push:
     branches:
